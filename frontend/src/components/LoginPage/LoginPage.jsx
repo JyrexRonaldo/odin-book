@@ -2,7 +2,7 @@ function LoginPage() {
     return (
         <>
             <div className="grid min-h-screen grid-rows-[auto_1fr] bg-blue-950">
-                <nav className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between px-4">
+                <nav className="mx-auto flex h-20 w-full max-w-6xl items-center justify-between px-4">
                     <h1 className="text-3xl font-bold text-white">Book</h1>
                     <div className="flex gap-3">
                         <button className="rounded-lg border-2 border-blue-500 bg-black px-3 py-1 text-blue-500">
