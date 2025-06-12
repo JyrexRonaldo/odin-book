@@ -1,3 +1,4 @@
+import PostComponent from '../PostComponent/PostComponent'
 import { useState } from 'react'
 
 function PostListComponent() {
@@ -25,7 +26,7 @@ function PostListComponent() {
     }
 
     return (
-        <div className="mx-5 inline-block h-80 w-full max-w-2xl self-start rounded-lg bg-amber-800 lg:min-w-2xl">
+        <div className=" mx-5 flex flex-col gap-5 w-full max-w-2xl self-start rounded-lg lg:min-w-2xl">
             <nav className="flex gap-2.5">
                 <button
                     onClick={handleSelect}
@@ -46,7 +47,9 @@ function PostListComponent() {
                     Oldest
                 </button>
             </nav>
-            <div></div>
+            <div>
+                <PostComponent />
+            </div>
         </div>
     )
 }
