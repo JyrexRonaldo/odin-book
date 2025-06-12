@@ -25,7 +25,7 @@ function PostListComponent() {
     }
 
     return (
-        <div className="mx-5 w-full max-w-xl self-start inline-block rounded-lg h-80 bg-amber-800">
+        <div className="mx-5 inline-block h-80 w-full self-start rounded-lg bg-amber-800 max-w-2xl lg:min-w-2xl">
             <nav className="flex gap-2.5">
                 <button
                     onClick={handleSelect}
