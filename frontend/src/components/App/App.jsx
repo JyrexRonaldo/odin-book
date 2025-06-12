@@ -35,20 +35,8 @@ function App() {
                     <div className="flex h-full w-full items-center justify-center p-5">
                         <Outlet />
                     </div>
-                    {/* <Outlet /> */}
-                    {/* <div className="fixed top-32 left-32 flex min-h-36 flex-col gap-8 rounded-lg bg-blue-900 p-5 text-2xl font-bold text-white max-lg:hidden">
-                        <div className="flex flex-col gap-4 *:h-12 *:w-52 *:rounded-lg *:px-3.5 *:text-left">
-                            <button>Feed</button>
-                            <button>Explore</button>
-                            <button>Find Users</button>
-                            <button>Likes</button>
-                        </div>
-                        <button className="mt-14 h-12 w-52 rounded-lg bg-blue-500 px-3.5 text-left">
-                            Create Post
-                        </button>
-                    </div> */}
                     <div className="fixed min-h-24 w-full self-end overflow-hidden lg:hidden">
-                        <div className="flex min-h-24 w-full items-center justify-between self-end overflow-hidden bg-blue-800/30 px-5 backdrop-blur-md *:size-16 *:rounded-[50%] *:bg-blue-500">
+                        <div className="flex min-h-24 w-full items-center justify-between self-end overflow-hidden bg-blue-800/30 px-5 backdrop-blur-md *:size-16 *:rounded-[50%] *:cursor-pointer *:bg-blue-500">
                             <button></button>
                             <button></button>
                             <button></button>

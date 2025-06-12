@@ -9,9 +9,9 @@ function PostListComponent() {
 
     const buttonColorVariants = {
         default:
-            'rounded-lg border-2 border-blue-500 bg-black px-3 py-1 text-blue-500',
+            'cursor-pointer rounded-lg border-2 border-blue-500 bg-black px-3 py-1 text-blue-500',
         selected:
-            'rounded-lg border-2 bg-blue-500 text-white border-blue-500 px-3 py-1',
+            'cursor-pointer rounded-lg border-2 border-blue-500 bg-blue-500 px-3 py-1 text-white',
     }
 
     function handleSelect(e) {
@@ -25,7 +25,7 @@ function PostListComponent() {
     }
 
     return (
-        <div className="mx-5 inline-block h-80 w-full self-start rounded-lg bg-amber-800 max-w-2xl lg:min-w-2xl">
+        <div className="mx-5 inline-block h-80 w-full max-w-2xl self-start rounded-lg bg-amber-800 lg:min-w-2xl">
             <nav className="flex gap-2.5">
                 <button
                     onClick={handleSelect}

@@ -1,7 +1,7 @@
 function PostComponent() {
     return (
         <>
-            <div className="h-[100px] bg-rose-600"></div>
+            <div className="hello"></div>
         </>
     )
 }
