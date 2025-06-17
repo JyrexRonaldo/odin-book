@@ -32,17 +32,17 @@ function App() {
                             </button>
                         </div>
                     </div>
-                    <div className="flex h-full w-full items-center justify-center p-5">
+                    <div className="flex h-full w-full items-center justify-center p-5 mb-26">
                         <Outlet />
                     </div>
-                    <div className="fixed min-h-24 w-full self-end overflow-hidden lg:hidden">
-                        <div className="flex min-h-24 w-full items-center justify-between self-end overflow-hidden bg-blue-800/30 px-5 backdrop-blur-md *:size-16 *:rounded-[50%] *:cursor-pointer *:bg-blue-500">
-                            <button></button>
-                            <button></button>
-                            <button></button>
-                            <button></button>
-                            <button></button>
-                        </div>
+                </div>
+                <div className="fixed min-h-24 w-full bottom-0 overflow-hidden lg:hidden">
+                    <div className="flex min-h-24 w-full items-center justify-between self-end overflow-hidden bg-blue-800/30 px-5 backdrop-blur-md *:size-16 *:cursor-pointer *:rounded-[50%] *:bg-blue-500">
+                        <button></button>
+                        <button></button>
+                        <button></button>
+                        <button></button>
+                        <button></button>
                     </div>
                 </div>
             </div>

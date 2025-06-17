@@ -26,7 +26,7 @@ function PostListComponent() {
     }
 
     return (
-        <div className="mx-5 flex w-full max-w-2xl flex-col gap-5 self-start rounded-lg lg:min-w-2xl">
+        <div className="mx-5 flex w-full max-w-xl flex-col gap-5 self-start rounded-lg lg:min-w-2xl">
             <nav className="flex gap-2.5">
                 <button
                     onClick={handleSelect}
@@ -50,6 +50,14 @@ function PostListComponent() {
             <div className="flex flex-col gap-8">
                 <PostComponent />
                 <PostComponent />
+                <PostComponent />
+                <PostComponent />
+                <PostComponent />
+                <PostComponent />
+                <PostComponent />
+                <PostComponent />
+
+                
             </div>
         </div>
     )
