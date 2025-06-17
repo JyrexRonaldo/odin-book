@@ -20,7 +20,7 @@ function App() {
                 </nav>
                 <div className="flex items-center justify-center lg:grid lg:grid-cols-[3fr_4fr_3fr]">
                     <div className="flex h-full items-start justify-end p-5 max-lg:hidden">
-                        <div className="flex min-h-36 flex-col gap-8 rounded-lg bg-blue-900 p-5 text-2xl font-bold text-white max-lg:hidden">
+                        <div className="fixed flex min-h-36 flex-col gap-8 rounded-lg bg-blue-900 p-5 text-2xl font-bold text-white max-lg:hidden">
                             <div className="flex flex-col gap-4 *:h-12 *:w-52 *:rounded-lg *:px-3.5 *:text-left">
                                 <button>Feed</button>
                                 <button>Explore</button>

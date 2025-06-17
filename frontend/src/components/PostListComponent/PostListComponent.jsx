@@ -26,7 +26,7 @@ function PostListComponent() {
     }
 
     return (
-        <div className="mx-5 flex w-full max-w-xl flex-col gap-5 self-start rounded-lg lg:min-w-2xl">
+        <div className="flex w-full max-w-xl flex-col gap-5 self-start rounded-lg lg:min-w-md">
             <nav className="flex gap-2.5">
                 <button
                     onClick={handleSelect}

@@ -9,7 +9,7 @@ function PostComponent() {
                         alt=""
                     />
                     <div>
-                        <p>name</p>
+                        <p className="font-bold">name</p>
                         <p>@username</p>
                     </div>
                 </div>
