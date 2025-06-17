@@ -4,12 +4,13 @@ import LoginPage from './components/LoginPage/LoginPage'
 import Signup from './components/SignupPage/Signup'
 import CreatePostPage from './components/CreatePostPage/CreatePostPage'
 import PostListComponent from './components/PostListComponent/PostListComponent'
+import AccountEdit from './components/AccountEdit/AccountEdit'
 
 const routes = [
     {
         path: '/',
         element: <App />,
-        children: [{ index: true, element: <UserProfile /> }],
+        children: [{ index: true, element: <PostListComponent /> }],
         errorElement: <ErrorPage />,
     },
     { path: '/login', element: <LoginPage /> },
