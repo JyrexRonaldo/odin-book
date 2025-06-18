@@ -4,7 +4,7 @@ import { useState } from 'react'
 function PostListComponent() {
     const [buttonStyles, setButtonStyles] = useState([
         'default',
-        'default',
+        'selected',
         'default',
     ])
 

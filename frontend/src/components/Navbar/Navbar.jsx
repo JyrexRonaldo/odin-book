@@ -37,11 +37,11 @@ function Navbar() {
                     >
                         Create Post
                     </button>
-                    <button onClick={handleDropdown} className="relative flex cursor-pointer items-center gap-3 text-white">
+                    <div onClick={handleDropdown} className="relative flex cursor-pointer items-center gap-3 text-white">
                         <p className="">username</p>
                         <BiSolidUserCircle className="size-9" />
                         {showDropdown && <Dropdown />}
-                    </button>
+                    </div>
                 </div>
             </nav>
         </>

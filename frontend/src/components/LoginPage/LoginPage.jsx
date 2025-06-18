@@ -1,6 +1,14 @@
 import AuthNavBar from "../AuthNavBar/AuthNavBar"
+import { useNavigate } from "react-router-dom"
+
 
 function LoginPage() {
+    const navigate = useNavigate()
+
+    function handleLogin () {
+        navigate("/feed")
+    }
+
     return (
         <>
             <div className="grid min-h-screen grid-rows-[auto_1fr] bg-blue-950">
@@ -50,7 +58,7 @@ function LoginPage() {
                             </div>
                         </div>
                         <div>
-                            <button className="h-10 rounded-lg bg-blue-500 px-3 py-1 text-black">
+                            <button onClick={handleLogin} className="h-10 rounded-lg bg-blue-500 px-3 py-1 text-black">
                                 Log In
                             </button>
                         </div>
