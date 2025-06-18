@@ -1,7 +1,9 @@
+import UserCard from '../UserCard/UserCard'
+
 function UserList() {
     return (
-        <div className="flex w-full max-w-xl self-start mt-12 flex-col items-center gap-10 text-white">
-            <div className="flex w-80  justify-center rounded-lg bg-blue-900 p-3">
+        <div className="mt-12 flex w-full max-w-2xl flex-col items-center gap-5 self-start text-white">
+            <div className="flex w-80 justify-center rounded-lg bg-blue-900 p-3">
                 <input
                     className="mr-3 w-full bg-blue-900"
                     type="search"
@@ -22,7 +24,12 @@ function UserList() {
                     />
                 </svg>
             </div>
-            <div className="bg-red-700  w-full">asdsa</div>
+            <div className="flex w-full flex-wrap justify-center gap-5 lg:min-w-149 ">
+                <UserCard />
+                <UserCard />
+                <UserCard />
+                <UserCard />
+            </div>
         </div>
     )
 }

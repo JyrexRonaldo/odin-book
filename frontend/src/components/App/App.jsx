@@ -4,7 +4,7 @@ function App() {
     return (
         <>
             <div className="grid min-h-screen grid-rows-[auto_1fr] bg-blue-950">
-                <nav className="mx-auto flex h-20 w-full max-w-6xl items-center justify-between px-4">
+                <nav className="mx-auto flex h-20 w-full max-w-6xl items-center justify-between z-10 px-4">
                     <h1 className="text-3xl font-bold text-white">Book</h1>
                     <div className="flex gap-3">
                         <button className="cursor-pointer rounded-lg px-3 py-1 text-blue-500 hover:underline hover:underline-offset-4 max-md:hidden">
