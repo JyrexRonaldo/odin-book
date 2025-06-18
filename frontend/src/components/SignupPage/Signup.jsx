@@ -1,18 +1,10 @@
+import AuthNavBar from '../AuthNavBar/AuthNavBar'
+
 function SignupPage() {
     return (
         <>
             <div className="grid min-h-screen grid-rows-[auto_1fr] bg-blue-950">
-                <nav className="mx-auto flex h-20 w-full max-w-6xl items-center justify-between px-4">
-                    <h1 className="text-3xl font-bold text-white">Book</h1>
-                    <div className="flex gap-3">
-                        <button className="rounded-lg border-2 border-blue-500 bg-black px-3 py-1 text-blue-500">
-                            Log In
-                        </button>
-                        <button className="rounded-lg bg-blue-500 px-3 py-1 hover:bg-blue-600 focus:bg-blue-600 active:bg-blue-600">
-                            Sign Up
-                        </button>
-                    </div>
-                </nav>
+                <AuthNavBar />
                 <div className="flex items-center justify-center">
                     <div className="mx-5 flex min-h-7/12 w-full max-w-md flex-col justify-between rounded-lg bg-blue-900 p-5 text-white">
                         <div className="flex flex-col gap-5">
@@ -36,7 +28,7 @@ function SignupPage() {
                                     id="name"
                                     placeholder="Display Name"
                                 />
-                                <p className="text-sm text-blue-500">
+                                <p className="text-sm text-blue-400">
                                     This is your public display name.
                                 </p>
                             </div>
@@ -54,7 +46,7 @@ function SignupPage() {
                                     id="username"
                                     placeholder="Username"
                                 />
-                                <p className="text-sm text-blue-500">
+                                <p className="text-sm text-blue-400">
                                     This is a unique username that your friends
                                     can use to find you.
                                 </p>
@@ -105,7 +97,7 @@ function SignupPage() {
                                 />
                             </div>
                             <div>
-                                <button className="rounded-lg bg-blue-500 px-3 py-1 text-black hover:bg-blue-600 focus:bg-blue-600 active:bg-blue-600">
+                                <button className="rounded-lg bg-blue-500 px-3 py-1 text-black hover:bg-blue-600">
                                     Sign Up
                                 </button>
                             </div>
