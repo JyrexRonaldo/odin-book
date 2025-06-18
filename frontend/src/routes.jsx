@@ -12,7 +12,12 @@ const routes = [
     {
         path: '/',
         element: <App />,
-        children: [{ index: true, element: <UserProfile /> }],
+        children: [
+            { index: true, element: <PostListComponent /> },
+            // { path: '', element: <PostListComponent /> },
+            { path: '/users', element: <UserList /> },
+            // { path: '', element: <PostListComponent /> },
+        ],
         errorElement: <ErrorPage />,
     },
     { path: '/login', element: <LoginPage /> },
