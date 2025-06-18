@@ -7,6 +7,7 @@ import { BiPlusCircle } from 'react-icons/bi'
 import { BiSolidUserCircle } from 'react-icons/bi'
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+import Navbar from '../Navbar/Navbar'
 
 function App() {
     const [buttonStyles, setButtonStyles] = useState([
@@ -92,26 +93,7 @@ function App() {
     return (
         <>
             <div className="grid min-h-screen grid-rows-[auto_1fr] bg-blue-950">
-                <nav className="mx-auto flex h-20 w-full max-w-6xl items-center justify-between px-4">
-                    <Link to="/">
-                        <h1 className="text-3xl font-bold text-white">Book</h1>
-                    </Link>
-                    <div className="flex gap-3">
-                        <button className="cursor-pointer rounded-lg px-3 py-1 text-blue-500 hover:underline hover:underline-offset-4 max-md:hidden">
-                            Home
-                        </button>
-                        <button
-                            onClick={handleCreatePost}
-                            className="cursor-pointer rounded-lg bg-blue-500 px-3 py-1 max-md:hidden"
-                        >
-                            Create Post
-                        </button>
-                        <button className="flex cursor-pointer items-center gap-3 text-white">
-                            <p className="">username</p>
-                            <BiSolidUserCircle className="size-9" />
-                        </button>
-                    </div>
-                </nav>
+                <Navbar />
                 <div className="flex items-center justify-center lg:grid lg:grid-cols-[3fr_4fr_3fr]">
                     <div className="flex h-full items-start justify-end p-5 max-lg:hidden">
                         <div className="fixed flex min-h-36 flex-col gap-8 rounded-lg bg-blue-900 p-5 text-2xl font-bold text-white max-lg:hidden">
