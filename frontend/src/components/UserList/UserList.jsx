@@ -2,8 +2,8 @@ import UserCard from '../UserCard/UserCard'
 
 function UserList() {
     return (
-        <div className="mt-12 flex w-full max-w-2xl flex-col items-center gap-5 self-start text-white">
-            <div className="flex w-80 justify-center rounded-lg bg-blue-900 p-3">
+        <div className="flex w-full max-w-2xl flex-col items-center gap-5 self-start text-white">
+            <div className="flex w-80 justify-center rounded-lg p-3 bg-blue-900">
                 <input
                     className="mr-3 w-full bg-blue-900"
                     type="search"
@@ -24,7 +24,7 @@ function UserList() {
                     />
                 </svg>
             </div>
-            <div className="flex w-full flex-wrap justify-center gap-5 lg:min-w-149 ">
+            <div className="flex w-full flex-wrap justify-center gap-8 lg:min-w-149">
                 <UserCard />
                 <UserCard />
                 <UserCard />

@@ -4,7 +4,7 @@ function App() {
     return (
         <>
             <div className="grid min-h-screen grid-rows-[auto_1fr] bg-blue-950">
-                <nav className="mx-auto flex h-20 w-full max-w-6xl items-center justify-between z-10 px-4">
+                <nav className="z-10 mx-auto flex h-20 w-full max-w-6xl items-center justify-between px-4">
                     <h1 className="text-3xl font-bold text-white">Book</h1>
                     <div className="flex gap-3">
                         <button className="cursor-pointer rounded-lg px-3 py-1 text-blue-500 hover:underline hover:underline-offset-4 max-md:hidden">
@@ -32,11 +32,11 @@ function App() {
                             </button>
                         </div>
                     </div>
-                    <div className="flex h-full w-full col-span-2 items-start max-lg:justify-center justify-start p-5 bg-green-600">
+                    <div className="col-span-2 flex h-full w-full items-start justify-start pb-30 p-5 max-lg:justify-center">
                         <Outlet />
                     </div>
                 </div>
-                <div className="fixed min-h-24 w-full bottom-0 overflow-hidden lg:hidden">
+                <div className="fixed bottom-0 min-h-24 w-full overflow-hidden lg:hidden">
                     <div className="flex min-h-24 w-full items-center justify-between self-end overflow-hidden bg-blue-800/30 px-5 backdrop-blur-md *:size-16 *:cursor-pointer *:rounded-[50%] *:bg-blue-500">
                         <button></button>
                         <button></button>

@@ -1,6 +1,6 @@
 function UserCard() {
     return (
-        <div className="flex h-auto w-full max-w-72 flex-col items-center gap-2 rounded-xl bg-blue-900 p-3 text-center text-white">
+        <div className="flex h-auto w-full max-w-80 flex-col items-center gap-2 rounded-xl bg-blue-900 p-5 text-center text-white">
             <img src="" alt="" />
             <svg
                 xmlns="http://www.w3.org/2000/svg"

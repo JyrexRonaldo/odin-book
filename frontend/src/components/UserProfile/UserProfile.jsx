@@ -2,8 +2,8 @@ import PostComponent from '../PostComponent/PostComponent'
 
 function UserProfile() {
     return (
-        <div className=" flex w-full max-w-xl flex-col gap-10 self-start text-white *:rounded-2xl *:bg-blue-900 *:p-5">
-            <div className="flex flex-col gap-5">
+        <div className="flex w-full max-w-xl flex-col gap-10 text-white">
+            <div className="flex flex-col gap-5 rounded-2xl bg-blue-900 p-5">
                 <div className="flex flex-col items-center gap-3 text-center">
                     {/* <img src="" alt="" /> */}
                     <div>
@@ -24,7 +24,7 @@ function UserProfile() {
                         <p>ron</p>
                         <p>@ron</p>
                     </div>
-                    <button className="flex cursor-pointer items-center gap-2 rounded-lg bg-blue-500 px-3 py-1 text-xl text-blue-950 hover:bg-blue-600 focus:bg-blue-600 active:bg-blue-600">
+                    <button className="flex cursor-pointer items-center gap-2 rounded-lg bg-blue-500 px-3 py-1 text-xl text-blue-950 hover:bg-blue-600 active:bg-blue-600">
                         Follow
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -52,8 +52,10 @@ function UserProfile() {
                     </div>
                 </div>
             </div>
-            <div className='empty:hidden'>
-                {/* <PostComponent /> */}
+            <div className="flex flex-col gap-8 empty:hidden">
+                <PostComponent />
+                <PostComponent />
+                <PostComponent />
             </div>
         </div>
     )
