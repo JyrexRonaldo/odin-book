@@ -32,7 +32,7 @@ function App() {
                             </button>
                         </div>
                     </div>
-                    <div className="flex h-full w-full items-center justify-center p-5 mb-26">
+                    <div className="flex h-full w-full col-span-2 items-start max-lg:justify-center justify-start p-5 bg-green-600">
                         <Outlet />
                     </div>
                 </div>

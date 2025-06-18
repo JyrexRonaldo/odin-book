@@ -2,7 +2,7 @@ import PostComponent from '../PostComponent/PostComponent'
 
 function UserProfile() {
     return (
-        <div className="mt-13 flex w-full max-w-xl flex-col gap-10 self-start text-white *:rounded-2xl *:bg-blue-900 *:p-5">
+        <div className=" flex w-full max-w-xl flex-col gap-10 self-start text-white *:rounded-2xl *:bg-blue-900 *:p-5">
             <div className="flex flex-col gap-5">
                 <div className="flex flex-col items-center gap-3 text-center">
                     {/* <img src="" alt="" /> */}
