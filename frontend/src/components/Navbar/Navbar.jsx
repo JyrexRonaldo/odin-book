@@ -1,8 +1,11 @@
 import { useNavigate, Link } from 'react-router-dom'
 import { BiSolidUserCircle } from 'react-icons/bi'
+import Dropdown from '../Dropdown/Dropdown'
+import { useState } from 'react'
 
 function Navbar() {
     const navigate = useNavigate()
+    const [showDropdown, setShowDropdown] = useState(false)
 
     function handleCreatePost() {
         navigate('/post/create')
@@ -11,6 +14,10 @@ function Navbar() {
     function handleHomeButton() {
         navigate('/')
     }
+
+    function handleDropdown() {
+        setShowDropdown(!showDropdown)
+    }
     return (
         <>
             <nav className="mx-auto flex h-20 w-full max-w-6xl items-center justify-between px-4">
@@ -18,7 +25,10 @@ function Navbar() {
                     <h1 className="text-3xl font-bold text-white">Book</h1>
                 </Link>
                 <div className="flex gap-3">
-                    <button onClick={handleHomeButton} className="cursor-pointer rounded-lg px-3 py-1 text-blue-500 hover:underline hover:underline-offset-4 max-md:hidden">
+                    <button
+                        onClick={handleHomeButton}
+                        className="cursor-pointer rounded-lg px-3 py-1 text-blue-500 hover:underline hover:underline-offset-4 max-md:hidden"
+                    >
                         Home
                     </button>
                     <button
@@ -27,9 +37,10 @@ function Navbar() {
                     >
                         Create Post
                     </button>
-                    <button className="flex cursor-pointer items-center gap-3 text-white">
+                    <button onClick={handleDropdown} className="relative flex cursor-pointer items-center gap-3 text-white">
                         <p className="">username</p>
                         <BiSolidUserCircle className="size-9" />
+                        {showDropdown && <Dropdown />}
                     </button>
                 </div>
             </nav>

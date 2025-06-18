@@ -7,6 +7,7 @@ import PostListComponent from './components/PostListComponent/PostListComponent'
 import AccountEdit from './components/AccountEdit/AccountEdit'
 import UserProfile from './components/UserProfile/UserProfile'
 import UserList from './components/UserList/UserList'
+import Dropdown from './components/Dropdown/Dropdown'
 
 const routes = [
     {
@@ -14,9 +15,9 @@ const routes = [
         element: <App />,
         children: [
             { index: true, element: <PostListComponent /> },
-            // { path: '', element: <PostListComponent /> },
+            { path: '/account', element: <AccountEdit /> },
             { path: '/users', element: <UserList /> },
-            // { path: '', element: <PostListComponent /> },
+            { path: '/users/1', element: <UserProfile /> },
         ],
         errorElement: <ErrorPage />,
     },
