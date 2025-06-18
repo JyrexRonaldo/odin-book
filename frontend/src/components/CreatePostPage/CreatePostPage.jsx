@@ -17,7 +17,7 @@ function CreatePostPage() {
                         <p className="text-5xl font-bold">Create Post</p>
                         <div>
                             <p>Image</p>
-                            <div className="flex min-h-56 justify-center rounded-lg bg-blue-800 p-5 text-center">
+                            <div className="flex min-h-56 justify-center rounded-lg bg-blue-500 p-5 text-center">
                                 <div className="flex min-h-full flex-col justify-between">
                                     <p>Drag Here to Upload Media</p>
                                     <p>
@@ -40,7 +40,7 @@ function CreatePostPage() {
                         <div className="flex flex-col">
                             <label htmlFor="postText">Post</label>
                             <textarea
-                                className="min-h-28 max-w-2xl resize-y rounded-lg bg-blue-800 p-5"
+                                className="min-h-28 max-w-2xl resize-y rounded-lg bg-white p-5"
                                 name="postText"
                                 placeholder="Write down your thoughts..."
                                 id="postText"

@@ -8,6 +8,9 @@ import AccountEdit from './components/AccountEdit/AccountEdit'
 import UserProfile from './components/UserProfile/UserProfile'
 import UserList from './components/UserList/UserList'
 import Dropdown from './components/Dropdown/Dropdown'
+import Feed from './components/Feed/Feed'
+import Explore from './components/Explore/Explore'
+import Likes from './components/Likes/Likes'
 
 const routes = [
     {
@@ -16,7 +19,10 @@ const routes = [
         children: [
             { index: true, element: <PostListComponent /> },
             { path: '/account', element: <AccountEdit /> },
+            { path: '/feed', element: <Feed /> },
+            { path: '/explore', element: <Explore /> },
             { path: '/users', element: <UserList /> },
+            { path: '/likes', element: <Likes /> },
             { path: '/users/1', element: <UserProfile /> },
         ],
         errorElement: <ErrorPage />,

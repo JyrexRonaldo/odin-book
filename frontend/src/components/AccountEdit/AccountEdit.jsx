@@ -24,7 +24,7 @@ function AccountEdit() {
                 <div className="flex flex-col gap-2">
                     <label htmlFor="name">Name</label>
                     <input
-                        className="bg-blue-800 px-5 py-2.5"
+                        className="bg-white rounded-lg px-5 py-2.5"
                         type="text"
                         id="name"
                     />
@@ -32,7 +32,7 @@ function AccountEdit() {
                 <div className="flex flex-col gap-2">
                     <label htmlFor="bio">Bio</label>
                     <textarea
-                        className="min-h-28 max-w-2xl resize-y rounded-lg bg-blue-800 p-5"
+                        className="min-h-28 max-w-2xl resize-y rounded-lg bg-white p-5"
                         name="bio"
                         id="bio"
                     ></textarea>
@@ -50,7 +50,7 @@ function AccountEdit() {
                 <div className="flex flex-col gap-2">
                     <label htmlFor="username">New Username</label>
                     <input
-                        className="bg-blue-800 px-5 py-2.5"
+                        className="bg-white rounded-lg px-5 py-2.5"
                         placeholder="Your new username"
                         type="text"
                         id="username"
@@ -66,7 +66,7 @@ function AccountEdit() {
                 <div className="flex flex-col gap-2">
                     <label htmlFor="oldPassword">Old Password:</label>
                     <input
-                        className="bg-blue-800 px-5 py-2.5"
+                        className="bg-white rounded-lg px-5 py-2.5"
                         type="password"
                         id="oldPassword"
                         name="oldPassword"
@@ -75,7 +75,7 @@ function AccountEdit() {
                 <div className="flex flex-col gap-2">
                     <label htmlFor="newPassword">New Password</label>
                     <input
-                        className="bg-blue-800 px-5 py-2.5"
+                        className="bg-white rounded-lg px-5 py-2.5"
                         type="password"
                         id="newPassword"
                         name="newPassword"
@@ -86,7 +86,7 @@ function AccountEdit() {
                         Confirm New Password
                     </label>
                     <input
-                        className="bg-blue-800 px-5 py-2.5"
+                        className="bg-white rounded-lg px-5 py-2.5"
                         type="password"
                         id="confirmPassword"
                         name="confirmPassword"

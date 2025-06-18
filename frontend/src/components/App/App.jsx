@@ -1,4 +1,3 @@
-import { Outlet } from 'react-router-dom'
 import { MdRssFeed } from 'react-icons/md'
 import { MdOutlineExplore } from 'react-icons/md'
 import { HiUsers } from 'react-icons/hi2'
@@ -6,7 +5,7 @@ import { ImHeart } from 'react-icons/im'
 import { BiPlusCircle } from 'react-icons/bi'
 import { BiSolidUserCircle } from 'react-icons/bi'
 import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link, Outlet } from 'react-router-dom'
 import Navbar from '../Navbar/Navbar'
 
 function App() {
@@ -36,32 +35,6 @@ function App() {
         selected: 'bg-white text-black',
     }
 
-    // function handleSelect(e) {
-    //     console.log(e.currentTarget.dataset.button)
-    //     if (e.currentTarget.dataset.button === 'Feed') {
-    // setButtonStyles(['selected', 'default', 'default', 'default'])
-    //     } else if (e.currentTarget.dataset.button === 'Explore') {
-    // setButtonStyles(['default', 'selected', 'default', 'default'])
-    //     } else if (e.currentTarget.dataset.button === 'Find Users') {
-    //         setButtonStyles(['default', 'default', 'selected', 'default'])
-    //     } else if (e.currentTarget.dataset.button === 'Likes') {
-    // setButtonStyles(['default', 'default', 'default', 'selected'])
-    //     }
-    // }
-
-    // function handleIconClick(e) {
-    //     console.log(e.currentTarget.dataset.icon)
-    //     if (e.currentTarget.dataset.icon === 'Feed') {
-    //         setIconStyles(['selected', 'default', 'default', 'default'])
-    //     } else if (e.currentTarget.dataset.icon === 'Explore') {
-    // setIconStyles(['default', 'selected', 'default', 'default'])
-    //     } else if (e.currentTarget.dataset.icon === 'Find Users') {
-    //         setIconStyles(['default', 'default', 'selected', 'default'])
-    //     } else if (e.currentTarget.dataset.icon === 'Likes') {
-    // setIconStyles(['default', 'default', 'default', 'selected'])
-    //     }
-    // }
-
     function handleCreatePost() {
         navigate('/post/create')
     }
@@ -69,13 +42,13 @@ function App() {
     function handleFeed() {
         setButtonStyles(['selected', 'default', 'default', 'default'])
         setIconStyles(['selected', 'default', 'default', 'default'])
-        navigate('/users')
+        navigate('/feed')
     }
 
     function handleExplore() {
         setButtonStyles(['default', 'selected', 'default', 'default'])
         setIconStyles(['default', 'selected', 'default', 'default'])
-        navigate('/users')
+        navigate('/explore')
     }
 
     function handleFindUsers() {
@@ -87,7 +60,7 @@ function App() {
     function handleLikes() {
         setButtonStyles(['default', 'default', 'default', 'selected'])
         setIconStyles(['default', 'default', 'default', 'selected'])
-        navigate('/users')
+        navigate('/likes')
     }
 
     return (
