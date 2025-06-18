@@ -6,7 +6,7 @@ function LoginPage() {
                     <h1 className="text-3xl font-bold text-white">Book</h1>
                     <div className="flex gap-3">
                         <button className="rounded-lg border-2 border-blue-500 bg-black px-3 py-1 text-blue-500">
-                            Sign In
+                            Log In
                         </button>
                         <button className="rounded-lg bg-blue-500 px-3 py-1">
                             Sign Up
@@ -16,8 +16,8 @@ function LoginPage() {
                 <div className="flex items-center justify-center">
                     <div className="mx-5 flex min-h-7/12 w-full max-w-md flex-col justify-between rounded-lg bg-blue-900 p-5 text-white">
                         <div>
-                            <p className="text-2xl font-bold">Sign In</p>
-                            <p className="text-sm">Sign in to jump back in!</p>
+                            <p className="text-2xl font-bold">Log In</p>
+                            <p className="text-sm">Log in to jump back in!</p>
                         </div>
                         <div className="self-center">
                             <button className="rounded-lg bg-white p-3 text-black">
@@ -59,7 +59,7 @@ function LoginPage() {
                         </div>
                         <div>
                             <button className="h-10 rounded-lg bg-blue-500 px-3 py-1 text-black">
-                                Sign Up
+                                Log In
                             </button>
                         </div>
                     </div>

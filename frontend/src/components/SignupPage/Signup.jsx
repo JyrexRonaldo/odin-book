@@ -6,7 +6,7 @@ function SignupPage() {
                     <h1 className="text-3xl font-bold text-white">Book</h1>
                     <div className="flex gap-3">
                         <button className="rounded-lg border-2 border-blue-500 bg-black px-3 py-1 text-blue-500">
-                            Sign In
+                            Log In
                         </button>
                         <button className="rounded-lg bg-blue-500 px-3 py-1 hover:bg-blue-600 focus:bg-blue-600 active:bg-blue-600">
                             Sign Up
@@ -17,7 +17,7 @@ function SignupPage() {
                     <div className="mx-5 flex min-h-7/12 w-full max-w-md flex-col justify-between rounded-lg bg-blue-900 p-5 text-white">
                         <div className="flex flex-col gap-5">
                             <div>
-                                <p className="text-2xl font-bold">Sign In</p>
+                                <p className="text-2xl font-bold">Sign Up</p>
                                 <p className="text-sm">
                                     Sign up to rock and roll!
                                 </p>
@@ -105,7 +105,7 @@ function SignupPage() {
                                 />
                             </div>
                             <div>
-                                <button className="rounded-lg bg-blue-500 px-3 py-1 hover:bg-blue-600 focus:bg-blue-600 active:bg-blue-600">
+                                <button className="rounded-lg bg-blue-500 px-3 py-1 text-black hover:bg-blue-600 focus:bg-blue-600 active:bg-blue-600">
                                     Sign Up
                                 </button>
                             </div>
