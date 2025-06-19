@@ -1,3 +1,4 @@
+import { FaCloudUploadAlt } from 'react-icons/fa'
 import Navbar from '../Navbar/Navbar'
 import { useNavigate } from 'react-router-dom'
 
@@ -17,7 +18,7 @@ function CreatePostPage() {
                     <div className="flex flex-col gap-3">
                         <p className="text-2xl font-bold">Image</p>
                         <div className="flex min-h-56 justify-center rounded-lg bg-blue-500 p-5 text-center">
-                            <div className="flex flex-col justify-between">
+                            <div className="flex flex-col justify-between items-center">
                                 <p>Drag Here to Upload Media</p>
                                 <p>
                                     Should be less than 9mb and only ong and jpg
@@ -25,7 +26,7 @@ function CreatePostPage() {
                                 </p>
                                 <p>Recommended size:</p>
                                 <p>2000px by 2000 px</p>
-                                <div></div>
+                                <FaCloudUploadAlt className='size-8' />
                                 <label htmlFor="postImage">Browse Files</label>
                             </div>
                             <input
