@@ -26,13 +26,13 @@ function CreatePostPage() {
                                 <p>Recommended size:</p>
                                 <p>2000px by 2000 px</p>
                                 <div></div>
-                                <button>Browse Files</button>
+                                <label htmlFor="postImage">Browse Files</label>
                             </div>
                             <input
                                 type="file"
                                 name="postImage"
                                 id="postImage"
-                                className="h-0 w-0 p-0 opacity-0"
+                                className="hidden"
                             />
                         </div>
                     </div>
