@@ -26,6 +26,26 @@ function SignupPage() {
         setConfirmPassword(e.target.value)
     }
 
+    async function handleSignUpButton() {
+        try {
+            const response = await fetch(
+                `${import.meta.env.VITE_HOME_DOMAIN}/auth/signup`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ name, username, email, password }),
+                }
+            )
+
+            const data = await response.json()
+            console.log(data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     if (password != confirmPassword) {
         passwordVerification = 'Password do not match!'
     } else {
@@ -145,6 +165,7 @@ function SignupPage() {
                             </div>
                             <div>
                                 <button
+                                onClick={handleSignUpButton}
                                     type="button"
                                     className="rounded-lg bg-blue-500 px-3 py-1 text-black hover:bg-blue-600"
                                 >
