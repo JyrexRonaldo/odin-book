@@ -11,6 +11,7 @@ function Dropdown() {
     }
 
     function handleLogout() {
+        localStorage.clear()
         navigate('/login')
     }
 

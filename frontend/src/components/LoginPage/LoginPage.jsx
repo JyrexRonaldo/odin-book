@@ -14,8 +14,29 @@ function LoginPage() {
         setPassword(e.target.value)
     }
 
-    function handleLoginButton() {
-        navigate('/feed')
+    async function handleLoginButton() {
+        try {
+            const response = await fetch(
+                `${import.meta.env.VITE_HOME_DOMAIN}/auth/signin`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password }),
+                }
+            )
+            const data = await response.json()
+            localStorage.setItem('userToken', `${data.token}`)
+            console.log(data)
+            console.log(localStorage.getItem('userToken'))
+            console.log(response)
+            if (response.ok) {
+                navigate('/feed')
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (
