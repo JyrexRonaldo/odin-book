@@ -1,12 +1,21 @@
-import AuthNavBar from "../AuthNavBar/AuthNavBar"
-import { useNavigate } from "react-router-dom"
-
+import AuthNavBar from '../AuthNavBar/AuthNavBar'
+import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 
 function LoginPage() {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
     const navigate = useNavigate()
 
-    function handleLogin () {
-        navigate("/feed")
+    function handleEmailInput(e) {
+        setEmail(e.target.value)
+    }
+    function handlePasswordInput(e) {
+        setPassword(e.target.value)
+    }
+
+    function handleLoginButton() {
+        navigate('/feed')
     }
 
     return (
@@ -14,7 +23,7 @@ function LoginPage() {
             <div className="grid min-h-screen grid-rows-[auto_1fr] bg-blue-950">
                 <AuthNavBar />
                 <div className="flex items-center justify-center">
-                    <div className="mx-5 flex min-h-7/12 w-full max-w-md flex-col justify-between rounded-lg bg-blue-900 p-5 text-white">
+                    <form className="mx-5 flex min-h-7/12 w-full max-w-md flex-col justify-between rounded-lg bg-blue-900 p-5 text-white">
                         <div>
                             <p className="text-2xl font-bold">Log In</p>
                             <p className="text-sm">Log in to jump back in!</p>
@@ -34,6 +43,9 @@ function LoginPage() {
                                     Email
                                 </label>
                                 <input
+                                    onChange={handleEmailInput}
+                                    value={email}
+                                    autoComplete="email"
                                     className="min-h-10 rounded-lg bg-white px-3 text-black"
                                     type="email"
                                     name="email"
@@ -49,6 +61,9 @@ function LoginPage() {
                                     Password
                                 </label>
                                 <input
+                                    onChange={handlePasswordInput}
+                                    value={password}
+                                    autoComplete="current-password"
                                     className="min-h-10 rounded-lg bg-white px-3 text-black"
                                     type="password"
                                     name="password"
@@ -58,11 +73,15 @@ function LoginPage() {
                             </div>
                         </div>
                         <div>
-                            <button onClick={handleLogin} className="h-10 rounded-lg bg-blue-500 px-3 py-1 text-black">
+                            <button
+                                type="button"
+                                onClick={handleLoginButton}
+                                className="h-10 rounded-lg bg-blue-500 px-3 py-1 text-black"
+                            >
                                 Log In
                             </button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </>
