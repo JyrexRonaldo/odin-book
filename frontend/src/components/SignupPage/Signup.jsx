@@ -1,20 +1,51 @@
+import { useState } from 'react'
 import AuthNavBar from '../AuthNavBar/AuthNavBar'
 
 function SignupPage() {
+    const [name, setName] = useState('')
+    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
+    let passwordVerification = null
+
+    function handleNameInput(e) {
+        setName(e.target.value)
+    }
+    function handleUsernameInput(e) {
+        setUsername(e.target.value)
+    }
+    function handleEmailInput(e) {
+        setEmail(e.target.value)
+    }
+    function handlePasswordInput(e) {
+        setPassword(e.target.value)
+    }
+
+    function handleConfirmPasswordInput(e) {
+        setConfirmPassword(e.target.value)
+    }
+
+    if (password != confirmPassword) {
+        passwordVerification = 'Password do not match!'
+    } else {
+        passwordVerification = null
+    }
+
     return (
         <>
             <div className="grid min-h-screen grid-rows-[auto_1fr] bg-blue-950">
                 <AuthNavBar />
                 <div className="flex items-center justify-center">
                     <div className="mx-5 flex min-h-7/12 w-full max-w-md flex-col justify-between rounded-lg bg-blue-900 p-5 text-white">
-                        <div className="flex flex-col gap-5">
+                        <form className="flex flex-col gap-5">
                             <div>
                                 <p className="text-2xl font-bold">Sign Up</p>
                                 <p className="text-sm">
                                     Sign up to rock and roll!
                                 </p>
                             </div>
-                            <div className="flex flex-col gap-1">
+                            <div className="flex flex-col gap-1.5">
                                 <label
                                     className="mb-1 font-bold"
                                     htmlFor="name"
@@ -22,6 +53,8 @@ function SignupPage() {
                                     Name
                                 </label>
                                 <input
+                                    onChange={handleNameInput}
+                                    value={name}
                                     className="min-h-10 rounded-lg bg-white px-3 text-black"
                                     type="text"
                                     name="name"
@@ -32,7 +65,7 @@ function SignupPage() {
                                     This is your public display name.
                                 </p>
                             </div>
-                            <div className="flex flex-col">
+                            <div className="flex flex-col gap-1.5">
                                 <label
                                     className="mb-1 font-bold"
                                     htmlFor="username"
@@ -40,6 +73,9 @@ function SignupPage() {
                                     Username
                                 </label>
                                 <input
+                                    onChange={handleUsernameInput}
+                                    value={username}
+                                    autoComplete="username"
                                     className="min-h-10 rounded-lg bg-white px-3 text-black"
                                     type="text"
                                     name="username"
@@ -59,6 +95,8 @@ function SignupPage() {
                                     Email
                                 </label>
                                 <input
+                                    onChange={handleEmailInput}
+                                    value={email}
                                     className="min-h-10 rounded-lg bg-white px-3 text-black"
                                     type="email"
                                     name="email"
@@ -74,6 +112,9 @@ function SignupPage() {
                                     Password
                                 </label>
                                 <input
+                                    onChange={handlePasswordInput}
+                                    value={password}
+                                    autoComplete="current-password"
                                     className="min-h-10 rounded-lg bg-white px-3 text-black"
                                     type="password"
                                     name="password"
@@ -81,7 +122,7 @@ function SignupPage() {
                                     placeholder="password"
                                 />
                             </div>
-                            <div className="flex flex-col">
+                            <div className="flex flex-col gap-1.5">
                                 <label
                                     className="mb-1 font-bold"
                                     htmlFor="confirmPassword"
@@ -89,19 +130,28 @@ function SignupPage() {
                                     Confirm Password
                                 </label>
                                 <input
+                                    onChange={handleConfirmPasswordInput}
+                                    value={confirmPassword}
+                                    autoComplete="current-password"
                                     className="min-h-10 rounded-lg bg-white px-3 text-black"
                                     type="password"
                                     name="confirmPassword"
                                     id="confirmPassword"
                                     placeholder="Confirm Password"
                                 />
+                                <p className="text-sm text-red-400">
+                                    {passwordVerification}
+                                </p>
                             </div>
                             <div>
-                                <button className="rounded-lg bg-blue-500 px-3 py-1 text-black hover:bg-blue-600">
+                                <button
+                                    type="button"
+                                    className="rounded-lg bg-blue-500 px-3 py-1 text-black hover:bg-blue-600"
+                                >
                                     Sign Up
                                 </button>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
