@@ -45,7 +45,7 @@ async function handleSignIn(req, res) {
 
     return res.status(200).json({
       message: "Welcome",
-      token,
+      token: `Bearer ${token}`,
       userId: user.id,
       email: user.email,
     });
