@@ -14,6 +14,10 @@ app.use(express.json());
 app.use("/auth", authRouter);
 app.use(passport.authenticate("jwt", { session: false }));
 app.use("/", dataRouter);
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json(err.message);
+});
 
 const PORT = process.env.PORT || 3000;
 
