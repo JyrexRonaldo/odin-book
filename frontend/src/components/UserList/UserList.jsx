@@ -64,6 +64,7 @@ function UserList() {
         return (
             <UserCard
                 key={data.id}
+                id={data.id}
                 name={data.name}
                 username={data.username}
                 bio={data.bio}

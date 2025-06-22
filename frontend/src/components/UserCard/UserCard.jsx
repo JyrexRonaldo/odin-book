@@ -1,6 +1,12 @@
 import { BiSolidUserCircle } from 'react-icons/bi'
 
-function UserCard({ name, username, bio }) {
+function UserCard({ id,name, username, bio }) {
+    function handleFollow(e) {
+        console.log(e.currentTarget.dataset.id)
+        
+
+    }
+
     return (
         <div className="flex h-auto w-full max-w-80 flex-col items-center gap-2 rounded-xl bg-blue-900 p-5 text-center text-white">
             <img src={null} alt="" />
@@ -11,7 +17,7 @@ function UserCard({ name, username, bio }) {
             <p>@{username}</p>
             <p>{bio}</p>
             <div className="flex gap-3">
-                <button className="flex cursor-pointer items-center gap-2 rounded-lg border-2 border-blue-500 bg-blue-500 px-3 py-1 text-black">
+                <button onClick={handleFollow} data-id={id} className="flex cursor-pointer items-center gap-2 rounded-lg border-2 border-blue-500 bg-blue-500 px-3 py-1 text-black">
                     Follow
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
