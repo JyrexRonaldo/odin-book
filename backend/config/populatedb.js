@@ -3,11 +3,14 @@ const prisma = require("./prisma");
 const asyncHandler = require("express-async-handler");
 
 const usersData = Array.from({ length: 10 }).map((element, index) => {
+  const firstName = faker.person.firstName()
+  const lastName = faker.person.lastName()
+
   element = {
-    name: faker.person.fullName(),
-    username: faker.internet.username(),
+    name: `${firstName} ${lastName}`,
+    username: faker.internet.username({firstName,lastName}),
     password: faker.internet.password(),
-    email: faker.internet.email(),
+    email: faker.internet.email({firstName,lastName}),
     bio: faker.person.bio(),
   };
   return element;
