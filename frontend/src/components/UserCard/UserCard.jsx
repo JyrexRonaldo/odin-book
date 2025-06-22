@@ -1,18 +1,15 @@
 import { BiSolidUserCircle } from 'react-icons/bi'
 
-function UserCard() {
+function UserCard({ name, username, bio }) {
     return (
         <div className="flex h-auto w-full max-w-80 flex-col items-center gap-2 rounded-xl bg-blue-900 p-5 text-center text-white">
-            <img src="" alt="" />
+            <img src={null} alt="" />
             <BiSolidUserCircle className="size-17" />
 
-            <p className="text-2xl font-extrabold">jyrex</p>
+            <p className="text-2xl font-extrabold">{name}</p>
             <p className="text-xs">5 followers</p>
-            <p>@IAmJyrex</p>
-            <p>
-                The lead developer of Book. Plant guy, picks up the guitar from
-                time to time.
-            </p>
+            <p>@{username}</p>
+            <p>{bio}</p>
             <div className="flex gap-3">
                 <button className="flex cursor-pointer items-center gap-2 rounded-lg border-2 border-blue-500 bg-blue-500 px-3 py-1 text-black">
                     Follow
