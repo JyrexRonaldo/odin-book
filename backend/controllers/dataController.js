@@ -8,7 +8,9 @@ const getAllUsers = asyncHandler(async (req, res) => {
 });
 
 function checkController(req, res) {
-  res.json("Hello world");
+  // await prisma.user.update({
+  //   user: f
+  // })
 }
 
 module.exports = { checkController, getAllUsers };
