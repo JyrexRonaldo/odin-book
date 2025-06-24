@@ -1,10 +1,29 @@
 import { BiSolidUserCircle } from 'react-icons/bi'
 
-function UserCard({ id,name, username, bio }) {
-    function handleFollow(e) {
+function UserCard({ id, name, username, bio }) {
+    async function handleSendRequest(e) {
         console.log(e.currentTarget.dataset.id)
-        
+        try {
+            const response = await fetch(
+                `${import.meta.env.VITE_HOME_DOMAIN}/users`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `${localStorage.getItem('userToken')}`,
+                    },
+                    body: JSON.stringify({
+                        receiverId: `${e.currentTarget.dataset.id}`,
+                    }),
+                }
+            )
 
+            const data = await response.json()
+            console.log(data)
+            // navigate('/')
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (
@@ -17,7 +36,11 @@ function UserCard({ id,name, username, bio }) {
             <p>@{username}</p>
             <p>{bio}</p>
             <div className="flex gap-3">
-                <button onClick={handleFollow} data-id={id} className="flex cursor-pointer items-center gap-2 rounded-lg border-2 border-blue-500 bg-blue-500 px-3 py-1 text-black">
+                <button
+                    onClick={handleSendRequest}
+                    data-id={id}
+                    className="flex cursor-pointer items-center gap-2 rounded-lg border-2 border-blue-500 bg-blue-500 px-3 py-1 text-black"
+                >
                     Follow
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

@@ -15,8 +15,13 @@ app.use("/auth", authRouter);
 app.use(passport.authenticate("jwt", { session: false }));
 app.use("/", dataRouter);
 app.use((err, req, res, next) => {
-  console.error(err);
-  res.status(500).json(err.message);
+  console.log(err.meta.modelName);
+  console.log(err.code);
+  if (err.code === "P2002" && err.meta.modelName === "Request") {
+    res.status(400).json("Request already sent");
+  } else {
+    res.status(500).json(err.message);
+  }
 });
 
 const PORT = process.env.PORT || 3000;
