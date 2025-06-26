@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import AuthNavBar from '../AuthNavBar/AuthNavBar'
+import { useNavigate } from 'react-router-dom'
 
 function SignupPage() {
     const [name, setName] = useState('')
@@ -7,6 +8,7 @@ function SignupPage() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
+    const navigate = useNavigate()
     let passwordVerification = null
 
     function handleNameInput(e) {
@@ -41,6 +43,10 @@ function SignupPage() {
 
             const data = await response.json()
             console.log(data)
+            localStorage.setItem('userToken', `${data.token}`)
+            if (response.ok) {
+                navigate('/feed')
+            }
         } catch (error) {
             console.log(error)
         }
@@ -107,7 +113,7 @@ function SignupPage() {
                                     can use to find you.
                                 </p>
                             </div>
-                            <div className="flex flex-col">
+                            <div className="flex flex-col gap-1.5">
                                 <label
                                     className="mb-1 font-bold"
                                     htmlFor="email"
@@ -124,7 +130,7 @@ function SignupPage() {
                                     placeholder="Email"
                                 />
                             </div>
-                            <div className="flex flex-col">
+                            <div className="flex flex-col gap-1.5">
                                 <label
                                     className="mb-1 font-bold"
                                     htmlFor="password"

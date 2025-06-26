@@ -56,7 +56,7 @@ function LoginPage() {
                         </div>
                         <div className="self-center">OR</div>
                         <div className="flex flex-col gap-5">
-                            <div className="flex flex-col">
+                            <div className="flex flex-col gap-1.5">
                                 <label
                                     className="mb-1 font-bold"
                                     htmlFor="email"
@@ -74,7 +74,7 @@ function LoginPage() {
                                     placeholder="Email"
                                 />
                             </div>
-                            <div className="flex flex-col">
+                            <div className="flex flex-col gap-1.5">
                                 <label
                                     className="mb-1 font-bold"
                                     htmlFor="password"
@@ -91,6 +91,9 @@ function LoginPage() {
                                     id="password"
                                     placeholder="password"
                                 />
+                                <p className="text-sm text-red-400">
+                                    FEEDBACK MESSAGE
+                                </p>
                             </div>
                         </div>
                         <div>
