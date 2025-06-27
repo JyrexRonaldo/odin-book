@@ -12,13 +12,13 @@ function checkController(req, res) {
 }
 
 const sendRequest = asyncHandler(async (req, res) => {
-  const { receiverId } = req.body;
+  const { followeeId } = req.body;
   console.log(typeof req.user.id);
-  console.log(typeof receiverId);
-  await prisma.requests.create({
+  console.log(typeof followeeId);
+  await prisma.follows.create({
     data: {
-      incomingRequestsId: +receiverId,
-      outgoingRequestsId: req.user.id,
+      followedById: +followeeId,
+      followingId: req.user.id,
     },
   });
   res.status(201).json("Request sent");

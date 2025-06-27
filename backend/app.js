@@ -17,11 +17,11 @@ app.use("/", dataRouter);
 app.use((err, req, res, next) => {
   // console.log(err.meta.modelName);
   // console.log(err.code);
-  if (err.code === "P2002" && err.meta.modelName === "Requests") {
-    res.status(400).json("Request already sent");
-  } else {
+  // if (err.code === "P2002" && err.meta.modelName === "Requests") {
+  //   res.status(400).json("Request already sent");
+  // } else {
     res.status(500).json(err.message);
-  }
+  // }
 });
 
 const PORT = process.env.PORT || 3000;

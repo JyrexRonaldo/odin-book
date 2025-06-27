@@ -15,18 +15,16 @@ datasource db {
 }
 
 model User {
-  id         Int        @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   name       String
-  username   String     @unique
-  email      String     @unique
+  username   String    @unique
+  email      String    @unique
   bio        String?
   password   String
   posts      Post[]
   comments   Comment[]
-  followedBy Follows[]  @relation("followedBy")
-  following  Follows[]  @relation("following")
-  incomingRequests   Requests[] @relation("incomingRequests")
-  outgoingRequests     Requests[] @relation("outgoingRequests")
+  followedBy Follows[] @relation("followedBy")
+  following  Follows[] @relation("following")
 }
 
 model Follows {
@@ -36,15 +34,6 @@ model Follows {
   followingId  Int
 
   @@id([followingId, followedById])
-}
-
-model Requests {
-  incomingRequests   User @relation("incomingRequests", fields: [incomingRequestsId], references: [id])
-  incomingRequestsId Int
-  outgoingRequests     User @relation("outgoingRequests", fields: [outgoingRequestsId], references: [id])
-  outgoingRequestsId   Int
-
-  @@id([incomingRequestsId, outgoingRequestsId])
 }
 
 model Post {

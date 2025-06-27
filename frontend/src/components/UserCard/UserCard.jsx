@@ -14,7 +14,7 @@ function UserCard({ id, name, username, bio }) {
                         Authorization: `${localStorage.getItem('userToken')}`,
                     },
                     body: JSON.stringify({
-                        receiverId: `${e.currentTarget.dataset.id}`,
+                        followeeId: `${e.currentTarget.dataset.id}`,
                     }),
                 }
             )
