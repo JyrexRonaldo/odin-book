@@ -13,16 +13,15 @@ function checkController(req, res) {
 
 const sendRequest = asyncHandler(async (req, res) => {
   const { receiverId } = req.body;
-  console.log(req.user);
-  console.log(receiverId);
-  await prisma.request.create({
+  console.log(typeof req.user.id);
+  console.log(typeof receiverId);
+  await prisma.requests.create({
     data: {
-      senderId: req.user.id,
-      receiverId: +receiverId,
+      incomingRequestsId: +receiverId,
+      outgoingRequestsId: req.user.id,
     },
   });
   res.status(201).json("Request sent");
-  // res.end()
 });
 
 module.exports = { checkController, getAllUsers, sendRequest };

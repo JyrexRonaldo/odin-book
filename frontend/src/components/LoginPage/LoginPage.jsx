@@ -5,6 +5,7 @@ import { useState } from 'react'
 function LoginPage() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [successMessage, setSuccessMessage] = useState(null)
     const navigate = useNavigate()
 
     function handleEmailInput(e) {
@@ -32,7 +33,10 @@ function LoginPage() {
             console.log(localStorage.getItem('userToken'))
             console.log(response)
             if (response.ok) {
-                navigate('/feed')
+                setSuccessMessage(data.message)
+                setTimeout(() => {
+                    navigate('/feed')
+                }, 1000)
             }
         } catch (error) {
             console.log(error)
@@ -91,8 +95,8 @@ function LoginPage() {
                                     id="password"
                                     placeholder="password"
                                 />
-                                <p className="text-sm text-red-400">
-                                    FEEDBACK MESSAGE
+                                <p className="text-sm text-green-400">
+                                    {successMessage}
                                 </p>
                             </div>
                         </div>
@@ -100,7 +104,7 @@ function LoginPage() {
                             <button
                                 type="button"
                                 onClick={handleLoginButton}
-                                className="h-10 rounded-lg bg-blue-500 px-3 py-1 text-black"
+                                className="h-10 cursor-pointer rounded-lg bg-blue-500 px-3 py-1 text-black"
                             >
                                 Log In
                             </button>

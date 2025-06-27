@@ -180,7 +180,7 @@ function SignupPage() {
                                 <button
                                     onClick={handleSignUpButton}
                                     type="button"
-                                    className="rounded-lg bg-blue-500 px-3 py-1 text-black hover:bg-blue-600"
+                                    className="cursor-pointer rounded-lg bg-blue-500 px-3 py-1 text-black hover:bg-blue-600"
                                 >
                                     Sign Up
                                 </button>

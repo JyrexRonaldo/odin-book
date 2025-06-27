@@ -22,7 +22,9 @@ function Navbar() {
         <>
             <nav className="mx-auto flex h-20 w-full max-w-6xl items-center justify-between px-4">
                 <Link to="/">
-                    <h1 className="text-3xl font-bold text-white">Book</h1>
+                    <h1 className="cursor-pointer text-3xl font-bold text-white">
+                        Book
+                    </h1>
                 </Link>
                 <div className="flex gap-3">
                     <button
@@ -37,7 +39,10 @@ function Navbar() {
                     >
                         Create Post
                     </button>
-                    <div onClick={handleDropdown} className="relative flex cursor-pointer items-center gap-3 text-white">
+                    <div
+                        onClick={handleDropdown}
+                        className="relative flex cursor-pointer items-center gap-3 text-white"
+                    >
                         <p className="">username</p>
                         <BiSolidUserCircle className="size-9" />
                         {showDropdown && <Dropdown />}
