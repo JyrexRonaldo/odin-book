@@ -8,6 +8,7 @@ function SignupPage() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
+    const [successMessage, setSuccessMessage] = useState(null)
     const navigate = useNavigate()
     let passwordVerification = null
 
@@ -45,7 +46,10 @@ function SignupPage() {
             console.log(data)
             localStorage.setItem('userToken', `${data.token}`)
             if (response.ok) {
-                navigate('/feed')
+                setSuccessMessage(data.message)
+                setTimeout(() => {
+                    navigate('/feed')
+                }, 1000)
             }
         } catch (error) {
             console.log(error)
@@ -168,10 +172,13 @@ function SignupPage() {
                                 <p className="text-sm text-red-400">
                                     {passwordVerification}
                                 </p>
+                                <p className="text-sm text-green-400">
+                                    {successMessage}
+                                </p>
                             </div>
                             <div>
                                 <button
-                                onClick={handleSignUpButton}
+                                    onClick={handleSignUpButton}
                                     type="button"
                                     className="rounded-lg bg-blue-500 px-3 py-1 text-black hover:bg-blue-600"
                                 >
