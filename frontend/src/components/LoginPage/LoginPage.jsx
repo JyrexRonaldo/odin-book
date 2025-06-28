@@ -38,7 +38,7 @@ function LoginPage() {
                 setSuccessMessage(data.message)
                 setTimeout(() => {
                     navigate('/feed')
-                }, 500)
+                }, 250)
             }
         } catch (error) {
             console.log(error)

@@ -25,6 +25,7 @@ model User {
   comments   Comment[]
   followedBy Follows[] @relation("followedBy")
   following  Follows[] @relation("following")
+  likedPosts Likes[]
 }
 
 model Follows {
@@ -44,6 +45,16 @@ model Post {
   author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId  Int
   comments  Comment[]
+  likedBy   Likes[]
+}
+
+model Likes {
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+  post   Post @relation(fields: [postId], references: [id])
+  postId Int
+
+  @@id([userId, postId])
 }
 
 model Comment {
