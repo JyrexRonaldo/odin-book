@@ -2,7 +2,18 @@ const prisma = require("../config/prisma");
 const asyncHandler = require("express-async-handler");
 
 const getAllUsers = asyncHandler(async (req, res) => {
-  const allUsers = await prisma.user.findMany();
+  const allUsers = await prisma.user.findMany({
+    include: {
+      followedBy: true,
+      following: true,
+    },
+  });
+
+  // allUsers.followedBy.forEach((followers) => {
+  //   if ((followers.followingId = req)) {
+  //   }
+  // });
+
   console.log(allUsers);
   res.json(allUsers);
 });

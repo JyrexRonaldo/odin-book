@@ -7,7 +7,7 @@ function Feed() {
 
     useEffect(() => {
         async function fetchData() {
-            console.log(localStorage.getItem('userToken'))
+            // console.log(localStorage.getItem('userToken'))
             try {
                 const response = await fetch(
                     `${import.meta.env.VITE_HOME_DOMAIN}/feed`,

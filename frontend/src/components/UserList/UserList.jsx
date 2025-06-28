@@ -61,6 +61,17 @@ function UserList() {
     }
 
     const userCards = userData.map((data) => {
+        let isFollowedValue = null
+        console.log(localStorage.getItem("userId"))
+        // console.log(data.followedBy)
+        data.followedBy.forEach(element => {
+            console.log(typeof element.followingId)
+            console.log(typeof localStorage.getItem("userId"))
+            if (element.followingId === +localStorage.getItem("userId")) {
+                isFollowedValue = true
+            }
+        });
+        
         return (
             <UserCard
                 key={data.id}
@@ -68,6 +79,7 @@ function UserList() {
                 name={data.name}
                 username={data.username}
                 bio={data.bio}
+                isFollowed={isFollowedValue}
             />
         )
     })

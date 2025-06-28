@@ -1,7 +1,9 @@
 import { BiSolidUserCircle } from 'react-icons/bi'
 import { FaPlus } from 'react-icons/fa6'
+import { FaMinus } from "react-icons/fa6";
 
-function UserCard({ id, name, username, bio }) {
+function UserCard({ id, name, username, bio, isFollowed=false }) {
+    // isFollowed = true
     async function handleSendRequest(e) {
         console.log(e.currentTarget.dataset.id)
         try {
@@ -37,14 +39,25 @@ function UserCard({ id, name, username, bio }) {
             <p>@{username}</p>
             <p>{bio}</p>
             <div className="flex gap-3">
-                <button
-                    onClick={handleSendRequest}
-                    data-id={id}
-                    className="flex cursor-pointer items-center gap-2 rounded-lg border-2 border-blue-500 bg-blue-500 px-3 py-1 text-black"
-                >
-                    Follow
-                    <FaPlus />
-                </button>
+                {isFollowed ? (
+                    <button
+                        onClick={handleSendRequest}
+                        data-id={id}
+                        className="flex cursor-pointer items-center gap-2 rounded-lg border-2 border-blue-500 bg-black px-3 py-1 text-blue-500"
+                    >
+                        Follow
+                        <FaMinus />
+                    </button>
+                ) : (
+                    <button
+                        onClick={handleSendRequest}
+                        data-id={id}
+                        className="flex cursor-pointer items-center gap-2 rounded-lg border-2 border-blue-500 bg-blue-500 px-3 py-1 text-black"
+                    >
+                        Follow
+                        <FaPlus />
+                    </button>
+                )}
                 <button className="cursor-pointer rounded-lg border-2 border-blue-500 bg-black px-3 py-1 text-blue-500">
                     View
                 </button>
