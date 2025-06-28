@@ -1,11 +1,9 @@
 import { BiSolidUserCircle } from 'react-icons/bi'
 import { FaPlus } from 'react-icons/fa6'
-import { FaMinus } from "react-icons/fa6";
+import { FaMinus } from 'react-icons/fa6'
 
-function UserCard({ id, name, username, bio, isFollowed=false }) {
-    // isFollowed = true
+function UserCard({ id, name, username, bio, isFollowed, setTriggerRender }) {
     async function handleSendRequest(e) {
-        console.log(e.currentTarget.dataset.id)
         try {
             const response = await fetch(
                 `${import.meta.env.VITE_HOME_DOMAIN}/users`,
@@ -23,7 +21,7 @@ function UserCard({ id, name, username, bio, isFollowed=false }) {
 
             const data = await response.json()
             console.log(data)
-            // navigate('/')
+            setTriggerRender(self.crypto.randomUUID())
         } catch (error) {
             console.log(error)
         }

@@ -7,11 +7,11 @@ function UserList() {
     const [userData, setUserData] = useState(null)
     const [error, setError] = useState(false)
     const [loading, setLoading] = useState(true)
+    const [triggerRender, setTriggerRender] = useState(0)
     const navigate = useNavigate()
 
     useEffect(() => {
         async function fetchData() {
-            // console.log(localStorage.getItem('userToken'))
             try {
                 const response = await fetch(
                     `${import.meta.env.VITE_HOME_DOMAIN}/users`,
@@ -24,15 +24,11 @@ function UserList() {
                     }
                 )
 
-                // console.log(response.status)
-
                 if (response.status === 401) {
                     navigate('/login')
                 }
 
                 const data = await response.json()
-
-                // console.log(data)
                 setUserData(data)
             } catch (error) {
                 console.log(error)
@@ -42,7 +38,7 @@ function UserList() {
             }
         }
         fetchData()
-    }, [navigate])
+    }, [navigate, triggerRender])
 
     if (loading) {
         return (
@@ -62,16 +58,14 @@ function UserList() {
 
     const userCards = userData.map((data) => {
         let isFollowedValue = null
-        console.log(localStorage.getItem("userId"))
-        // console.log(data.followedBy)
-        data.followedBy.forEach(element => {
-            console.log(typeof element.followingId)
-            console.log(typeof localStorage.getItem("userId"))
-            if (element.followingId === +localStorage.getItem("userId")) {
+        data.followedBy.forEach((element) => {
+            if (element.followingId === +localStorage.getItem('userId')) {
                 isFollowedValue = true
+            } else {
+                isFollowedValue = false
             }
-        });
-        
+        })
+
         return (
             <UserCard
                 key={data.id}
@@ -80,6 +74,7 @@ function UserList() {
                 username={data.username}
                 bio={data.bio}
                 isFollowed={isFollowedValue}
+                setTriggerRender={setTriggerRender}
             />
         )
     })

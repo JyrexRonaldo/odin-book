@@ -4,7 +4,9 @@ const dataController = require("../controllers/dataController");
 
 dataRouter.route("/feed").get(dataController.checkController);
 
-dataRouter.route("/users").get(dataController.getAllUsers).post(dataController.sendRequest)
-
+dataRouter
+  .route("/users")
+  .get(dataController.getAllUsers)
+  .post(dataController.followRequestHandler);
 
 module.exports = dataRouter;
