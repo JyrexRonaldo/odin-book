@@ -30,6 +30,7 @@ function LoginPage() {
             const data = await response.json()
             localStorage.setItem('userToken', `${data.token}`)
             localStorage.setItem('userId', `${data.userId}`)
+            localStorage.setItem('username', `${data.username}`)
             // console.log(data)
             // console.log(localStorage.getItem('userToken'))
             // console.log(response)
@@ -37,7 +38,7 @@ function LoginPage() {
                 setSuccessMessage(data.message)
                 setTimeout(() => {
                     navigate('/feed')
-                }, 1000)
+                }, 500)
             }
         } catch (error) {
             console.log(error)

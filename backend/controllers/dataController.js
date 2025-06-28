@@ -53,4 +53,10 @@ const followRequestHandler = asyncHandler(async (req, res) => {
   res.status(201).json("Request sent");
 });
 
-module.exports = { checkController, getAllUsers, followRequestHandler };
+
+module.exports = {
+  checkController,
+  getAllUsers,
+  followRequestHandler,
+
+};

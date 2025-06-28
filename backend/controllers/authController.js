@@ -16,7 +16,7 @@ const createUser = asyncHandler(async (req, res, next) => {
     },
   });
   // res.json("Registration successful! You can now login.");
-  next()
+  next();
 });
 
 const handleSignIn = asyncHandler(async (req, res) => {
@@ -44,11 +44,11 @@ const handleSignIn = asyncHandler(async (req, res) => {
     { expiresIn: "14d" }
   );
 
-  let message = null
+  let message = null;
   if (req.body.name) {
-    message = "Registration successful!, logging you in" 
+    message = "Registration successful!, logging you in";
   } else {
-    message = "Welcome, logging you in"
+    message = "Welcome, logging you in";
   }
 
   return res.status(200).json({
@@ -56,6 +56,7 @@ const handleSignIn = asyncHandler(async (req, res) => {
     token: `Bearer ${token}`,
     userId: user.id,
     email: user.email,
+    username: user.username,
   });
 });
 
