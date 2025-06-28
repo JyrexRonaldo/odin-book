@@ -53,10 +53,19 @@ const followRequestHandler = asyncHandler(async (req, res) => {
   res.status(201).json("Request sent");
 });
 
+const createPost = asyncHandler(async (req, res) => {
+  const { body, authorId } = req.body;
+  await prisma.post.create({
+    data: {
+      body,
+      authorId: +authorId,
+    },
+  });
+});
 
 module.exports = {
   checkController,
   getAllUsers,
   followRequestHandler,
-
+  createPost,
 };

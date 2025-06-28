@@ -1,12 +1,42 @@
 import { FaCloudUploadAlt } from 'react-icons/fa'
 import Navbar from '../Navbar/Navbar'
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 
 function CreatePostPage() {
+    const [postBody, setPostBody] = useState('')
     const navigate = useNavigate()
+
+    function handlePostTextarea(e) {
+        setPostBody(e.target.value)
+    }
 
     function handleCancelButton() {
         navigate('/')
+    }
+
+    async function handleCreatePostButton() {
+        try {
+            const response = await fetch(
+                `${import.meta.env.VITE_HOME_DOMAIN}/posts`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `${localStorage.getItem('userToken')}`,
+                    },
+                    body: JSON.stringify({
+                        body: postBody,
+                        authorId: localStorage.getItem('userId'),
+                    }),
+                }
+            )
+
+            const data = await response.json()
+            console.log(data)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (
@@ -18,7 +48,7 @@ function CreatePostPage() {
                     <div className="flex flex-col gap-3">
                         <p className="text-2xl font-bold">Image</p>
                         <div className="flex min-h-56 justify-center rounded-lg bg-blue-500 p-5 text-center">
-                            <div className="flex flex-col justify-between items-center">
+                            <div className="flex flex-col items-center justify-between">
                                 <p>Drag Here to Upload Media</p>
                                 <p>
                                     Should be less than 9mb and only ong and jpg
@@ -26,7 +56,7 @@ function CreatePostPage() {
                                 </p>
                                 <p>Recommended size:</p>
                                 <p>2000px by 2000 px</p>
-                                <FaCloudUploadAlt className='size-8' />
+                                <FaCloudUploadAlt className="size-8" />
                                 <label htmlFor="postImage">Browse Files</label>
                             </div>
                             <input
@@ -45,6 +75,8 @@ function CreatePostPage() {
                             Post
                         </label>
                         <textarea
+                            onChange={handlePostTextarea}
+                            value={postBody}
                             className="resize-y rounded-lg bg-white p-5 text-black"
                             name="postText"
                             placeholder="Write down your thoughts..."
@@ -53,7 +85,10 @@ function CreatePostPage() {
                         ></textarea>
                     </div>
                     <div className="flex gap-3">
-                        <button className="cursor-pointer rounded-lg bg-blue-500 px-3 py-1 text-xl text-blue-950 hover:bg-blue-600">
+                        <button
+                            onClick={handleCreatePostButton}
+                            className="cursor-pointer rounded-lg bg-blue-500 px-3 py-1 text-xl text-blue-950 hover:bg-blue-600"
+                        >
                             Create Post
                         </button>
                         <button

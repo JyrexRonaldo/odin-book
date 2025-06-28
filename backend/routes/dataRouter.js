@@ -9,4 +9,9 @@ dataRouter
   .get(dataController.getAllUsers)
   .post(dataController.followRequestHandler);
 
+  dataRouter
+  .route("/posts")
+  // .get(dataController.getAllUsers)
+  .post(dataController.createPost);
+
 module.exports = dataRouter;
