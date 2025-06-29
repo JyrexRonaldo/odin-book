@@ -61,6 +61,7 @@ const createPost = asyncHandler(async (req, res) => {
       authorId: +authorId,
     },
   });
+  res.json(req.body);
 });
 
 module.exports = {
