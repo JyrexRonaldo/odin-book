@@ -20,21 +20,20 @@ function Feed() {
                     }
                 )
 
-                console.log(response.status)
+                // console.log(response.status)
 
                 if (response.status === 401) {
-                    navigate("/login")
+                    navigate('/login')
                 }
 
                 const data = await response.json()
-
                 console.log(data)
             } catch (error) {
                 console.log(error)
             }
         }
         fetchData()
-    }, )
+    })
 
     return (
         <>

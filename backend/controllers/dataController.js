@@ -64,9 +64,38 @@ const createPost = asyncHandler(async (req, res) => {
   res.json(req.body);
 });
 
+const getFeed = asyncHandler(async (req, res) => {
+  
+  const userPosts = await prisma.post.findMany({
+    where: {
+      authorId: req.user.id,
+    },
+  });
+
+  const followingIdsObjects = await prisma.follows.findMany({
+    where: { followingId: req.user.id },
+    select: { followedById: true },
+  });
+
+  const followingIds = followingIdsObjects
+    .map((idObject) => idObject.followedById)
+    .filter((id) => id !== req.user.id);
+
+  const followersPosts = await prisma.post.findMany({
+    where: {
+      authorId: { in: followingIds },
+    },
+  });
+
+  const feed = userPosts.concat(followersPosts);
+
+  res.status(200).json(feed);
+});
+
 module.exports = {
   checkController,
   getAllUsers,
   followRequestHandler,
   createPost,
+  getFeed,
 };
