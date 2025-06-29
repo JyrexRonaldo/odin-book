@@ -45,11 +45,13 @@ function SignupPage() {
             const data = await response.json()
             console.log(data)
             localStorage.setItem('userToken', `${data.token}`)
+            localStorage.setItem('userId', `${data.userId}`)
+            localStorage.setItem('username', `${data.username}`)
             if (response.ok) {
                 setSuccessMessage(data.message)
                 setTimeout(() => {
                     navigate('/feed')
-                }, 1000)
+                }, 250)
             }
         } catch (error) {
             console.log(error)

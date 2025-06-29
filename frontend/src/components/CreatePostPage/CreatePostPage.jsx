@@ -86,6 +86,7 @@ function CreatePostPage() {
                     </div>
                     <div className="flex gap-3">
                         <button
+                            type="button"
                             onClick={handleCreatePostButton}
                             className="cursor-pointer rounded-lg bg-blue-500 px-3 py-1 text-xl text-blue-950 hover:bg-blue-600"
                         >
