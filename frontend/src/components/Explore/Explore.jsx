@@ -3,7 +3,8 @@ import PostListComponent from '../PostListComponent/PostListComponent'
 function Explore() {
     return (
         <>
-            <PostListComponent />
+            {/* <PostListComponent /> */}
+            <p className='text-white'>Coming soon! 😉😎  </p>
         </>
     )
 }

@@ -2,7 +2,7 @@ import { ImHeart } from 'react-icons/im'
 import { FaComment } from 'react-icons/fa'
 import { TbArrowForwardUp } from "react-icons/tb";
 
-function PostComponent({name, username,body, createdAt }) {
+function PostComponent({name, username,body, createdAt, commentCount }) {
     return (
         <>
             <div className="flex flex-col gap-2 rounded-xl bg-blue-900 py-5 text-white">
@@ -24,11 +24,11 @@ function PostComponent({name, username,body, createdAt }) {
                 <div className="flex gap-2 px-2.5">
                     <button className="flex cursor-pointer items-center gap-1">
                         <ImHeart className="size-6" />
-                        <p>0</p>
+                        <p>0 {"hello"}</p>
                     </button>
                     <button className="flex cursor-pointer items-center gap-1">
                         <FaComment className='size-6' />
-                        <p>0</p>
+                        <p>{commentCount}</p>
                     </button>
                     <button className="ml-auto flex cursor-pointer items-center gap-1">
                         <TbArrowForwardUp className='size-7'/>

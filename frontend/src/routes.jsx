@@ -17,7 +17,7 @@ const routes = [
         path: '/',
         element: <App />,
         children: [
-            { index: true, element: <PostListComponent /> },
+            { index: true, element: <Feed /> },
             { path: '/account', element: <AccountEdit /> },
             { path: '/feed', element: <Feed /> },
             { path: '/explore', element: <Explore /> },

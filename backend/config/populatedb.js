@@ -3,14 +3,14 @@ const prisma = require("./prisma");
 const asyncHandler = require("express-async-handler");
 
 const usersData = Array.from({ length: 10 }).map((element, index) => {
-  const firstName = faker.person.firstName()
-  const lastName = faker.person.lastName()
+  const firstName = faker.person.firstName();
+  const lastName = faker.person.lastName();
 
   element = {
     name: `${firstName} ${lastName}`,
-    username: faker.internet.username({firstName,lastName}),
+    username: faker.internet.username({ firstName, lastName }),
     password: faker.internet.password(),
-    email: faker.internet.email({firstName,lastName}),
+    email: faker.internet.email({ firstName, lastName }),
     bio: faker.person.bio(),
   };
   return element;
@@ -18,13 +18,10 @@ const usersData = Array.from({ length: 10 }).map((element, index) => {
 
 const postsData = Array.from({ length: 20 }).map((element, index) => {
   let authorId = index + 1;
-//   let status = false;
+  //   let status = false;
   if (authorId > 10) {
     authorId -= 10;
   }
-//   if (authorId % 2 === 0) {
-//     status = true;
-//   }
 
   element = {
     body: faker.lorem.paragraph(),
@@ -33,15 +30,20 @@ const postsData = Array.from({ length: 20 }).map((element, index) => {
   return element;
 });
 
-const commentsData = Array.from({ length: 20 }).map((element, index) => {
+const commentsData = Array.from({ length: 40 }).map((element, index) => {
   let authorId = index + 1;
-  if (authorId > 10) {
+  if (authorId > 30) {
+    authorId -= 30;
+  } else if (authorId > 20) {
+    authorId -= 20;
+  } else if (authorId > 10) {
     authorId -= 10;
   }
   let postId = index + 1;
-  if (postId > 10) {
-    postId -= 10;
+  if (postId > 20) {
+    postId -= 20;
   }
+
   element = {
     comment: faker.lorem.sentence(),
     authorId,

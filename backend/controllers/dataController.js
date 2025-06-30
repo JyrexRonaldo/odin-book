@@ -76,6 +76,13 @@ const getFeed = asyncHandler(async (req, res) => {
           username: true,
         },
       },
+      comments: true,
+      _count: {
+        select: {
+          comments: true,
+          likedBy: true,
+        },
+      },
     },
   });
 
@@ -97,6 +104,13 @@ const getFeed = asyncHandler(async (req, res) => {
         select: {
           name: true,
           username: true,
+        },
+      },
+      comments: true,
+      _count: {
+        select: {
+          comments: true,
+          likedBy: true,
         },
       },
     },

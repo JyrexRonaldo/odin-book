@@ -36,7 +36,7 @@ function CreatePostPage() {
             console.log(data)
             if (response.ok) {
                 setPostBody('')
-                // navigate("/feed")
+                navigate("/")
             }
         } catch (error) {
             console.log(error)

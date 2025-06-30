@@ -35,6 +35,7 @@ function PostListComponent({ feedData }) {
                 username={data.author.username}
                 body={data.body}
                 createdAt={data.createdAt}
+                commentCount={data._count.comments}
             />
         )
     })
