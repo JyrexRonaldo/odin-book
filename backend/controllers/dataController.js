@@ -144,6 +144,11 @@ const createCommentHandler = asyncHandler(async (req, res) => {
   res.status(200).json("Comment created");
 });
 
+const getAllPost = asyncHandler(async (req,res) => {
+  const allPost = await prisma.post.findMany()
+  res.status(200).json(allPost)
+})
+
 module.exports = {
   checkController,
   getAllUsers,
@@ -152,4 +157,5 @@ module.exports = {
   getFeed,
   createlikeHandler,
   createCommentHandler,
+  getAllPost
 };

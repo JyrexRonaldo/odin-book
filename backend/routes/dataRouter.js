@@ -4,6 +4,8 @@ const dataController = require("../controllers/dataController");
 
 dataRouter.route("/feed").get(dataController.getFeed);
 
+dataRouter.route("/explore").get(dataController.getAllPost)
+
 dataRouter
   .route("/users")
   .get(dataController.getAllUsers)
