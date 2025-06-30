@@ -1,8 +1,10 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import PostListComponent from '../PostListComponent/PostListComponent'
 import { useNavigate } from 'react-router-dom'
 
 function Feed() {
+    const [feedData, setFeedData] = useState([])
+    // let postdata = null
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -25,19 +27,19 @@ function Feed() {
                 if (response.status === 401) {
                     navigate('/login')
                 }
-
                 const data = await response.json()
-                console.log(data)
+                // console.log(data)
+                setFeedData(data)
             } catch (error) {
                 console.log(error)
             }
         }
         fetchData()
-    })
+    }, [navigate])
 
     return (
         <>
-            <PostListComponent />
+            <PostListComponent feedData={feedData} />
         </>
     )
 }

@@ -1,7 +1,7 @@
 import PostComponent from '../PostComponent/PostComponent'
 import { useState } from 'react'
 
-function PostListComponent() {
+function PostListComponent({ feedData }) {
     const [buttonStyles, setButtonStyles] = useState([
         'default',
         'selected',
@@ -24,6 +24,20 @@ function PostListComponent() {
             setButtonStyles(['default', 'default', 'selected'])
         }
     }
+
+    console.log(feedData)
+
+    const feedCards = feedData.map((data) => {
+        return (
+            <PostComponent
+                key={data.id}
+                name={data.author.name}
+                username={data.author.username}
+                body={data.body}
+                createdAt={data.createdAt}
+            />
+        )
+    })
 
     return (
         <div className="flex w-full max-w-xl flex-col gap-5 rounded-lg lg:min-w-md">
@@ -48,14 +62,16 @@ function PostListComponent() {
                 </button>
             </nav>
             <div className="flex flex-col gap-8">
+                {/* <PostComponent />
                 <PostComponent />
                 <PostComponent />
                 <PostComponent />
                 <PostComponent />
                 <PostComponent />
                 <PostComponent />
-                <PostComponent />
-                <PostComponent />
+                <PostComponent /> */}
+
+                {feedCards}
             </div>
         </div>
     )

@@ -69,6 +69,14 @@ const getFeed = asyncHandler(async (req, res) => {
     where: {
       authorId: req.user.id,
     },
+    include: {
+      author: {
+        select: {
+          name: true,
+          username: true,
+        },
+      },
+    },
   });
 
   const followingIdsObjects = await prisma.follows.findMany({
@@ -83,6 +91,14 @@ const getFeed = asyncHandler(async (req, res) => {
   const followersPosts = await prisma.post.findMany({
     where: {
       authorId: { in: followingIds },
+    },
+    include: {
+      author: {
+        select: {
+          name: true,
+          username: true,
+        },
+      },
     },
   });
 
