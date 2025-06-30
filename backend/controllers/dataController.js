@@ -91,7 +91,7 @@ const getFeed = asyncHandler(async (req, res) => {
   res.status(200).json(feed);
 });
 
-const likeHandler = asyncHandler(async (req, res) => {
+const createlikeHandler = asyncHandler(async (req, res) => {
   const { postId } = req.body;
   await prisma.likes.create({
     data: {
@@ -102,11 +102,24 @@ const likeHandler = asyncHandler(async (req, res) => {
   res.status(200).json("post liked!");
 });
 
+const createCommentHandler = asyncHandler(async (req, res) => {
+  const { comment, postId } = req.body;
+  await prisma.comment.create({
+    data: {
+      comment,
+      authorId: req.user.id,
+      postId: +postId,
+    },
+  });
+  res.status(200).json("Comment created");
+});
+
 module.exports = {
   checkController,
   getAllUsers,
   followRequestHandler,
   createPost,
   getFeed,
-  likeHandler,
+  createlikeHandler,
+  createCommentHandler,
 };
