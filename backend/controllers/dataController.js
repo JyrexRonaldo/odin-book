@@ -65,7 +65,6 @@ const createPost = asyncHandler(async (req, res) => {
 });
 
 const getFeed = asyncHandler(async (req, res) => {
-  
   const userPosts = await prisma.post.findMany({
     where: {
       authorId: req.user.id,
@@ -92,10 +91,22 @@ const getFeed = asyncHandler(async (req, res) => {
   res.status(200).json(feed);
 });
 
+const likeHandler = asyncHandler(async (req, res) => {
+  const { postId } = req.body;
+  await prisma.likes.create({
+    data: {
+      userId: req.user.id,
+      postId: +postId,
+    },
+  });
+  res.status(200).json("post liked!");
+});
+
 module.exports = {
   checkController,
   getAllUsers,
   followRequestHandler,
   createPost,
   getFeed,
+  likeHandler,
 };
