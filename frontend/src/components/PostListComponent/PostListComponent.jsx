@@ -1,7 +1,7 @@
 import PostComponent from '../PostComponent/PostComponent'
 import { useState } from 'react'
 
-function PostListComponent({ feedData }) {
+function PostListComponent({ data }) {
     const [buttonStyles, setButtonStyles] = useState([
         'default',
         'selected',
@@ -25,17 +25,17 @@ function PostListComponent({ feedData }) {
         }
     }
 
-    console.log(feedData)
+    console.log(data)
 
-    const feedCards = feedData.map((data) => {
+    const feedCards = data.map((dataItem) => {
         return (
             <PostComponent
-                key={data.id}
-                name={data.author.name}
-                username={data.author.username}
-                body={data.body}
-                createdAt={data.createdAt}
-                commentCount={data._count.comments}
+                key={dataItem.id}
+                name={dataItem.author.name}
+                username={dataItem.author.username}
+                body={dataItem.body}
+                createdAt={dataItem.createdAt}
+                commentCount={dataItem._count.comments}
             />
         )
     })

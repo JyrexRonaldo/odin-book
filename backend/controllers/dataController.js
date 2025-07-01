@@ -145,7 +145,20 @@ const createCommentHandler = asyncHandler(async (req, res) => {
 });
 
 const getAllPost = asyncHandler(async (req,res) => {
-  const allPost = await prisma.post.findMany()
+  const allPost = await prisma.post.findMany({include: {
+    author: {
+      select: {
+        name: true,
+        username: true
+      }
+    },
+    comments: true,
+    _count: {
+      select: {
+        comments: true
+      }
+    }
+  }})
   res.status(200).json(allPost)
 })
 

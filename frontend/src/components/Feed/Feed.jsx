@@ -39,7 +39,7 @@ function Feed() {
 
     return (
         <>
-            <PostListComponent feedData={feedData} />
+            <PostListComponent data={feedData} />
         </>
     )
 }
