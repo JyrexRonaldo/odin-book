@@ -27,7 +27,7 @@ function PostListComponent({ data }) {
 
     console.log(data)
 
-    const feedCards = data.map((dataItem) => {
+    const dataCards = data.map((dataItem) => {
         return (
             <PostComponent
                 key={dataItem.id}
@@ -72,7 +72,7 @@ function PostListComponent({ data }) {
                 <PostComponent />
                 <PostComponent /> */}
 
-                {feedCards}
+                {dataCards}
             </div>
         </div>
     )

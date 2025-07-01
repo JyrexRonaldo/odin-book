@@ -144,23 +144,46 @@ const createCommentHandler = asyncHandler(async (req, res) => {
   res.status(200).json("Comment created");
 });
 
-const getAllPost = asyncHandler(async (req,res) => {
-  const allPost = await prisma.post.findMany({include: {
-    author: {
-      select: {
-        name: true,
-        username: true
-      }
+const getAllPost = asyncHandler(async (req, res) => {
+  const allPost = await prisma.post.findMany({
+    include: {
+      author: {
+        select: {
+          name: true,
+          username: true,
+        },
+      },
+      comments: true,
+      _count: {
+        select: {
+          comments: true,
+        },
+      },
     },
-    comments: true,
-    _count: {
-      select: {
-        comments: true
-      }
-    }
-  }})
-  res.status(200).json(allPost)
-})
+  });
+  res.status(200).json(allPost);
+});
+
+const getLikedPost = asyncHandler(async (req, res) => {
+  const likedPost = await prisma.user.findMany({
+    where: {
+      id: req.user.id,
+    },
+    select: { likedPosts: true },
+  });
+  res.status(200).json(likedPost);
+});
+
+const createLikePost = asyncHandler(async (req, res) => {
+  const { postId } = req.body;
+  await prisma.likes.create({
+    data: {
+      userId: req.user.id,
+      postId: +postId,
+    },
+  });
+  res.status(200).json("Post created");
+});
 
 module.exports = {
   checkController,
@@ -170,5 +193,7 @@ module.exports = {
   getFeed,
   createlikeHandler,
   createCommentHandler,
-  getAllPost
+  getAllPost,
+  getLikedPost,
+  createLikePost
 };
