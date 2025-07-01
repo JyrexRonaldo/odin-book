@@ -3,7 +3,7 @@ import { FaPlus } from 'react-icons/fa6'
 import { FaMinus } from 'react-icons/fa6'
 
 function UserCard({ id, name, username, bio, isFollowed, setTriggerRender }) {
-    async function handleSendRequest(e) {
+    async function handleSendRequest() {
         try {
             const response = await fetch(
                 `${import.meta.env.VITE_HOME_DOMAIN}/users`,
@@ -14,7 +14,7 @@ function UserCard({ id, name, username, bio, isFollowed, setTriggerRender }) {
                         Authorization: `${localStorage.getItem('userToken')}`,
                     },
                     body: JSON.stringify({
-                        followeeId: `${e.currentTarget.dataset.id}`,
+                        followeeId: `${id}`,
                     }),
                 }
             )
@@ -40,7 +40,6 @@ function UserCard({ id, name, username, bio, isFollowed, setTriggerRender }) {
                 {isFollowed ? (
                     <button
                         onClick={handleSendRequest}
-                        data-id={id}
                         className="flex cursor-pointer items-center gap-2 rounded-lg border-2 border-blue-500 bg-black px-3 py-1 text-blue-500"
                     >
                         Follow
@@ -49,7 +48,6 @@ function UserCard({ id, name, username, bio, isFollowed, setTriggerRender }) {
                 ) : (
                     <button
                         onClick={handleSendRequest}
-                        data-id={id}
                         className="flex cursor-pointer items-center gap-2 rounded-lg border-2 border-blue-500 bg-blue-500 px-3 py-1 text-black"
                     >
                         Follow
