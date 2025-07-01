@@ -176,13 +176,35 @@ const getLikedPost = asyncHandler(async (req, res) => {
 
 const createLikePost = asyncHandler(async (req, res) => {
   const { postId } = req.body;
-  await prisma.likes.create({
-    data: {
-      userId: req.user.id,
-      postId: +postId,
+  const likeRecord = await prisma.likes.findUnique({
+    where: {
+      userId_postId: {
+        userId: req.user.id,
+        postId: +postId,
+      },
     },
   });
-  res.status(200).json("Post created");
+  if (likeRecord) {
+    await prisma.likes.delete({
+      where: {
+        userId_postId: {
+          userId: req.user.id,
+          postId: +postId,
+        },
+      },
+    });
+    res.status(200).json("Post deleted");
+  } else {
+    await prisma.likes.create({
+      data: {
+        userId: req.user.id,
+        postId: +postId,
+      },
+    });
+    res.status(200).json("Post created");
+  }
+
+  // res.status(200).json("Post created");
 });
 
 module.exports = {
@@ -195,5 +217,5 @@ module.exports = {
   createCommentHandler,
   getAllPost,
   getLikedPost,
-  createLikePost
+  createLikePost,
 };

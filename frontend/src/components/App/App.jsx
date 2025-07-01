@@ -127,7 +127,6 @@ function App() {
                             <MdOutlineExplore className="size-8" />
                         </button>
                         <button
-                            data-icon="createPost"
                             onClick={handleCreatePost}
                             className="bg-blue-500"
                         >

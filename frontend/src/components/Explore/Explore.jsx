@@ -32,7 +32,7 @@ function Explore() {
         fetchData()
     }, [navigate])
 
-    console.log(exploreData)
+    // console.log(exploreData)
 
     return (
         <>

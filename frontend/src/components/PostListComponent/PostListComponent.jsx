@@ -31,6 +31,7 @@ function PostListComponent({ data }) {
         return (
             <PostComponent
                 key={dataItem.id}
+                id={dataItem.id}
                 name={dataItem.author.name}
                 username={dataItem.author.username}
                 body={dataItem.body}
