@@ -25,9 +25,17 @@ function PostListComponent({ data }) {
         }
     }
 
-    console.log(data)
-
     const dataCards = data.map((dataItem) => {
+        let isLikedByUser = false
+        const likeArray = []
+        // console.log(dataItem.likedBy)
+        dataItem.likedBy.forEach((item) => {
+            likeArray.push(item.userId)
+        })
+        if (likeArray.includes(+localStorage.getItem("userId"))) {
+            isLikedByUser = true
+        }
+
         return (
             <PostComponent
                 key={dataItem.id}
@@ -37,6 +45,8 @@ function PostListComponent({ data }) {
                 body={dataItem.body}
                 createdAt={dataItem.createdAt}
                 commentCount={dataItem._count.comments}
+                likeCount={dataItem._count.likedBy}
+                isLikedByUser={isLikedByUser}
             />
         )
     })

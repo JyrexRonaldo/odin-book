@@ -77,6 +77,7 @@ const getFeed = asyncHandler(async (req, res) => {
         },
       },
       comments: true,
+      likedBy: true,
       _count: {
         select: {
           comments: true,
@@ -107,6 +108,7 @@ const getFeed = asyncHandler(async (req, res) => {
         },
       },
       comments: true,
+      likedBy: true,
       _count: {
         select: {
           comments: true,
@@ -154,9 +156,11 @@ const getAllPost = asyncHandler(async (req, res) => {
         },
       },
       comments: true,
+      likedBy: true,
       _count: {
         select: {
           comments: true,
+          likedBy: true,
         },
       },
     },
@@ -193,7 +197,20 @@ const createLikePost = asyncHandler(async (req, res) => {
         },
       },
     });
-    res.status(200).json("Post deleted");
+    const likeCount = await prisma.post.findUnique({
+      where: {
+        id: +postId,
+      },
+      select: {
+        // likedBy: true,
+        _count: {
+          select: {
+            likedBy: true,
+          },
+        },
+      },
+    });
+    res.status(200).json({ message: "Post deleted", likeCount });
   } else {
     await prisma.likes.create({
       data: {
@@ -201,7 +218,19 @@ const createLikePost = asyncHandler(async (req, res) => {
         postId: +postId,
       },
     });
-    res.status(200).json("Post created");
+    const likeCount = await prisma.post.findUnique({
+      where: {
+        id: +postId,
+      },
+      select: {
+        _count: {
+          select: {
+            likedBy: true,
+          },
+        },
+      },
+    });
+    res.status(200).json({ message: "Post created", likeCount });
   }
 
   // res.status(200).json("Post created");

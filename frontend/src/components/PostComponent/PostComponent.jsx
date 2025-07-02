@@ -2,9 +2,20 @@ import { ImHeart } from 'react-icons/im'
 import { FaComment } from 'react-icons/fa'
 import { TbArrowForwardUp } from 'react-icons/tb'
 import { useState } from 'react'
+import { useEffect } from 'react'
 
-function PostComponent({ id, name, username, body, createdAt, commentCount }) {
+function PostComponent({
+    id,
+    name,
+    username,
+    body,
+    createdAt,
+    commentCount,
+    likeCount,
+    isLikedByUser,
+}) {
     const [liked, setLiked] = useState(false)
+    const [likes, setLikes] = useState(likeCount)
     // const heartIconStyleVariants = {
     //     default: 'size-6',
     //     liked: 'size-6 text-red-600',
@@ -22,28 +33,35 @@ function PostComponent({ id, name, username, body, createdAt, commentCount }) {
                     },
                     body: JSON.stringify({
                         postId: id,
-                        authorId: localStorage.getItem('userId'),
                     }),
                 }
             )
 
             const data = await response.json()
-            console.log(data)
-            if ( data === "Post created") {
-               setLiked(true) 
+            // console.log(data)
+            if (data.message === 'Post created') {
+                likeCount = data.likeCount._count.likedBy
+                setLiked(true)
             } else {
-               setLiked(false) 
+                likeCount = data.likeCount._count.likedBy
+                setLiked(false)
             }
+            // console.log(likeCount)
+            setLikes(likeCount)
         } catch (error) {
             console.log(error)
         }
-
-        // if (liked) {
-        //     setLiked(false)
-        // } else {
-        //     setLiked(true)
-        // }
     }
+
+    // console.log(isLikedByUser)
+
+    useEffect(() => {
+        if (isLikedByUser) {
+            setLiked(true)
+        } else {
+            setLiked(false)
+        }
+    }, [isLikedByUser])
 
     let heartIconStyle = 'size-6'
 
@@ -75,7 +93,7 @@ function PostComponent({ id, name, username, body, createdAt, commentCount }) {
                         className="flex cursor-pointer items-center gap-1"
                     >
                         <ImHeart className={`${heartIconStyle}`} />
-                        <p>0 {'hello'}</p>
+                        <p>{likes}</p>
                     </button>
                     <button className="flex cursor-pointer items-center gap-1">
                         <FaComment className="size-6" />
