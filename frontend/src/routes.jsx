@@ -23,7 +23,7 @@ const routes = [
             { path: '/explore', element: <Explore /> },
             { path: '/users', element: <UserList /> },
             { path: '/likes', element: <Likes /> },
-            { path: '/users/1', element: <UserProfile /> },
+            { path: '/users/:username', element: <UserProfile /> },
         ],
         errorElement: <ErrorPage />,
     },

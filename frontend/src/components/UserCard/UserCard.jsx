@@ -1,8 +1,11 @@
 import { BiSolidUserCircle } from 'react-icons/bi'
 import { FaPlus } from 'react-icons/fa6'
 import { FaMinus } from 'react-icons/fa6'
+import { useNavigate } from 'react-router-dom'
 
 function UserCard({ id, name, username, bio, isFollowed, setTriggerRender }) {
+    const navigate = useNavigate()
+
     async function handleSendRequest() {
         try {
             const response = await fetch(
@@ -25,6 +28,10 @@ function UserCard({ id, name, username, bio, isFollowed, setTriggerRender }) {
         } catch (error) {
             console.log(error)
         }
+    }
+
+    function handlerUserView() {
+        navigate(`/users/${username}`)
     }
 
     return (
@@ -54,7 +61,7 @@ function UserCard({ id, name, username, bio, isFollowed, setTriggerRender }) {
                         <FaPlus />
                     </button>
                 )}
-                <button className="cursor-pointer rounded-lg border-2 border-blue-500 bg-black px-3 py-1 text-blue-500">
+                <button onClick={handlerUserView} className="cursor-pointer rounded-lg border-2 border-blue-500 bg-black px-3 py-1 text-blue-500">
                     View
                 </button>
             </div>

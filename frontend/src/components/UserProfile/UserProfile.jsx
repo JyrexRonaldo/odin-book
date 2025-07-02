@@ -1,8 +1,41 @@
+import { useEffect } from 'react'
 import PostComponent from '../PostComponent/PostComponent'
 import { BiSolidUserCircle } from 'react-icons/bi'
-import { FaPlus } from "react-icons/fa6";
+import { FaPlus } from 'react-icons/fa6'
+import { useParams, useNavigate } from 'react-router-dom'
 
 function UserProfile() {
+    const navigate = useNavigate()
+    const { username } = useParams()
+    console.log(username)
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await fetch(
+                    `${import.meta.env.VITE_HOME_DOMAIN}/users/${username}`,
+                    {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `${localStorage.getItem('userToken')}`,
+                        },
+                    }
+                )
+
+                if (response.status === 401) {
+                    navigate('/login')
+                }
+
+                const data = await response.json()
+                console.log(data)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        fetchData()
+    }, [navigate, username])
+
     return (
         <div className="flex w-full max-w-xl flex-col gap-10 text-white">
             <div className="flex flex-col gap-5 rounded-2xl bg-blue-900 p-5">
