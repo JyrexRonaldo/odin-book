@@ -257,8 +257,47 @@ const createLikePost = asyncHandler(async (req, res) => {
     });
     res.status(200).json({ message: "Post liked", likeCount });
   }
+});
 
-  // res.status(200).json("Post created");
+const getUserProfileByUsername = asyncHandler(async (req, res) => {
+  const { username } = req.params;
+  console.log(username, "line 264");
+  const userProfile = await prisma.user.findUnique({
+    relationLoadStrategy: "join",
+    where: {
+      username,
+    },
+    include: {
+      posts: {
+        include: {
+          author: {
+            select: {
+              name: true,
+              username: true,
+            },
+          },
+          comments: true,
+          likedBy: true,
+          _count: {
+            select: {
+              comments: true,
+              likedBy: true,
+            },
+          },
+        },
+      },
+      followedBy: { select: { following: true } },
+      following: { select: { followedBy: true } },
+      _count: {
+        select: {
+          posts: true,
+          followedBy: true,
+          following: true,
+        },
+      },
+    },
+  });
+  res.status(200).json(userProfile);
 });
 
 module.exports = {
@@ -271,4 +310,5 @@ module.exports = {
   getAllPost,
   getLikedPost,
   createLikePost,
+  getUserProfileByUsername,
 };

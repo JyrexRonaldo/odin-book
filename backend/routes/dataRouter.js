@@ -16,6 +16,11 @@ dataRouter
   .get(dataController.getAllUsers)
   .post(dataController.followRequestHandler);
 
+  dataRouter
+  .route("/users/:username")
+  .get(dataController.getUserProfileByUsername)
+  
+
 dataRouter
   .route("/posts")
   // .get(dataController.getAllUsers)

@@ -61,7 +61,10 @@ function UserCard({ id, name, username, bio, isFollowed, setTriggerRender }) {
                         <FaPlus />
                     </button>
                 )}
-                <button onClick={handlerUserView} className="cursor-pointer rounded-lg border-2 border-blue-500 bg-black px-3 py-1 text-blue-500">
+                <button
+                    onClick={handlerUserView}
+                    className="cursor-pointer rounded-lg border-2 border-blue-500 bg-black px-3 py-1 text-blue-500"
+                >
                     View
                 </button>
             </div>
