@@ -39,7 +39,7 @@ function PostComponent({
 
             const data = await response.json()
             // console.log(data)
-            if (data.message === 'Post created') {
+            if (data.message === 'Post liked') {
                 likeCount = data.likeCount._count.likedBy
                 setLiked(true)
             } else {

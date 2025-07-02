@@ -21,8 +21,7 @@ dataRouter
   // .get(dataController.getAllUsers)
   .post(dataController.createPost);
 
-dataRouter.route("likes").post(dataController.createlikeHandler);
 
-dataRouter.route("comments").post(dataController.createCommentHandler);
+dataRouter.route("/comments").post(dataController.createCommentHandler);
 
 module.exports = dataRouter;

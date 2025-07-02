@@ -123,17 +123,6 @@ const getFeed = asyncHandler(async (req, res) => {
   res.status(200).json(feed);
 });
 
-const createlikeHandler = asyncHandler(async (req, res) => {
-  const { postId } = req.body;
-  await prisma.likes.create({
-    data: {
-      userId: req.user.id,
-      postId: +postId,
-    },
-  });
-  res.status(200).json("post liked!");
-});
-
 const createCommentHandler = asyncHandler(async (req, res) => {
   const { comment, postId } = req.body;
   await prisma.comment.create({
@@ -169,13 +158,49 @@ const getAllPost = asyncHandler(async (req, res) => {
 });
 
 const getLikedPost = asyncHandler(async (req, res) => {
-  const likedPost = await prisma.user.findMany({
+  // const likedPost = await prisma.user.findMany({
+  //   where: {
+  //     id: req.user.id,
+  //   },
+  //   select: { posts: true, likedPosts: true },
+  // });
+  // res.status(200).json(likedPost);
+  const likedPostIdsObjects = await prisma.likes.findMany({
     where: {
-      id: req.user.id,
+      userId: req.user.id,
     },
-    select: { likedPosts: true },
+    select: {
+      postId: true,
+    },
   });
-  res.status(200).json(likedPost);
+
+  const likePostIds = likedPostIdsObjects.map((idObject) => {
+    return idObject.postId;
+  });
+
+  const likedPosts = await prisma.post.findMany({
+    where: {
+      id: { in: likePostIds },
+    },
+    include: {
+      author: {
+        select: {
+          name: true,
+          username: true,
+        },
+      },
+      comments: true,
+      likedBy: true,
+      _count: {
+        select: {
+          comments: true,
+          likedBy: true,
+        },
+      },
+    },
+  });
+
+  res.status(200).json(likedPosts);
 });
 
 const createLikePost = asyncHandler(async (req, res) => {
@@ -210,7 +235,7 @@ const createLikePost = asyncHandler(async (req, res) => {
         },
       },
     });
-    res.status(200).json({ message: "Post deleted", likeCount });
+    res.status(200).json({ message: "Post unliked", likeCount });
   } else {
     await prisma.likes.create({
       data: {
@@ -230,7 +255,7 @@ const createLikePost = asyncHandler(async (req, res) => {
         },
       },
     });
-    res.status(200).json({ message: "Post created", likeCount });
+    res.status(200).json({ message: "Post liked", likeCount });
   }
 
   // res.status(200).json("Post created");
@@ -242,7 +267,6 @@ module.exports = {
   followRequestHandler,
   createPost,
   getFeed,
-  createlikeHandler,
   createCommentHandler,
   getAllPost,
   getLikedPost,

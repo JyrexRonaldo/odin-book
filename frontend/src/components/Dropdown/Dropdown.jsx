@@ -17,7 +17,7 @@ function Dropdown() {
 
     return (
         <>
-            <div className="flex flex-col gap-2 w-37 rounded-xl bg-blue-900 p-5 absolute top-15 -left-6.5">
+            <div className="flex flex-col gap-2 w-37 rounded-xl bg-blue-900 p-5 absolute top-15 -left-20">
                 <button
                     onClick={handleProfile}
                     className="cursor-pointer rounded-lg px-3 py-1 text-blue-500 hover:underline hover:underline-offset-4"
