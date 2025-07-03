@@ -49,7 +49,7 @@ function UserCard({ id, name, username, bio, isFollowed, setTriggerRender }) {
                         onClick={handleSendRequest}
                         className="flex cursor-pointer items-center gap-2 rounded-lg border-2 border-blue-500 bg-black px-3 py-1 text-blue-500"
                     >
-                        Follow
+                        Unfollow
                         <FaMinus />
                     </button>
                 ) : (

@@ -263,7 +263,6 @@ const getUserProfileByUsername = asyncHandler(async (req, res) => {
   const { username } = req.params;
   console.log(username, "line 264");
   const userProfile = await prisma.user.findUnique({
-    relationLoadStrategy: "join",
     where: {
       username,
     },

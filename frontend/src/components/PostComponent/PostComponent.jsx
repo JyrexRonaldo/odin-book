@@ -108,9 +108,11 @@ function PostComponent({
                 </div>
                 <div className="flex gap-4 px-2.5 text-sm">
                     <a href="">View Comments...</a>
-                    <a className="text-red-600" href="">
-                        Delete Post
-                    </a>
+                    {username === localStorage.getItem('username') && (
+                        <a className="text-red-600" href="">
+                            Delete Post
+                        </a>
+                    )}
                 </div>
             </div>
         </>
