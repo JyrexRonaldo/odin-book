@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 
 function Likes() {
     const [likesData, setLikesData] = useState([])
-    const navigate = useNavigate
+    const navigate = useNavigate()
 
     useEffect(() => {
         async function fetchData() {
@@ -34,12 +34,9 @@ function Likes() {
         fetchData()
     }, [navigate])
 
-    console.log(likesData)
-
     return (
         <>
             <PostListComponent data={likesData} />
-            {/* <p className="text-white">Coming soon! 😉😎 </p> */}
         </>
     )
 }

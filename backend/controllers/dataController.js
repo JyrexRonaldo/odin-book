@@ -285,8 +285,36 @@ const getUserProfileByUsername = asyncHandler(async (req, res) => {
           },
         },
       },
-      followedBy: { select: { following: true } },
-      following: { select: { followedBy: true } },
+      followedBy: {
+        select: {
+          following: {
+            include: {
+              followedBy: true,
+              _count: {
+                select: {
+                  following: true,
+                  followedBy: true,
+                },
+              },
+            },
+          },
+        },
+      },
+      following: {
+        select: {
+          followedBy: {
+            include: {
+              followedBy: true,
+              _count: {
+                select: {
+                  following: true,
+                  followedBy: true,
+                },
+              },
+            },
+          },
+        },
+      },
       _count: {
         select: {
           posts: true,
