@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import PostComponent from '../PostComponent/PostComponent'
 import { BiSolidUserCircle } from 'react-icons/bi'
 import { FaPlus } from 'react-icons/fa6'
+import { FaMinus } from 'react-icons/fa6'
 import { useParams, useNavigate } from 'react-router-dom'
 import FollowCard from '../FollowCard/FollowCard'
 
@@ -11,16 +12,6 @@ function UserProfile() {
     const [profileData, setProfileData] = useState([])
     const [show, setShow] = useState([true, false, false])
     const [triggerRender, setTriggerRender] = useState(0)
-
-    function handleTabView(tabName) {
-        if (tabName === 'post') {
-            setShow([true, false, false])
-        } else if (tabName === 'followers') {
-            setShow([false, true, false])
-        } else {
-            setShow([false, false, true])
-        }
-    }
 
     useEffect(() => {
         async function fetchData() {
@@ -48,6 +39,40 @@ function UserProfile() {
         }
         fetchData()
     }, [navigate, username, triggerRender])
+
+    function handleTabView(tabName) {
+        if (tabName === 'post') {
+            setShow([true, false, false])
+        } else if (tabName === 'followers') {
+            setShow([false, true, false])
+        } else {
+            setShow([false, false, true])
+        }
+    }
+
+    async function handleSendRequest() {
+        try {
+            const response = await fetch(
+                `${import.meta.env.VITE_HOME_DOMAIN}/users`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `${localStorage.getItem('userToken')}`,
+                    },
+                    body: JSON.stringify({
+                        followeeId: `${profileData.id}`,
+                    }),
+                }
+            )
+
+            const data = await response.json()
+            console.log(data)
+            setTriggerRender(self.crypto.randomUUID())
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     const postCount = profileData._count?.posts
     const follwersCount = profileData._count?.followedBy
@@ -137,6 +162,15 @@ function UserProfile() {
         )
     })
 
+    let isFollowed = null
+    profileData.followedBy?.forEach((element) => {
+        if (element.following.id === +localStorage.getItem('userId')) {
+            isFollowed = true
+        } else {
+            isFollowed = false
+        }
+    })
+
     return (
         <div className="flex w-full max-w-xl flex-col gap-10 text-white">
             <div className="flex flex-col gap-5 rounded-2xl bg-blue-900 p-5">
@@ -148,10 +182,23 @@ function UserProfile() {
                         <p>{profileData.name}</p>
                         <p>@{profileData.username}</p>
                     </div>
-                    <button className="flex cursor-pointer items-center gap-2 rounded-lg bg-blue-500 px-3 py-1 text-xl text-blue-950 hover:bg-blue-600 active:bg-blue-600">
-                        Follow
-                        <FaPlus />
-                    </button>
+                    {isFollowed ? (
+                        <button
+                            onClick={handleSendRequest}
+                            className="flex cursor-pointer items-center gap-2 rounded-lg border-2 border-blue-500 bg-black px-3 py-1 text-blue-500"
+                        >
+                            Unfollow
+                            <FaMinus />
+                        </button>
+                    ) : (
+                        <button
+                            onClick={handleSendRequest}
+                            className="flex cursor-pointer items-center gap-2 rounded-lg border-2 border-blue-500 bg-blue-500 px-3 py-1 text-black"
+                        >
+                            Follow
+                            <FaPlus />
+                        </button>
+                    )}
                     <p>{profileData.bio}</p>
                     <div className="flex gap-3">
                         <button
@@ -182,7 +229,7 @@ function UserProfile() {
                 </div>
             </div>
             <div className="flex flex-col gap-8 empty:hidden">
-                {show[0] &&  postCards}
+                {show[0] && postCards}
                 {show[1] && followerCards}
                 {show[2] && followingCards}
             </div>

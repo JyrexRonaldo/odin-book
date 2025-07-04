@@ -11,9 +11,6 @@ const getAllUsers = asyncHandler(async (req, res) => {
   res.json(allUsers);
 });
 
-function checkController(req, res) {
-  console.log("Hello backend");
-}
 
 const followRequestHandler = asyncHandler(async (req, res) => {
   const { followeeId } = req.body;
@@ -40,6 +37,7 @@ const followRequestHandler = asyncHandler(async (req, res) => {
         },
       },
     });
+    res.status(201).json("User unfollowed");
   } else {
     // console.log("is following")
     await prisma.follows.create({
@@ -48,9 +46,8 @@ const followRequestHandler = asyncHandler(async (req, res) => {
         followingId: req.user.id,
       },
     });
+    res.status(201).json("User followed");
   }
-
-  res.status(201).json("Request sent");
 });
 
 const createPost = asyncHandler(async (req, res) => {
@@ -261,7 +258,6 @@ const createLikePost = asyncHandler(async (req, res) => {
 
 const getUserProfileByUsername = asyncHandler(async (req, res) => {
   const { username } = req.params;
-  console.log(username, "line 264");
   const userProfile = await prisma.user.findUnique({
     where: {
       username,
@@ -328,7 +324,6 @@ const getUserProfileByUsername = asyncHandler(async (req, res) => {
 });
 
 module.exports = {
-  checkController,
   getAllUsers,
   followRequestHandler,
   createPost,
