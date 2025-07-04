@@ -146,7 +146,7 @@ function SignupPage() {
                                 <input
                                     onChange={handlePasswordInput}
                                     value={password}
-                                    autoComplete="current-password"
+                                    autoComplete="new-password"
                                     className="min-h-10 rounded-lg bg-white px-3 text-black"
                                     type="password"
                                     name="password"
@@ -164,7 +164,7 @@ function SignupPage() {
                                 <input
                                     onChange={handleConfirmPasswordInput}
                                     value={confirmPassword}
-                                    autoComplete="current-password"
+                                    autoComplete="new-password"
                                     className="min-h-10 rounded-lg bg-white px-3 text-black"
                                     type="password"
                                     name="confirmPassword"
