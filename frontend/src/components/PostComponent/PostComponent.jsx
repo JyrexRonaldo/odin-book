@@ -3,6 +3,7 @@ import { FaComment } from 'react-icons/fa'
 import { TbArrowForwardUp } from 'react-icons/tb'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import { format } from 'date-fns'
 
 function PostComponent({
     id,
@@ -16,10 +17,8 @@ function PostComponent({
 }) {
     const [liked, setLiked] = useState(false)
     const [likes, setLikes] = useState(likeCount)
-    // const heartIconStyleVariants = {
-    //     default: 'size-6',
-    //     liked: 'size-6 text-red-600',
-    // }
+
+    createdAt = format(createdAt, 'MMM d, yyyy, h:m a')
 
     async function handleLikeButton() {
         try {
