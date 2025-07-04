@@ -11,7 +11,6 @@ const getAllUsers = asyncHandler(async (req, res) => {
   res.json(allUsers);
 });
 
-
 const followRequestHandler = asyncHandler(async (req, res) => {
   const { followeeId } = req.body;
 
@@ -323,6 +322,16 @@ const getUserProfileByUsername = asyncHandler(async (req, res) => {
   res.status(200).json(userProfile);
 });
 
+const deletePostById = asyncHandler(async (req, res) => {
+  const { postId } = req.body;
+  await prisma.post.delete({
+    where: {
+      id: +postId,
+    },
+  });
+  res.status(200).json("Post deleted");
+});
+
 module.exports = {
   getAllUsers,
   followRequestHandler,
@@ -333,4 +342,5 @@ module.exports = {
   getLikedPost,
   createLikePost,
   getUserProfileByUsername,
+  deletePostById,
 };

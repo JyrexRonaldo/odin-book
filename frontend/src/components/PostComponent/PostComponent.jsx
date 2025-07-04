@@ -52,7 +52,7 @@ function PostComponent({
         }
     }
 
-    // console.log(isLikedByUser)
+
 
     useEffect(() => {
         if (isLikedByUser) {

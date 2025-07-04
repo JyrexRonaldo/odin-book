@@ -16,16 +16,15 @@ dataRouter
   .get(dataController.getAllUsers)
   .post(dataController.followRequestHandler);
 
-  dataRouter
+dataRouter
   .route("/users/:username")
-  .get(dataController.getUserProfileByUsername)
-  
+  .get(dataController.getUserProfileByUsername);
 
 dataRouter
   .route("/posts")
   // .get(dataController.getAllUsers)
-  .post(dataController.createPost);
-
+  .post(dataController.createPost)
+  .delete(dataController.deletePostById);
 
 dataRouter.route("/comments").post(dataController.createCommentHandler);
 
