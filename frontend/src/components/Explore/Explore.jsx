@@ -5,6 +5,7 @@ import { useState } from 'react'
 
 function Explore() {
     const [exploreData, setExploreData] = useState([])
+    const [triggerRender, setTriggerRender] = useState(0)
     const navigate = useNavigate()
     useEffect(() => {
         async function fetchData() {
@@ -30,13 +31,16 @@ function Explore() {
             }
         }
         fetchData()
-    }, [navigate])
+    }, [navigate, triggerRender])
 
     // console.log(exploreData)
 
     return (
         <>
-            <PostListComponent data={exploreData} />
+            <PostListComponent
+                data={exploreData}
+                setTriggerRender={setTriggerRender}
+            />
         </>
     )
 }

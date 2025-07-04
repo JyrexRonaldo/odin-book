@@ -158,6 +158,7 @@ function UserProfile() {
                 commentCount={dataItem._count.comments}
                 likeCount={dataItem._count.likedBy}
                 isLikedByUser={isLikedByUser}
+                setTriggerRender={setTriggerRender}
             />
         )
     })

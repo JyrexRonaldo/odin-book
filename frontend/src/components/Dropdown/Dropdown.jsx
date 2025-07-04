@@ -4,6 +4,7 @@ function Dropdown() {
     const navigate = useNavigate()
     function handleProfile() {
         navigate('/users/1')
+        navigate(`/users/${localStorage.getItem('username')}`)
     }
 
     function handleSettings() {
@@ -17,7 +18,7 @@ function Dropdown() {
 
     return (
         <>
-            <div className="flex flex-col gap-2 w-37 rounded-xl bg-blue-900 p-5 absolute top-15 -left-20">
+            <div className="absolute top-15 -left-20 flex w-37 flex-col gap-2 rounded-xl bg-blue-900 p-5">
                 <button
                     onClick={handleProfile}
                     className="cursor-pointer rounded-lg px-3 py-1 text-blue-500 hover:underline hover:underline-offset-4"

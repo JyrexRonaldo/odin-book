@@ -14,6 +14,7 @@ function PostComponent({
     commentCount,
     likeCount,
     isLikedByUser,
+    setTriggerRender
 }) {
     const [liked, setLiked] = useState(false)
     const [likes, setLikes] = useState(likeCount)
@@ -52,7 +53,29 @@ function PostComponent({
         }
     }
 
+    async function handleDeletePost() {
+        try {
+            const response = await fetch(
+                `${import.meta.env.VITE_HOME_DOMAIN}/posts`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `${localStorage.getItem('userToken')}`,
+                    },
+                    body: JSON.stringify({
+                        postId: id,
+                    }),
+                }
+            )
 
+            const data = await response.json()
+            console.log(data)
+            setTriggerRender(self.crypto.randomUUID())
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     useEffect(() => {
         if (isLikedByUser) {
@@ -108,9 +131,12 @@ function PostComponent({
                 <div className="flex gap-4 px-2.5 text-sm">
                     <a href="">View Comments...</a>
                     {username === localStorage.getItem('username') && (
-                        <a className="text-red-600" href="">
+                        <button
+                            onClick={handleDeletePost}
+                            className="text-red-600"
+                        >
                             Delete Post
-                        </a>
+                        </button>
                     )}
                 </div>
             </div>

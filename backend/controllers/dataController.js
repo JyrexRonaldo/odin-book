@@ -329,7 +329,7 @@ const deletePostById = asyncHandler(async (req, res) => {
       id: +postId,
     },
   });
-  res.status(200).json("Post deleted");
+  res.status(200).json(`PostID: ${postId}  deleted`);
 });
 
 module.exports = {

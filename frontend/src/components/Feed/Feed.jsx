@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 function Feed() {
     const [feedData, setFeedData] = useState([])
-    // let postdata = null
+    const [triggerRender, setTriggerRender] = useState(0)
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -35,11 +35,14 @@ function Feed() {
             }
         }
         fetchData()
-    }, [navigate])
+    }, [navigate, triggerRender])
 
     return (
         <>
-            <PostListComponent data={feedData} />
+            <PostListComponent
+                data={feedData}
+                setTriggerRender={setTriggerRender}
+            />
         </>
     )
 }

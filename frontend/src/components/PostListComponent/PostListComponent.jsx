@@ -1,7 +1,7 @@
 import PostComponent from '../PostComponent/PostComponent'
 import { useState } from 'react'
 
-function PostListComponent({ data }) {
+function PostListComponent({ data , setTriggerRender }) {
     const [buttonStyles, setButtonStyles] = useState([
         'default',
         'selected',
@@ -47,6 +47,7 @@ function PostListComponent({ data }) {
                 commentCount={dataItem._count.comments}
                 likeCount={dataItem._count.likedBy}
                 isLikedByUser={isLikedByUser}
+                setTriggerRender={setTriggerRender}
             />
         )
     })

@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 
 function Likes() {
     const [likesData, setLikesData] = useState([])
+    const [triggerRender, setTriggerRender] = useState(0)
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -32,11 +33,14 @@ function Likes() {
             }
         }
         fetchData()
-    }, [navigate])
+    }, [navigate, triggerRender])
 
     return (
         <>
-            <PostListComponent data={likesData} />
+            <PostListComponent
+                data={likesData}
+                setTriggerRender={setTriggerRender}
+            />
         </>
     )
 }
