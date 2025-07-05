@@ -28,7 +28,6 @@ const followRequestHandler = asyncHandler(async (req, res) => {
   });
 
   if (followAction) {
-    // console.log("unfollowed")
     await prisma.follows.delete({
       where: {
         followingId_followedById: {
@@ -155,13 +154,6 @@ const getAllPost = asyncHandler(async (req, res) => {
 });
 
 const getLikedPost = asyncHandler(async (req, res) => {
-  // const likedPost = await prisma.user.findMany({
-  //   where: {
-  //     id: req.user.id,
-  //   },
-  //   select: { posts: true, likedPosts: true },
-  // });
-  // res.status(200).json(likedPost);
   const likedPostIdsObjects = await prisma.likes.findMany({
     where: {
       userId: req.user.id,
@@ -224,7 +216,6 @@ const createLikePost = asyncHandler(async (req, res) => {
         id: +postId,
       },
       select: {
-        // likedBy: true,
         _count: {
           select: {
             likedBy: true,
@@ -415,11 +406,6 @@ const editProfileInfo = asyncHandler(async (req, res) => {
     );
   }
 
-  // console.log("hello");
-  // console.log(req.user.id);
-  // res
-  //   .status(200)
-  //   .json({ changeType, name, bio, username, oldPassword, newPassword });
 });
 
 module.exports = {

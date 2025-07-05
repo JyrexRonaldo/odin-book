@@ -12,6 +12,7 @@ function AccountEdit() {
     const [confirmNewPassword, setconfirmNewPassword] = useState('')
     const navigate = useNavigate()
     const { setForceUpdate } = useContext(RenderContext)
+    let passwordVerification = null
 
     function handleNameInput(e) {
         setName(e.currentTarget.value)
@@ -76,6 +77,12 @@ function AccountEdit() {
         } catch (error) {
             console.log(error)
         }
+    }
+
+    if (newPassword != confirmNewPassword) {
+        passwordVerification = 'Password do not match!'
+    } else {
+        passwordVerification = null
     }
 
     return (
@@ -203,6 +210,9 @@ function AccountEdit() {
                         name="confirmPassword"
                         autoComplete="new-password"
                     />
+                    <p className="text-sm text-red-400">
+                        {passwordVerification}
+                    </p>
                 </div>
                 <button
                     onClick={() => {
