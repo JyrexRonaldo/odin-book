@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { BiSolidUserCircle } from 'react-icons/bi'
 import { useNavigate } from 'react-router-dom'
+import RenderContext from '../RenderContext/RenderContext'
 
 function AccountEdit() {
     const [name, setName] = useState('')
@@ -9,8 +10,8 @@ function AccountEdit() {
     const [oldPassword, setOldPassword] = useState('')
     const [newPassword, setnewPassword] = useState('')
     const [confirmNewPassword, setconfirmNewPassword] = useState('')
-    const [forceUpdate, setForceUpdate] = useState('update')
     const navigate = useNavigate()
+    const { setForceUpdate } = useContext(RenderContext)
 
     function handleNameInput(e) {
         setName(e.currentTarget.value)

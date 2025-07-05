@@ -7,8 +7,10 @@ import { BiSolidUserCircle } from 'react-icons/bi'
 import { useState } from 'react'
 import { useNavigate, Link, Outlet } from 'react-router-dom'
 import Navbar from '../Navbar/Navbar'
+import RenderContext from '../RenderContext/RenderContext'
 
 function App() {
+    const [forceUpdate, setForceUpdate] = useState('update')
     const [buttonStyles, setButtonStyles] = useState([
         'default',
         'default',
@@ -109,7 +111,11 @@ function App() {
                         </div>
                     </div>
                     <div className="col-span-2 flex h-full w-full items-start justify-start p-5 pb-30 max-lg:justify-center">
-                        <Outlet />
+                        <RenderContext.Provider
+                            value={{ forceUpdate, setForceUpdate }}
+                        >
+                            <Outlet />
+                        </RenderContext.Provider>
                     </div>
                 </div>
                 <div className="fixed bottom-0 min-h-24 w-full overflow-hidden lg:hidden">
