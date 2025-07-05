@@ -1,5 +1,6 @@
 const prisma = require("../config/prisma");
 const asyncHandler = require("express-async-handler");
+const bcrypt = require("bcryptjs");
 
 const getAllUsers = asyncHandler(async (req, res) => {
   const allUsers = await prisma.user.findMany({
@@ -344,7 +345,7 @@ async function handleProfileChange(userId, name, bio) {
   });
 }
 
-async function handleProfileChange(userId, name, bio) {
+async function handleProfileChange(userId, name, bio, changeType, res) {
   await prisma.user.update({
     where: {
       id: userId,
@@ -354,9 +355,10 @@ async function handleProfileChange(userId, name, bio) {
       bio,
     },
   });
+  res.status(200).json({ changeType, message: "Change successful" });
 }
 
-async function handleUsernameChange(userId, username) {
+async function handleUsernameChange(userId, username, changeType, res) {
   await prisma.user.update({
     where: {
       id: userId,
@@ -365,17 +367,33 @@ async function handleUsernameChange(userId, username) {
       username,
     },
   });
+  res.status(200).json({ changeType, message: "Username change successful" });
 }
 
-async function handlePasswordChange(userId, username) {
-  await prisma.user.update({
-    where: {
-      id: userId,
-    },
-    data: {
-      username,
-    },
-  });
+async function handlePasswordChange(
+  userId,
+  userPassword,
+  oldPassword,
+  newPassword,
+  changeType,
+  res
+) {
+  const match = await bcrypt.compare(oldPassword, userPassword);
+  console.log(match);
+  if (match) {
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        password: hashedPassword,
+      },
+    });
+    res.status(200).json({ changeType, message: "Password change successful" });
+  } else {
+    res.status(200).json({ changeType, message: "Invalid old password" });
+  }
 }
 
 const editProfileInfo = asyncHandler(async (req, res) => {
@@ -383,16 +401,25 @@ const editProfileInfo = asyncHandler(async (req, res) => {
     req.body;
 
   if (changeType === "profile") {
-    await handleProfileChange(req.user.id, name, bio);
+    await handleProfileChange(req.user.id, name, bio, changeType, res);
   } else if (changeType === "username") {
-    await handleUsernameChange(req.user.id, username);
+    await handleUsernameChange(req.user.id, username, changeType, res);
+  } else if (changeType === "password") {
+    await handlePasswordChange(
+      req.user.id,
+      req.user.password,
+      oldPassword,
+      newPassword,
+      changeType,
+      res
+    );
   }
 
   // console.log("hello");
-  console.log(req.user.id);
-  res
-    .status(200)
-    .json({ changeType, name, bio, username, oldPassword, newPassword });
+  // console.log(req.user.id);
+  // res
+  //   .status(200)
+  //   .json({ changeType, name, bio, username, oldPassword, newPassword });
 });
 
 module.exports = {
