@@ -14,10 +14,19 @@ function PostComponent({
     commentCount,
     likeCount,
     isLikedByUser,
-    setTriggerRender
+    setTriggerRender,
 }) {
+    const [showComment, setShowComment] = useState(false)
     const [liked, setLiked] = useState(false)
     const [likes, setLikes] = useState(likeCount)
+
+    function handleShowComment(e) {
+        if (e.target === e.currentTarget) {
+            setShowComment(!showComment)
+        }
+
+        console.log(showComment)
+    }
 
     createdAt = format(createdAt, 'MMM d, yyyy, h:m a')
 
@@ -129,16 +138,35 @@ function PostComponent({
                     <p className="px-2.5 text-xs">{createdAt}</p>
                 </div>
                 <div className="flex gap-4 px-2.5 text-sm">
-                    <a href="">View Comments...</a>
+                    <button
+                        onClick={handleShowComment}
+                        type="button"
+                        className="cursor-pointer"
+                    >
+                        View Comments...
+                    </button>
                     {username === localStorage.getItem('username') && (
                         <button
                             onClick={handleDeletePost}
-                            className="text-red-600"
+                            className="cursor-pointer text-red-600"
                         >
                             Delete Post
                         </button>
                     )}
                 </div>
+                {showComment && (
+                    <div
+                        onClick={handleShowComment}
+                        className="fixed top-0 left-0 flex h-screen w-screen max-w-full items-center justify-center bg-red-700/0 max-lg:z-10"
+                    >
+                        <div className="h-8/12 w-full rounded-lg bg-green-700 max-lg:self-end lg:grid lg:max-w-9/12 lg:grid-cols-[6fr_5fr]">
+                            <div className="bg-amber-300 max-lg:hidden"></div>
+                            <div className="bg-blue-800 max-lg:h-full">
+                                asdasdasd
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         </>
     )
