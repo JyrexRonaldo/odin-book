@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { BiSolidUserCircle } from 'react-icons/bi'
+import { useNavigate } from 'react-router-dom'
 
 function AccountEdit() {
     const [name, setName] = useState('')
@@ -8,6 +9,8 @@ function AccountEdit() {
     const [oldPassword, setOldPassword] = useState('')
     const [newPassword, setnewPassword] = useState('')
     const [confirmNewPassword, setconfirmNewPassword] = useState('')
+    const [forceUpdate, setForceUpdate] = useState('update')
+    const navigate = useNavigate()
 
     function handleNameInput(e) {
         setName(e.currentTarget.value)
@@ -31,6 +34,47 @@ function AccountEdit() {
 
     function handleConfirmNewPasswordInput(e) {
         setconfirmNewPassword(e.currentTarget.value)
+    }
+
+    async function handleProfileInfoEdit(changeType) {
+        console.log(localStorage.getItem('username'))
+
+        let updateData = {}
+
+        if (changeType === 'profile') {
+            updateData = { changeType, name, bio }
+        } else if (changeType === 'username') {
+            updateData = { changeType, username }
+        } else if (changeType === 'password') {
+            updateData = { changeType, oldPassword, newPassword }
+        }
+
+        try {
+            const response = await fetch(
+                `${import.meta.env.VITE_HOME_DOMAIN}/profile`,
+                {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `${localStorage.getItem('userToken')}`,
+                    },
+                    body: JSON.stringify(updateData),
+                }
+            )
+
+            if (response.status === 401) {
+                navigate('/login')
+            }
+
+            const data = await response.json()
+            console.log(data)
+            if (data.changeType === 'username') {
+                localStorage.setItem('username', `${username}`)
+                setForceUpdate({})
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (
@@ -73,7 +117,13 @@ function AccountEdit() {
                         id="bio"
                     ></textarea>
                 </div>
-                <button className="cursor-pointer self-start rounded-lg bg-blue-500 px-3 py-1 text-xl text-blue-950 hover:bg-blue-600 focus:bg-blue-600 active:bg-blue-600">
+                <button
+                    onClick={() => {
+                        handleProfileInfoEdit('profile')
+                    }}
+                    className="cursor-pointer self-start rounded-lg bg-blue-500 px-3 py-1 text-xl text-blue-950 hover:bg-blue-600 focus:bg-blue-600 active:bg-blue-600"
+                    type="button"
+                >
                     Save
                 </button>
             </div>
@@ -95,7 +145,13 @@ function AccountEdit() {
                         name="username"
                     />
                 </div>
-                <button className="cursor-pointer self-start rounded-lg bg-blue-500 px-3 py-1 text-xl text-blue-950 hover:bg-blue-600 focus:bg-blue-600 active:bg-blue-600">
+                <button
+                    onClick={() => {
+                        handleProfileInfoEdit('username')
+                    }}
+                    className="cursor-pointer self-start rounded-lg bg-blue-500 px-3 py-1 text-xl text-blue-950 hover:bg-blue-600 focus:bg-blue-600 active:bg-blue-600"
+                    type="button"
+                >
                     Save
                 </button>
             </div>
@@ -147,7 +203,13 @@ function AccountEdit() {
                         autoComplete="new-password"
                     />
                 </div>
-                <button className="cursor-pointer self-start rounded-lg bg-blue-500 px-3 py-1 text-xl text-blue-950 hover:bg-blue-600 focus:bg-blue-600 active:bg-blue-600">
+                <button
+                    onClick={() => {
+                        handleProfileInfoEdit('password')
+                    }}
+                    className="cursor-pointer self-start rounded-lg bg-blue-500 px-3 py-1 text-xl text-blue-950 hover:bg-blue-600 focus:bg-blue-600 active:bg-blue-600"
+                    type="button"
+                >
                     Save
                 </button>
             </form>

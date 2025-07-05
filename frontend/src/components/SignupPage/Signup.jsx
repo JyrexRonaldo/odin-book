@@ -30,6 +30,9 @@ function SignupPage() {
     }
 
     async function handleSignUpButton() {
+        if (password === confirmPassword) {
+        return
+    }
         try {
             const response = await fetch(
                 `${import.meta.env.VITE_HOME_DOMAIN}/auth/signup`,

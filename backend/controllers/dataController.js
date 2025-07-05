@@ -332,6 +332,69 @@ const deletePostById = asyncHandler(async (req, res) => {
   res.status(200).json(`PostID: ${postId}  deleted`);
 });
 
+async function handleProfileChange(userId, name, bio) {
+  await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      name,
+      bio,
+    },
+  });
+}
+
+async function handleProfileChange(userId, name, bio) {
+  await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      name,
+      bio,
+    },
+  });
+}
+
+async function handleUsernameChange(userId, username) {
+  await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      username,
+    },
+  });
+}
+
+async function handlePasswordChange(userId, username) {
+  await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      username,
+    },
+  });
+}
+
+const editProfileInfo = asyncHandler(async (req, res) => {
+  const { changeType, name, bio, username, oldPassword, newPassword } =
+    req.body;
+
+  if (changeType === "profile") {
+    await handleProfileChange(req.user.id, name, bio);
+  } else if (changeType === "username") {
+    await handleUsernameChange(req.user.id, username);
+  }
+
+  // console.log("hello");
+  console.log(req.user.id);
+  res
+    .status(200)
+    .json({ changeType, name, bio, username, oldPassword, newPassword });
+});
+
 module.exports = {
   getAllUsers,
   followRequestHandler,
@@ -343,4 +406,5 @@ module.exports = {
   createLikePost,
   getUserProfileByUsername,
   deletePostById,
+  editProfileInfo,
 };

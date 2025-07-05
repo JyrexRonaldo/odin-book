@@ -20,6 +20,8 @@ dataRouter
   .route("/users/:username")
   .get(dataController.getUserProfileByUsername);
 
+dataRouter.route("/profile").put(dataController.editProfileInfo);
+
 dataRouter
   .route("/posts")
   // .get(dataController.getAllUsers)
