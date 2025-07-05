@@ -3,7 +3,7 @@ import { FaPlus } from 'react-icons/fa6'
 import { FaMinus } from 'react-icons/fa6'
 import { useNavigate } from 'react-router-dom'
 
-function UserCard({ id, name, username, bio, isFollowed, setTriggerRender }) {
+function UserCard({ id, name, username, bio, isFollowed, setTriggerRender, followerCount }) {
     const navigate = useNavigate()
 
     async function handleSendRequest() {
@@ -40,7 +40,7 @@ function UserCard({ id, name, username, bio, isFollowed, setTriggerRender }) {
             <BiSolidUserCircle className="size-17" />
 
             <p className="text-2xl font-extrabold">{name}</p>
-            <p className="text-xs">5 followers</p>
+            <p className="text-xs">{followerCount} followers</p>
             <p>@{username}</p>
             <p>{bio}</p>
             <div className="flex gap-3">

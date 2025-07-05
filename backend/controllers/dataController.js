@@ -7,6 +7,11 @@ const getAllUsers = asyncHandler(async (req, res) => {
     include: {
       followedBy: true,
       following: true,
+      _count: {
+        select: {
+          followedBy: true,
+        },
+      },
     },
   });
   res.json(allUsers);
@@ -405,7 +410,6 @@ const editProfileInfo = asyncHandler(async (req, res) => {
       res
     );
   }
-
 });
 
 module.exports = {

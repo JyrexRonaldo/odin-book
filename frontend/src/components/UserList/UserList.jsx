@@ -58,6 +58,7 @@ function UserList() {
 
     const userCards = userData.map((data) => {
         let isFollowedValue = null
+        const followerCount = data._count.followedBy
         data.followedBy.forEach((element) => {
             if (element.followingId === +localStorage.getItem('userId')) {
                 isFollowedValue = true
@@ -75,6 +76,7 @@ function UserList() {
                 bio={data.bio}
                 isFollowed={isFollowedValue}
                 setTriggerRender={setTriggerRender}
+                followerCount={followerCount}
             />
         )
     })
