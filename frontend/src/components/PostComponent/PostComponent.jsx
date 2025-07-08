@@ -4,6 +4,8 @@ import { TbArrowForwardUp } from 'react-icons/tb'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { format } from 'date-fns'
+import Textarea from '../Textarea/Textarea'
+import CommentList from '../CommentList/CommentList'
 
 function PostComponent({
     id,
@@ -159,10 +161,12 @@ function PostComponent({
                         onClick={handleShowComment}
                         className="fixed top-0 left-0 flex h-screen w-screen max-w-full items-center justify-center bg-red-700/0 max-lg:z-10"
                     >
-                        <div className="h-8/12 w-full rounded-lg bg-green-700 max-lg:self-end lg:grid lg:max-w-9/12 lg:grid-cols-[6fr_5fr]">
+                        <div className="h-8/12 w-full overflow-auto rounded-lg bg-blue-800 max-lg:self-end lg:grid lg:max-w-9/12 lg:grid-cols-[6fr_5fr]">
                             <div className="bg-amber-300 max-lg:hidden"></div>
-                            <div className="bg-blue-800 max-lg:h-full">
-                                asdasdasd
+                            <div className="bg-blue-800 max-lg:h-full flex flex-col">
+                                <CommentList />
+                                <p className='text-center text-xs text-blue-400'>-End of comments-</p>
+                                <Textarea></Textarea>
                             </div>
                         </div>
                     </div>

@@ -7,11 +7,11 @@ function Textarea({
     placeholderText,
 }) {
     return (
-        <div className="flex items-center justify-between gap-2 p-2.5 mt-auto">
+        <div className="sticky bottom-0 mt-auto flex items-center justify-between gap-2 bg-blue-800 p-2.5">
             <img src="/morty.jpg" className="size-12 rounded-full" alt="" />
 
             <textarea
-                className="grow resize-none rounded-[7px] bg-white text-black px-2 py-1"
+                className="grow resize-none rounded-[7px] bg-white px-2 py-1 text-black"
                 name="comment"
                 id=""
                 placeholder={placeholderText}
@@ -21,7 +21,7 @@ function Textarea({
             ></textarea>
 
             <button
-                className="rounded-[7px] bg-blue-500 text-black p-2"
+                className="rounded-[7px] bg-blue-500 p-2 text-black"
                 onClick={sendButtonHandler}
             >
                 Send
