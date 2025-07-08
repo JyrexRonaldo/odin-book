@@ -26,6 +26,7 @@ model User {
   followedBy Follows[] @relation("followedBy")
   following  Follows[] @relation("following")
   likedPosts Likes[]
+  LikedComments CommentLikes[]
 }
 
 model Follows {
@@ -57,6 +58,15 @@ model Likes {
   @@id([userId, postId])
 }
 
+model CommentLikes {
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+  comment   Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  commentId Int
+
+  @@id([userId, commentId])
+}
+
 model Comment {
   id        Int      @id @default(autoincrement())
   comment   String
@@ -66,4 +76,5 @@ model Comment {
   authorId  Int
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId    Int
+  LikedBy CommentLikes[]
 }
