@@ -1,8 +1,14 @@
 import { useState } from 'react'
 import { ImHeart } from 'react-icons/im'
+import Textarea from '../Textarea/Textarea'
 
 function Comment() {
+    const [show, setShow] = useState(false)
     const [liked, setLiked] = useState(false)
+
+    function handleEditButton() {
+        setShow(!show)
+    }
 
     async function handleLikeButton() {
         // try {
@@ -44,31 +50,38 @@ function Comment() {
         heartIconStyle = 'size-6 text-red-600'
     }
     return (
-        <div className="flex p-2.5 items-center">
-            <div>
-                <img src="/morty.jpg" className="size-12 rounded-full" alt="" />
-            </div>
-            <div>
-                <div className='flex gap-2 text-xs'>
-                    <p>Rick</p>
-                    <p>2 seconds</p>
+        <>
+            <div className="flex items-center p-2.5">
+                <div>
+                    <img
+                        src="/morty.jpg"
+                        className="size-12 rounded-full"
+                        alt=""
+                    />
                 </div>
                 <div>
-                    <p className='text-sm'>Hello</p>
+                    <div className="flex gap-2 text-xs">
+                        <p>Rick</p>
+                        <p>2 seconds</p>
+                    </div>
+                    <div>
+                        <p className="text-sm">Hello</p>
+                    </div>
+                    <div className="flex gap-2 text-xs">
+                        <button onClick={handleEditButton}>Edit</button>
+                        <button className="text-red-600">Delete</button>
+                    </div>
                 </div>
-                <div className='flex gap-2 text-xs'>
-                    <button>Edit</button>
-                    <button className='text-red-600'>Delete</button>
-                </div>
+                <button
+                    onClick={handleLikeButton}
+                    className="ml-auto flex cursor-pointer flex-col items-center gap-1"
+                >
+                    <ImHeart className={`${heartIconStyle}`} />
+                    <p>{'5'}</p>
+                </button>
             </div>
-            <button
-                onClick={handleLikeButton}
-                className="ml-auto flex cursor-pointer flex-col items-center gap-1"
-            >
-                <ImHeart className={`${heartIconStyle}`} />
-                <p>{'5'}</p>
-            </button>
-        </div>
+            {show && <Textarea></Textarea>}
+        </>
     )
 }
 

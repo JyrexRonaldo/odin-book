@@ -1,6 +1,7 @@
 import { ImHeart } from 'react-icons/im'
 import { FaComment } from 'react-icons/fa'
 import { TbArrowForwardUp } from 'react-icons/tb'
+import { IoCloseSharp } from 'react-icons/io5'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { format } from 'date-fns'
@@ -161,11 +162,27 @@ function PostComponent({
                         onClick={handleShowComment}
                         className="fixed top-0 left-0 flex h-screen w-screen max-w-full items-center justify-center bg-red-700/0 max-lg:z-10"
                     >
-                        <div className="h-8/12 w-full overflow-auto rounded-lg bg-blue-800 max-lg:self-end lg:grid lg:max-w-9/12 lg:grid-cols-[6fr_5fr]">
-                            <div className="bg-amber-300 max-lg:hidden"></div>
-                            <div className="bg-blue-800 max-lg:h-full flex flex-col">
+                        <div className="h-8/12 w-full rounded-lg bg-blue-800 max-lg:self-end lg:grid lg:max-w-9/12 lg:grid-cols-[6fr_5fr]">
+                            <div className="flex items-center justify-center bg-black max-lg:hidden">
+                                <img
+                                    className="object-fill max-lg:hidden"
+                                    src="/mass-effect.jpeg"
+                                    alt=""
+                                />
+                            </div>
+                            <div className="flex flex-col overflow-auto bg-blue-800 max-lg:h-full">
+                                <div className="sticky top-0 flex justify-between bg-blue-800 p-2.5">
+                                    <p className="text-2xl font-extrabold">
+                                        Comments
+                                    </p>{' '}
+                                    <button>
+                                        <IoCloseSharp className="size-8" />
+                                    </button>
+                                </div>
                                 <CommentList />
-                                <p className='text-center text-xs text-blue-400'>-End of comments-</p>
+                                <p className="text-center text-xs text-blue-400">
+                                    -End of comments-
+                                </p>
                                 <Textarea></Textarea>
                             </div>
                         </div>
