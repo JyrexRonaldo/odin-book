@@ -412,6 +412,16 @@ const editProfileInfo = asyncHandler(async (req, res) => {
   }
 });
 
+const getCommentsByPostId = asyncHandler(async (req, res) => {
+  const { postId } = req.params;
+  const comments = await prisma.comment.findMany({
+    where: {
+      postId: +postId,
+    },
+  });
+  res.status(200).json(comments);
+});
+
 module.exports = {
   getAllUsers,
   followRequestHandler,
@@ -424,4 +434,5 @@ module.exports = {
   getUserProfileByUsername,
   deletePostById,
   editProfileInfo,
+  getCommentsByPostId
 };
