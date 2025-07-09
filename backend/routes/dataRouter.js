@@ -28,7 +28,7 @@ dataRouter
   .post(dataController.createPost)
   .delete(dataController.deletePostById);
 
-dataRouter.route("/comments").post(dataController.createCommentHandler)
+dataRouter.route("/comments").post(dataController.createCommentHandler).delete(dataController.deleteCommentById)
 dataRouter.route("/comments/:postId").get(dataController.getCommentsByPostId);
 
 module.exports = dataRouter;

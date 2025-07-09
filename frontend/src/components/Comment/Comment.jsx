@@ -3,9 +3,42 @@ import { ImHeart } from 'react-icons/im'
 import Textarea from '../Textarea/Textarea'
 import { intervalToDuration } from 'date-fns'
 
-function Comment({ authorName, commentBody, authorUsername, createdAt }) {
+function Comment({
+    id,
+    authorName,
+    commentBody,
+    authorUsername,
+    createdAt,
+    setCommentTriggerRender,
+    setTriggerRender,
+}) {
     const [show, setShow] = useState(false)
     const [liked, setLiked] = useState(false)
+
+    async function handleDeleteButton() {
+        try {
+            const response = await fetch(
+                `${import.meta.env.VITE_HOME_DOMAIN}/comments`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `${localStorage.getItem('userToken')}`,
+                    },
+                    body: JSON.stringify({
+                        commentId: id,
+                    }),
+                }
+            )
+
+            const data = await response.json()
+            console.log(data)
+            setCommentTriggerRender(self.crypto.randomUUID())
+            setTriggerRender(self.crypto.randomUUID())
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     function handleEditButton() {
         setShow(!show)
@@ -58,10 +91,10 @@ function Comment({ authorName, commentBody, authorUsername, createdAt }) {
 
     const time = Object.keys(durationSinceCreated)[0]
 
-    let durationText = `0 seconds`
+    let durationText = `0s`
 
     if (time) {
-        durationText = `${durationSinceCreated[time]} ${time}`
+        durationText = `${durationSinceCreated[time]}${time.slice(0, 1)}`
     }
 
     return (
@@ -84,8 +117,18 @@ function Comment({ authorName, commentBody, authorUsername, createdAt }) {
                     </div>
                     {authorUsername === localStorage.getItem('username') && (
                         <div className="flex gap-2 text-xs">
-                            <button onClick={handleEditButton}>Edit</button>
-                            <button className="text-red-600">Delete</button>
+                            <button
+                                className="cursor-pointer"
+                                onClick={handleEditButton}
+                            >
+                                Edit
+                            </button>
+                            <button
+                                className="cursor-pointer text-red-600"
+                                onClick={handleDeleteButton}
+                            >
+                                Delete
+                            </button>
                         </div>
                     )}
                 </div>

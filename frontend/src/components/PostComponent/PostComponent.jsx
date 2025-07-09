@@ -22,8 +22,8 @@ function PostComponent({
     const [showComment, setShowComment] = useState(false)
     const [liked, setLiked] = useState(false)
     const [likes, setLikes] = useState(likeCount)
-    const [likedComment, setLikedComment] = useState(false)
-    const [commentLikes, setcommentLikes] = useState(likeCount)
+    // const [likedComment, setLikedComment] = useState(false)
+    // const [commentLikes, setcommentLikes] = useState(commentLikeCount)
 
     const [commentText, setCommentText] = useState('')
     const [commentTriggerRender, setCommentTriggerRender] = useState(null)
@@ -114,6 +114,7 @@ function PostComponent({
             const data = await response.json()
             console.log(data)
             setCommentTriggerRender(self.crypto.randomUUID())
+            setTriggerRender(self.crypto.randomUUID())
             setCommentText('')
         } catch (error) {
             console.log(error)
@@ -227,6 +228,8 @@ function PostComponent({
                                 <CommentList
                                     postId={id}
                                     commentTriggerRender={commentTriggerRender}
+                                    setCommentTriggerRender={setCommentTriggerRender}
+                                    setTriggerRender={setTriggerRender}
                                 />
                                 <p className="text-center text-xs text-blue-400">
                                     -End of comments-

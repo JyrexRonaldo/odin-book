@@ -419,7 +419,7 @@ const getCommentsByPostId = asyncHandler(async (req, res) => {
       postId: +postId,
     },
     orderBy: {
-      createdAt: 'desc'
+      createdAt: "desc",
     },
     include: {
       author: {
@@ -431,6 +431,16 @@ const getCommentsByPostId = asyncHandler(async (req, res) => {
     },
   });
   res.status(200).json(comments);
+});
+
+const deleteCommentById = asyncHandler(async (req, res) => {
+  const { commentId } = req.body;
+  await prisma.comment.delete({
+    where: {
+      id: +commentId,
+    },
+  });
+  res.status(200).json(`CommentID: ${commentId}  deleted`);
 });
 
 module.exports = {
@@ -446,4 +456,5 @@ module.exports = {
   deletePostById,
   editProfileInfo,
   getCommentsByPostId,
+  deleteCommentById,
 };

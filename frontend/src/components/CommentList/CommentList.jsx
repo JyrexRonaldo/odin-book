@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import Comment from '../Comment/Comment'
-import { data } from 'react-router-dom'
 
 // const useCommentsData = (postId, newComment, deletedCommentId) => {
 //     const [commentsData, setCommenttsData] = useState(null)
@@ -26,6 +25,8 @@ import { data } from 'react-router-dom'
 function CommentList({
     postId,
     commentTriggerRender,
+    setCommentTriggerRender,
+    setTriggerRender
     // newComment = null,
     // deletedCommentId = null,
     // setDeletedCommentId,
@@ -107,13 +108,16 @@ function CommentList({
     //     <Comment key={index} />
     // ))
 
-    const commentCards = commentsData.map((dataItem, index) => (
+    const commentCards = commentsData.map((dataItem) => (
         <Comment
-            key={index}
+            key={dataItem.id}
+            id={dataItem.id}
             authorName={dataItem.author.name}
             commentBody={dataItem.comment}
             authorUsername={dataItem.author.username}
             createdAt={dataItem.createdAt}
+            setCommentTriggerRender={setCommentTriggerRender}
+            setTriggerRender={setTriggerRender}
         />
     ))
 
