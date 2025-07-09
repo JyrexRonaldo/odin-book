@@ -26,7 +26,7 @@ const postsData = Array.from({ length: 20 }).map((element, index) => {
   element = {
     body: faker.lorem.paragraph(),
     authorId,
-    createdAt: faker.date.anytime(),
+    createdAt: faker.date.past(),
   };
   return element;
 });

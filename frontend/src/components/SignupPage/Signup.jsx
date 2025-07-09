@@ -53,7 +53,7 @@ function SignupPage() {
             if (response.ok) {
                 setSuccessMessage(data.message)
                 setTimeout(() => {
-                    navigate('/feed')
+                    navigate('/explore')
                 }, 250)
             }
         } catch (error) {
