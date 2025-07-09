@@ -36,7 +36,7 @@ function CreatePostPage() {
             console.log(data)
             if (response.ok) {
                 setPostBody('')
-                navigate("/")
+                navigate("/explore")
             }
         } catch (error) {
             console.log(error)

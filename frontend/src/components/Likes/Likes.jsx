@@ -1,12 +1,18 @@
-import { useState } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import PostListComponent from '../PostListComponent/PostListComponent'
 import { useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
+import StylesContext from '../StylesContext/StylesContext'
 
 function Likes() {
     const [likesData, setLikesData] = useState([])
     const [triggerRender, setTriggerRender] = useState(0)
     const navigate = useNavigate()
+    const { handleLikesStyles } = useContext(StylesContext)
+
+    useEffect(() => {
+        handleLikesStyles()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     useEffect(() => {
         async function fetchData() {

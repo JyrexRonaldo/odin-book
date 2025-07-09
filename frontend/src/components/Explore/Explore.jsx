@@ -1,12 +1,19 @@
-import { useEffect } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import PostListComponent from '../PostListComponent/PostListComponent'
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import StylesContext from '../StylesContext/StylesContext'
 
 function Explore() {
     const [exploreData, setExploreData] = useState([])
     const [triggerRender, setTriggerRender] = useState(0)
     const navigate = useNavigate()
+    const { handleExploreStyles } = useContext(StylesContext)
+
+    useEffect(() => {
+        handleExploreStyles()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     useEffect(() => {
         async function fetchData() {
             try {

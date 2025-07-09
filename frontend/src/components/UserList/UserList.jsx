@@ -1,7 +1,8 @@
 import { IoMdSearch } from 'react-icons/io'
 import UserCard from '../UserCard/UserCard'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
+import StylesContext from '../StylesContext/StylesContext'
 
 function UserList() {
     const [userData, setUserData] = useState(null)
@@ -9,6 +10,12 @@ function UserList() {
     const [loading, setLoading] = useState(true)
     const [triggerRender, setTriggerRender] = useState(0)
     const navigate = useNavigate()
+    const { handleFindUsersStyles } = useContext(StylesContext)
+
+    useEffect(() => {
+        handleFindUsersStyles()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     useEffect(() => {
         async function fetchData() {

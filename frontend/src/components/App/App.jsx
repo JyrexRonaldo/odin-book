@@ -8,6 +8,7 @@ import { useState } from 'react'
 import { useNavigate, Link, Outlet } from 'react-router-dom'
 import Navbar from '../Navbar/Navbar'
 import RenderContext from '../RenderContext/RenderContext'
+import StylesContext from '../StylesContext/StylesContext'
 
 function App() {
     const [forceUpdate, setForceUpdate] = useState('update')
@@ -41,27 +42,43 @@ function App() {
         navigate('/post/create')
     }
 
-    function handleFeed() {
+    function handleFeedStyles() {
         setButtonStyles(['selected', 'default', 'default', 'default'])
         setIconStyles(['selected', 'default', 'default', 'default'])
+    }
+
+    function handleExploreStyles() {
+        setButtonStyles(['default', 'selected', 'default', 'default'])
+        setIconStyles(['default', 'selected', 'default', 'default'])
+    }
+
+    function handleLikesStyles() {
+        setButtonStyles(['default', 'default', 'default', 'selected'])
+        setIconStyles(['default', 'default', 'default', 'selected'])
+    }
+
+    function handleFindUsersStyles() {
+        setButtonStyles(['default', 'default', 'selected', 'default'])
+        setIconStyles(['default', 'default', 'selected', 'default'])
+    }
+
+    function handleFeed() {
+        handleFeedStyles()
         navigate('/feed')
     }
 
     function handleExplore() {
-        setButtonStyles(['default', 'selected', 'default', 'default'])
-        setIconStyles(['default', 'selected', 'default', 'default'])
+        handleExploreStyles()
         navigate('/explore')
     }
 
     function handleFindUsers() {
-        setButtonStyles(['default', 'default', 'selected', 'default'])
-        setIconStyles(['default', 'default', 'selected', 'default'])
+        handleFindUsersStyles()
         navigate('/users')
     }
 
     function handleLikes() {
-        setButtonStyles(['default', 'default', 'default', 'selected'])
-        setIconStyles(['default', 'default', 'default', 'selected'])
+        handleLikesStyles()
         navigate('/likes')
     }
 
@@ -111,11 +128,20 @@ function App() {
                         </div>
                     </div>
                     <div className="col-span-2 flex h-full w-full items-start justify-start p-5 pb-30 max-lg:justify-center">
-                        <RenderContext.Provider
-                            value={{ forceUpdate, setForceUpdate }}
+                        <StylesContext.Provider
+                            value={{
+                                handleFeedStyles,
+                                handleExploreStyles,
+                                handleFindUsersStyles,
+                                handleLikesStyles,
+                            }}
                         >
-                            <Outlet />
-                        </RenderContext.Provider>
+                            <RenderContext.Provider
+                                value={{ forceUpdate, setForceUpdate }}
+                            >
+                                <Outlet />
+                            </RenderContext.Provider>
+                        </StylesContext.Provider>
                     </div>
                 </div>
                 <div className="fixed bottom-0 min-h-24 w-full overflow-hidden lg:hidden">
