@@ -26,7 +26,7 @@ function CommentList({
     postId,
     commentTriggerRender,
     setCommentTriggerRender,
-    setTriggerRender
+    setTriggerRender,
     // newComment = null,
     // deletedCommentId = null,
     // setDeletedCommentId,
@@ -108,18 +108,30 @@ function CommentList({
     //     <Comment key={index} />
     // ))
 
-    const commentCards = commentsData.map((dataItem) => (
-        <Comment
-            key={dataItem.id}
-            id={dataItem.id}
-            authorName={dataItem.author.name}
-            commentBody={dataItem.comment}
-            authorUsername={dataItem.author.username}
-            createdAt={dataItem.createdAt}
-            setCommentTriggerRender={setCommentTriggerRender}
-            setTriggerRender={setTriggerRender}
-        />
-    ))
+    const commentCards = commentsData.map((dataItem) => {
+        let isLikedByUser = false
+        const likeArray = []
+        dataItem.likedBy.forEach((item) => {
+            likeArray.push(item.userId)
+        })
+        if (likeArray.includes(+localStorage.getItem('userId'))) {
+            isLikedByUser = true
+        }
+        return (
+            <Comment
+                key={dataItem.id}
+                id={dataItem.id}
+                authorName={dataItem.author.name}
+                commentBody={dataItem.comment}
+                authorUsername={dataItem.author.username}
+                createdAt={dataItem.createdAt}
+                setCommentTriggerRender={setCommentTriggerRender}
+                setTriggerRender={setTriggerRender}
+                commentLikeCount={dataItem._count.likedBy}
+                isLikedByUser={isLikedByUser}
+            />
+        )
+    })
 
     return <div>{commentCards}</div>
 }

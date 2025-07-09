@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ImHeart } from 'react-icons/im'
 import Textarea from '../Textarea/Textarea'
 import { intervalToDuration } from 'date-fns'
@@ -11,9 +11,12 @@ function Comment({
     createdAt,
     setCommentTriggerRender,
     setTriggerRender,
+    isLikedByUser,
+    commentLikeCount,
 }) {
     const [show, setShow] = useState(false)
-    const [liked, setLiked] = useState(false)
+    const [likedComment, setLikedComment] = useState(false)
+    const [commentLikes, setCommentLikes] = useState(commentLikeCount)
 
     async function handleDeleteButton() {
         try {
@@ -45,42 +48,50 @@ function Comment({
     }
 
     async function handleLikeButton() {
-        // try {
-        //     const response = await fetch(
-        //         `${import.meta.env.VITE_HOME_DOMAIN}/likes`,
-        //         {
-        //             method: 'POST',
-        //             headers: {
-        //                 'Content-Type': 'application/json',
-        //                 Authorization: `${localStorage.getItem('userToken')}`,
-        //             },
-        //             body: JSON.stringify({
-        //                 postId: id,
-        //             }),
-        //         }
-        //     )
+        try {
+            const response = await fetch(
+                `${import.meta.env.VITE_HOME_DOMAIN}/comment-likes`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `${localStorage.getItem('userToken')}`,
+                    },
+                    body: JSON.stringify({
+                        commentId: id,
+                    }),
+                }
+            )
 
-        //     const data = await response.json()
-        //     // console.log(data)
-        //     if (data.message === 'Post liked') {
-        //         likeCount = data.likeCount._count.likedBy
-        //         setLiked(true)
-        //     } else {
-        //         likeCount = data.likeCount._count.likedBy
-        //         setLiked(false)
-        //     }
-        //     // console.log(likeCount)
-        //     setLikes(likeCount)
-        // } catch (error) {
-        //     console.log(error)
-        // }
+            const data = await response.json()
+            console.log(data)
+            if (data.message === 'Comment liked') {
+                commentLikeCount = data.commentLikeCount._count.likedBy
+                setLikedComment(true)
+            } else {
+                commentLikeCount = data.commentLikeCount._count.likedBy
+                setLikedComment(false)
+            }
+            // console.log(likeCount)
+            setCommentLikes(commentLikeCount)
+        } catch (error) {
+            console.log(error)
+        }
 
-        setLiked(!liked)
+        // setLikedComment(!likedComment)
     }
+
+    useEffect(() => {
+        if (isLikedByUser) {
+            setLikedComment(true)
+        } else {
+            setLikedComment(false)
+        }
+    }, [isLikedByUser])
 
     let heartIconStyle = 'size-6'
 
-    if (liked) {
+    if (likedComment) {
         heartIconStyle = 'size-6 text-red-600'
     }
 
@@ -137,7 +148,7 @@ function Comment({
                     className="ml-auto flex cursor-pointer flex-col items-center gap-1"
                 >
                     <ImHeart className={`${heartIconStyle}`} />
-                    <p>{'5'}</p>
+                    <p>{commentLikes}</p>
                 </button>
             </div>
             {show && (

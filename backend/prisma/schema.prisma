@@ -15,17 +15,17 @@ datasource db {
 }
 
 model User {
-  id         Int       @id @default(autoincrement())
-  name       String
-  username   String    @unique
-  email      String    @unique
-  bio        String?   @default("Follow me and get to know me! We might end up best friends!")
-  password   String
-  posts      Post[]
-  comments   Comment[]
-  followedBy Follows[] @relation("followedBy")
-  following  Follows[] @relation("following")
-  likedPosts Likes[]
+  id            Int            @id @default(autoincrement())
+  name          String
+  username      String         @unique
+  email         String         @unique
+  bio           String?        @default("Follow me and get to know me! We might end up best friends!")
+  password      String
+  posts         Post[]
+  comments      Comment[]
+  followedBy    Follows[]      @relation("followedBy")
+  following     Follows[]      @relation("following")
+  likedPosts    Likes[]
   LikedComments CommentLikes[]
 }
 
@@ -59,8 +59,8 @@ model Likes {
 }
 
 model CommentLikes {
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId Int
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
   comment   Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
   commentId Int
 
@@ -68,13 +68,13 @@ model CommentLikes {
 }
 
 model Comment {
-  id        Int      @id @default(autoincrement())
+  id        Int            @id @default(autoincrement())
   comment   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  author    User           @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId  Int
-  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  post      Post           @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId    Int
-  likedBy CommentLikes[]
+  likedBy   CommentLikes[]
 }

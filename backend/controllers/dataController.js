@@ -422,6 +422,12 @@ const getCommentsByPostId = asyncHandler(async (req, res) => {
       createdAt: "desc",
     },
     include: {
+      likedBy: true,
+      _count: {
+        select: {
+          likedBy: true,
+        },
+      },
       author: {
         select: {
           name: true,
@@ -480,7 +486,7 @@ const createLikeComment = asyncHandler(async (req, res) => {
     await prisma.commentLikes.create({
       data: {
         userId: req.user.id,
-        comment: +commentId,
+        commentId: +commentId,
       },
     });
     const commentLikeCount = await prisma.comment.findUnique({
@@ -513,5 +519,5 @@ module.exports = {
   editProfileInfo,
   getCommentsByPostId,
   deleteCommentById,
-  createLikeComment
+  createLikeComment,
 };
