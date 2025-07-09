@@ -1,7 +1,8 @@
 import PostComponent from '../PostComponent/PostComponent'
 import { useState } from 'react'
 
-function PostListComponent({ data , setTriggerRender }) {
+function PostListComponent({ data, setTriggerRender }) {
+    const [currentTab, setCurrentTab] = useState('Latest')
     const [buttonStyles, setButtonStyles] = useState([
         'default',
         'selected',
@@ -18,39 +19,89 @@ function PostListComponent({ data , setTriggerRender }) {
     function handleSelect(e) {
         if (e.target.textContent === 'Popular') {
             setButtonStyles(['selected', 'default', 'default'])
+            setCurrentTab('Popular')
         } else if (e.target.textContent === 'Latest') {
             setButtonStyles(['default', 'selected', 'default'])
-        } else {
+            setCurrentTab('Latest')
+        } else if (e.target.textContent === 'Oldest') {
             setButtonStyles(['default', 'default', 'selected'])
+            setCurrentTab('Oldest')
         }
     }
 
-    const dataCards = data.map((dataItem) => {
-        let isLikedByUser = false
-        const likeArray = []
-        // console.log(dataItem.likedBy)
-        dataItem.likedBy.forEach((item) => {
-            likeArray.push(item.userId)
+    function getOldestPost() {
+        const sortedData = data.toSorted((a, b) => {
+            if (a.createdAt < b.createdAt) {
+                return -1
+            } else {
+                return 1
+            }
         })
-        if (likeArray.includes(+localStorage.getItem("userId"))) {
-            isLikedByUser = true
-        }
+        return sortedData
+    }
+    function getLatestPost() {
+        const sortedData = data.toSorted((a, b) => {
+            if (a.createdAt > b.createdAt) {
+                return -1
+            } else {
+                return 1
+            }
+        })
+        return sortedData
+    }
+    function getMostPopularPost() {
+        const sortedData = data.toSorted((a, b) => {
+            if (a.likedBy.length > b.likedBy.length) {
+                return -1
+            } else {
+                return 1
+            }
+        })
+        return sortedData
+    }
 
-        return (
-            <PostComponent
-                key={dataItem.id}
-                id={dataItem.id}
-                name={dataItem.author.name}
-                username={dataItem.author.username}
-                body={dataItem.body}
-                createdAt={dataItem.createdAt}
-                commentCount={dataItem._count.comments}
-                likeCount={dataItem._count.likedBy}
-                isLikedByUser={isLikedByUser}
-                setTriggerRender={setTriggerRender}
-            />
-        )
-    })
+    function getPostCards(data) {
+        const dataCards = data.map((dataItem) => {
+            let isLikedByUser = false
+            const likeArray = []
+            dataItem.likedBy.forEach((item) => {
+                likeArray.push(item.userId)
+            })
+            if (likeArray.includes(+localStorage.getItem('userId'))) {
+                isLikedByUser = true
+            }
+
+            return (
+                <PostComponent
+                    key={dataItem.id}
+                    id={dataItem.id}
+                    name={dataItem.author.name}
+                    username={dataItem.author.username}
+                    body={dataItem.body}
+                    createdAt={dataItem.createdAt}
+                    commentCount={dataItem._count.comments}
+                    likeCount={dataItem._count.likedBy}
+                    isLikedByUser={isLikedByUser}
+                    setTriggerRender={setTriggerRender}
+                />
+            )
+        })
+
+        return dataCards
+    }
+
+    let dataCards = null
+
+    if (currentTab === 'Popular') {
+        const postData = getMostPopularPost()
+        dataCards = getPostCards(postData)
+    } else if (currentTab === 'Latest') {
+        const postData = getLatestPost()
+        dataCards = getPostCards(postData)
+    } else if (currentTab === 'Oldest') {
+        const postData = getOldestPost()
+        dataCards = getPostCards(postData)
+    }
 
     return (
         <div className="flex w-full max-w-xl flex-col gap-5 rounded-lg lg:min-w-md">
@@ -75,15 +126,6 @@ function PostListComponent({ data , setTriggerRender }) {
                 </button>
             </nav>
             <div className="flex flex-col gap-8">
-                {/* <PostComponent />
-                <PostComponent />
-                <PostComponent />
-                <PostComponent />
-                <PostComponent />
-                <PostComponent />
-                <PostComponent />
-                <PostComponent /> */}
-
                 {dataCards}
             </div>
         </div>
