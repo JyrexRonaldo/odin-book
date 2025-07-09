@@ -11,6 +11,8 @@ dataRouter
   .post(dataController.createLikePost)
   .get(dataController.getLikedPost);
 
+dataRouter.route("/comment-likes").post(dataController.createLikeComment);
+
 dataRouter
   .route("/users")
   .get(dataController.getAllUsers)
@@ -28,7 +30,10 @@ dataRouter
   .post(dataController.createPost)
   .delete(dataController.deletePostById);
 
-dataRouter.route("/comments").post(dataController.createCommentHandler).delete(dataController.deleteCommentById)
+dataRouter
+  .route("/comments")
+  .post(dataController.createCommentHandler)
+  .delete(dataController.deleteCommentById);
 dataRouter.route("/comments/:postId").get(dataController.getCommentsByPostId);
 
 module.exports = dataRouter;

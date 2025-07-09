@@ -443,6 +443,62 @@ const deleteCommentById = asyncHandler(async (req, res) => {
   res.status(200).json(`CommentID: ${commentId}  deleted`);
 });
 
+const createLikeComment = asyncHandler(async (req, res) => {
+  const { commentId } = req.body;
+  const commentLikeRecord = await prisma.commentLikes.findUnique({
+    where: {
+      userId_commentId: {
+        userId: req.user.id,
+        commentId: +commentId,
+      },
+    },
+  });
+
+  if (commentLikeRecord) {
+    await prisma.commentLikes.delete({
+      where: {
+        userId_commentId: {
+          userId: req.user.id,
+          commentId: +commentId,
+        },
+      },
+    });
+    const commentLikeCount = await prisma.comment.findUnique({
+      where: {
+        id: +commentId,
+      },
+      select: {
+        _count: {
+          select: {
+            likedBy: true,
+          },
+        },
+      },
+    });
+    res.status(200).json({ message: "Comment unliked", commentLikeCount });
+  } else {
+    await prisma.commentLikes.create({
+      data: {
+        userId: req.user.id,
+        comment: +commentId,
+      },
+    });
+    const commentLikeCount = await prisma.comment.findUnique({
+      where: {
+        id: +commentId,
+      },
+      select: {
+        _count: {
+          select: {
+            likedBy: true,
+          },
+        },
+      },
+    });
+    res.status(200).json({ message: "Comment liked", commentLikeCount });
+  }
+});
+
 module.exports = {
   getAllUsers,
   followRequestHandler,
@@ -457,4 +513,5 @@ module.exports = {
   editProfileInfo,
   getCommentsByPostId,
   deleteCommentById,
+  createLikeComment
 };
