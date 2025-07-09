@@ -9,12 +9,17 @@ function UserList() {
     const [error, setError] = useState(false)
     const [loading, setLoading] = useState(true)
     const [triggerRender, setTriggerRender] = useState(0)
+    const [searchInput, setSearchInput] = useState('')
     const navigate = useNavigate()
     const { handleFindUsersStyles } = useContext(StylesContext)
 
+    function handleSearchInput(e) {
+        setSearchInput(e.target.value)
+    }
+
     useEffect(() => {
         handleFindUsersStyles()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
@@ -63,6 +68,39 @@ function UserList() {
         )
     }
 
+    const filteredCards = userData
+        .filter((data) => {
+            if (data.username.startsWith(searchInput)) {
+                return true
+            } else {
+                return false
+            }
+        })
+        .map((data) => {
+            let isFollowedValue = null
+            const followerCount = data._count.followedBy
+            data.followedBy.forEach((element) => {
+                if (element.followingId === +localStorage.getItem('userId')) {
+                    isFollowedValue = true
+                } else {
+                    isFollowedValue = false
+                }
+            })
+
+            return (
+                <UserCard
+                    key={data.id}
+                    id={data.id}
+                    name={data.name}
+                    username={data.username}
+                    bio={data.bio}
+                    isFollowed={isFollowedValue}
+                    setTriggerRender={setTriggerRender}
+                    followerCount={followerCount}
+                />
+            )
+        })
+
     const userCards = userData.map((data) => {
         let isFollowedValue = null
         const followerCount = data._count.followedBy
@@ -92,6 +130,8 @@ function UserList() {
         <div className="flex w-full max-w-2xl flex-col items-center gap-5 self-start text-white">
             <div className="flex w-80 justify-center rounded-lg bg-blue-900 p-3">
                 <input
+                    onChange={handleSearchInput}
+                    value={searchInput}
                     className="mr-3 w-full bg-blue-900"
                     type="search"
                     name="userSearch"
@@ -101,7 +141,7 @@ function UserList() {
                 <IoMdSearch className="size-7" />
             </div>
             <div className="flex w-full flex-wrap justify-center gap-8 lg:min-w-149">
-                {userCards}
+                {searchInput ? filteredCards : userCards}
             </div>
         </div>
     )
