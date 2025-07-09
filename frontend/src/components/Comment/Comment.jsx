@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { ImHeart } from 'react-icons/im'
 import Textarea from '../Textarea/Textarea'
+import { intervalToDuration } from 'date-fns'
 
-function Comment() {
+function Comment({ authorName, commentBody, authorUsername, createdAt }) {
     const [show, setShow] = useState(false)
     const [liked, setLiked] = useState(false)
 
@@ -49,28 +50,44 @@ function Comment() {
     if (liked) {
         heartIconStyle = 'size-6 text-red-600'
     }
+
+    const durationSinceCreated = intervalToDuration({
+        start: new Date(createdAt),
+        end: new Date(),
+    })
+
+    const time = Object.keys(durationSinceCreated)[0]
+
+    let durationText = `0 seconds`
+
+    if (time) {
+        durationText = `${durationSinceCreated[time]} ${time}`
+    }
+
     return (
         <>
-            <div className="flex items-center p-2.5">
-                <div>
+            <div className="flex items-center gap-1 p-2.5">
+                <div className="shrink-0">
                     <img
                         src="/morty.jpg"
                         className="size-12 rounded-full"
                         alt=""
                     />
                 </div>
-                <div>
+                <div className="flex flex-col gap-1">
                     <div className="flex gap-2 text-xs">
-                        <p>Rick</p>
-                        <p>2 seconds</p>
+                        <p>{authorName}</p>
+                        <p>{durationText}</p>
                     </div>
                     <div>
-                        <p className="text-sm">Hello</p>
+                        <p className="text-sm">{commentBody}</p>
                     </div>
-                    <div className="flex gap-2 text-xs">
-                        <button onClick={handleEditButton}>Edit</button>
-                        <button className="text-red-600">Delete</button>
-                    </div>
+                    {authorUsername === localStorage.getItem('username') && (
+                        <div className="flex gap-2 text-xs">
+                            <button onClick={handleEditButton}>Edit</button>
+                            <button className="text-red-600">Delete</button>
+                        </div>
+                    )}
                 </div>
                 <button
                     onClick={handleLikeButton}
@@ -80,7 +97,9 @@ function Comment() {
                     <p>{'5'}</p>
                 </button>
             </div>
-            {show && <Textarea></Textarea>}
+            {show && (
+                <Textarea placeholderText={"What's on your mind"}></Textarea>
+            )}
         </>
     )
 }

@@ -1,5 +1,6 @@
-// import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Comment from '../Comment/Comment'
+import { data } from 'react-router-dom'
 
 // const useCommentsData = (postId, newComment, deletedCommentId) => {
 //     const [commentsData, setCommenttsData] = useState(null)
@@ -24,10 +25,43 @@ import Comment from '../Comment/Comment'
 
 function CommentList({
     postId,
-    newComment = null,
-    deletedCommentId = null,
-    setDeletedCommentId,
+    commentTriggerRender,
+    // newComment = null,
+    // deletedCommentId = null,
+    // setDeletedCommentId,
 }) {
+    const [commentsData, setCommentsData] = useState([])
+
+    useEffect(() => {
+        async function fetchData() {
+            // console.log(localStorage.getItem('userToken'))
+            try {
+                const response = await fetch(
+                    `${import.meta.env.VITE_HOME_DOMAIN}/comments/${postId}`,
+                    {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `${localStorage.getItem('userToken')}`,
+                        },
+                    }
+                )
+
+                // console.log(response.status)
+
+                if (response.status === 401) {
+                    // navigate('/login')
+                }
+                const data = await response.json()
+                console.log(data)
+                setCommentsData(data)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        fetchData()
+    }, [postId, commentTriggerRender])
+
     // const { commentsData, error, loading } = useCommentsData(
     //     postId,
     //     newComment,
@@ -69,8 +103,18 @@ function CommentList({
     //         )
     //     })
 
-    const commentCards = Array.from({ length: 23 }).map((element, index) => (
-        <Comment key={index} />
+    // const commentCards = Array.from({ length: 23 }).map((element, index) => (
+    //     <Comment key={index} />
+    // ))
+
+    const commentCards = commentsData.map((dataItem, index) => (
+        <Comment
+            key={index}
+            authorName={dataItem.author.name}
+            commentBody={dataItem.comment}
+            authorUsername={dataItem.author.username}
+            createdAt={dataItem.createdAt}
+        />
     ))
 
     return <div>{commentCards}</div>

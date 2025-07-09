@@ -418,6 +418,17 @@ const getCommentsByPostId = asyncHandler(async (req, res) => {
     where: {
       postId: +postId,
     },
+    orderBy: {
+      createdAt: 'desc'
+    },
+    include: {
+      author: {
+        select: {
+          name: true,
+          username: true,
+        },
+      },
+    },
   });
   res.status(200).json(comments);
 });
@@ -434,5 +445,5 @@ module.exports = {
   getUserProfileByUsername,
   deletePostById,
   editProfileInfo,
-  getCommentsByPostId
+  getCommentsByPostId,
 };

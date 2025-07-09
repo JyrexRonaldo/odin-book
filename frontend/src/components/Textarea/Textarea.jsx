@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 
 function Textarea({
-    textBoxValue,
+    textFieldValue,
     textFieldHandler,
     sendButtonHandler,
     placeholderText,
@@ -16,7 +16,7 @@ function Textarea({
                 id=""
                 placeholder={placeholderText}
                 rows="2"
-                value={textBoxValue}
+                value={textFieldValue}
                 onChange={textFieldHandler}
             ></textarea>
 
