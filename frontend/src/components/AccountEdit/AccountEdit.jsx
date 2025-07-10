@@ -38,6 +38,21 @@ function AccountEdit() {
         setconfirmNewPassword(e.currentTarget.value)
     }
 
+    function resetProfileInputs() {
+        setName('')
+        setBio('')
+    }
+
+    function resetUsernameInputs() {
+        setUsername('')
+    }
+
+    function resetPasswordInputs() {
+        setOldPassword('')
+        setnewPassword('')
+        setconfirmNewPassword('')
+    }
+
     async function handleProfileInfoEdit(changeType) {
         console.log(localStorage.getItem('username'))
 
@@ -73,6 +88,13 @@ function AccountEdit() {
             if (data.changeType === 'username') {
                 localStorage.setItem('username', `${username}`)
                 setForceUpdate({})
+                resetUsernameInputs()
+            }
+            if (data.changeType === 'profile') {
+                resetProfileInputs()
+            }
+            if (data.changeType === 'password') {
+                resetPasswordInputs()
             }
         } catch (error) {
             console.log(error)
