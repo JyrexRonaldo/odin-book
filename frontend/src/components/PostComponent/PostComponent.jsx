@@ -29,7 +29,7 @@ function PostComponent({
     const [commentTriggerRender, setCommentTriggerRender] = useState(null)
 
     function handleShowComment(e) {
-        if (e.target.dataset.comment === 'isComment') {
+        if (e.target.dataset.comment) {
             setShowComment(!showComment)
         }
         // console.log(e.target.dataset.comment)
@@ -178,7 +178,7 @@ function PostComponent({
                 </div>
                 <div className="flex gap-4 px-2.5 text-sm">
                     <button
-                        data-comment="isComment"
+                        data-comment
                         onClick={handleShowComment}
                         type="button"
                         className="cursor-pointer"
@@ -196,7 +196,7 @@ function PostComponent({
                 </div>
                 {showComment && (
                     <div
-                        data-comment="isComment"
+                        data-comment
                         onClick={handleShowComment}
                         className="fixed top-0 left-0 flex h-screen w-screen max-w-full items-center justify-center bg-red-700/0 max-lg:z-10"
                     >
@@ -214,13 +214,13 @@ function PostComponent({
                                         Comments
                                     </p>{' '}
                                     <button
-                                        data-comment="isComment"
+                                        data-comment
                                         type="button"
                                         onClick={handleShowComment}
                                         className="cursor-pointer"
                                     >
                                         <IoCloseSharp
-                                            data-comment="isComment"
+                                            data-comment
                                             className="size-8"
                                         />
                                     </button>
@@ -228,7 +228,9 @@ function PostComponent({
                                 <CommentList
                                     postId={id}
                                     commentTriggerRender={commentTriggerRender}
-                                    setCommentTriggerRender={setCommentTriggerRender}
+                                    setCommentTriggerRender={
+                                        setCommentTriggerRender
+                                    }
                                     setTriggerRender={setTriggerRender}
                                 />
                                 <p className="text-center text-xs text-blue-400">

@@ -20,12 +20,15 @@ function PostListComponent({ data, setTriggerRender }) {
         if (e.target.textContent === 'Popular') {
             setButtonStyles(['selected', 'default', 'default'])
             setCurrentTab('Popular')
+            setTriggerRender(self.crypto.randomUUID())
         } else if (e.target.textContent === 'Latest') {
             setButtonStyles(['default', 'selected', 'default'])
             setCurrentTab('Latest')
+            setTriggerRender(self.crypto.randomUUID())
         } else if (e.target.textContent === 'Oldest') {
             setButtonStyles(['default', 'default', 'selected'])
             setCurrentTab('Oldest')
+            setTriggerRender(self.crypto.randomUUID())
         }
     }
 

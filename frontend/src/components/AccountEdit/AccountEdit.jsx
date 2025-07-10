@@ -10,9 +10,26 @@ function AccountEdit() {
     const [oldPassword, setOldPassword] = useState('')
     const [newPassword, setnewPassword] = useState('')
     const [confirmNewPassword, setconfirmNewPassword] = useState('')
+    const [showDeleteDialog, setShowDeleteDialog] = useState(true)
+    const [confirmDeleteText, setConfirmDeleteText] = useState('')
     const navigate = useNavigate()
     const { setForceUpdate } = useContext(RenderContext)
     let passwordVerification = null
+
+    function handleDeleteConfirmText(e) {
+        setConfirmDeleteText(e.target.value)
+    }
+
+    function handleDeleteConfirm() {
+        setShowDeleteDialog(false)
+    }
+
+    function handleShowDeleteDialog(e) {
+        console.log(e.target.dataset.dialog)
+        if (e.target.dataset.dialog) {
+            setShowDeleteDialog(!showDeleteDialog)
+        }
+    }
 
     function handleNameInput(e) {
         setName(e.currentTarget.value)
@@ -108,8 +125,8 @@ function AccountEdit() {
     }
 
     return (
-        <div className="flex w-full max-w-xl flex-col gap-10 text-white *:rounded-2xl *:bg-blue-900 *:p-5">
-            <div className="flex flex-col gap-5">
+        <div className="flex w-full max-w-xl flex-col gap-10 text-white">
+            <div className="flex flex-col gap-5 rounded-2xl bg-blue-900 p-5">
                 <p className="text-2xl font-bold">Edit Profile Info</p>
                 <div className="flex flex-col items-center text-center">
                     {/* <img src="" alt="" /> */}
@@ -157,7 +174,7 @@ function AccountEdit() {
                     Save
                 </button>
             </div>
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-5 rounded-2xl bg-blue-900 p-5">
                 <p className="text-2xl font-bold">Change Username</p>
                 <div className="text-xl">
                     <p>Current Username:</p>
@@ -185,7 +202,7 @@ function AccountEdit() {
                     Save
                 </button>
             </div>
-            <form className="flex flex-col gap-5">
+            <form className="flex flex-col gap-5 rounded-2xl bg-blue-900 p-5">
                 <input
                     className="hidden"
                     type="text"
@@ -246,7 +263,7 @@ function AccountEdit() {
                     Save
                 </button>
             </form>
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3 rounded-2xl bg-blue-900 p-5">
                 <div>
                     <p className="text-2xl font-bold text-rose-700">
                         Danger Zone
@@ -256,10 +273,53 @@ function AccountEdit() {
                     <p className="font-bold">Delete Account</p>
                     <p>All your comments, posts, and account will be deleted</p>
                 </div>
-                <button className="cursor-pointer self-start rounded-lg bg-red-500 px-3 py-1 text-xl text-white hover:bg-red-700 focus:bg-red-700 active:bg-red-700">
+                <button
+                    data-dialog
+                    onClick={handleShowDeleteDialog}
+                    className="cursor-pointer self-start rounded-lg bg-red-500 px-3 py-1 text-xl text-white hover:bg-red-700 focus:bg-red-700 active:bg-red-700"
+                >
                     Delete
                 </button>
             </div>
+            {showDeleteDialog && (
+                <div
+                    data-dialog
+                    onClick={handleShowDeleteDialog}
+                    className="fixed top-0 left-0 flex h-screen w-screen max-w-full items-center justify-center bg-black/20 max-lg:z-10"
+                >
+                    <div className="mx-5 flex min-h-4/12 w-full max-w-2xl flex-col justify-center gap-5 rounded-2xl bg-blue-900 p-5">
+                        <p className="text-2xl font-extrabold">
+                            Are you sure you want to delete your account?
+                        </p>
+                        <p>
+                            This action is immediate and will permanently delete
+                            all your posts and comments.
+                        </p>
+                        <p className="text-blue-400">
+                            Type this below: delete my account
+                        </p>
+                        <div className="flex flex-col gap-2">
+                            <label htmlFor="confirm" className="font-extrabold">
+                                Confirm
+                            </label>
+                            <input
+                                onChange={handleDeleteConfirmText}
+                                value={confirmDeleteText}
+                                className="rounded-lg bg-white px-5 py-2.5 text-black"
+                                type="text"
+                                id="confirm"
+                            />
+                        </div>
+                        <button
+                            onClick={handleDeleteConfirm}
+                            className="cursor-pointer self-start rounded-lg bg-blue-500 px-3 py-1 text-xl text-blue-950 hover:bg-blue-600 focus:bg-blue-600 active:bg-blue-600"
+                            type="button"
+                        >
+                            Done
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
