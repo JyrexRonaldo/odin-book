@@ -18,6 +18,9 @@ function UserList() {
     }
 
     useEffect(() => {
+        if (localStorage.getItem('username') === null) {
+            navigate('/login')
+        }
         handleFindUsersStyles()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])

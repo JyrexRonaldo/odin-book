@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { BiSolidUserCircle } from 'react-icons/bi'
 import { useNavigate } from 'react-router-dom'
 import RenderContext from '../RenderContext/RenderContext'
@@ -10,18 +10,45 @@ function AccountEdit() {
     const [oldPassword, setOldPassword] = useState('')
     const [newPassword, setnewPassword] = useState('')
     const [confirmNewPassword, setconfirmNewPassword] = useState('')
-    const [showDeleteDialog, setShowDeleteDialog] = useState(true)
+    const [showDeleteDialog, setShowDeleteDialog] = useState(false)
     const [confirmDeleteText, setConfirmDeleteText] = useState('')
     const navigate = useNavigate()
     const { setForceUpdate } = useContext(RenderContext)
     let passwordVerification = null
 
+
+    useEffect(() => {
+        if (localStorage.getItem('username') === null) {
+            navigate('/login')
+        }
+    })
+
     function handleDeleteConfirmText(e) {
         setConfirmDeleteText(e.target.value)
     }
 
-    function handleDeleteConfirm() {
-        setShowDeleteDialog(false)
+    async function handleDeleteConfirm() {
+        if (confirmDeleteText !== 'delete my account') {
+            return
+        }
+        try {
+            const response = await fetch(
+                `${import.meta.env.VITE_HOME_DOMAIN}/users/${localStorage.getItem('username')}`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `${localStorage.getItem('userToken')}`,
+                    },
+                }
+            )
+            const data = await response.json()
+            console.log(data)
+            localStorage.clear()
+            navigate('/signup')
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     function handleShowDeleteDialog(e) {

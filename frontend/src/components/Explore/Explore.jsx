@@ -10,8 +10,11 @@ function Explore() {
     const { handleExploreStyles } = useContext(StylesContext)
 
     useEffect(() => {
+        if (localStorage.getItem('username') === null) {
+            navigate('/login')
+        }
         handleExploreStyles()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {

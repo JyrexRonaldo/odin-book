@@ -10,8 +10,11 @@ function Feed() {
     const { handleFeedStyles } = useContext(StylesContext)
 
     useEffect(() => {
+        if (localStorage.getItem('username') === null) {
+            navigate('/login')
+        }
         handleFeedStyles()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {

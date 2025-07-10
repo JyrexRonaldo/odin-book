@@ -1,11 +1,17 @@
 import { FaCloudUploadAlt } from 'react-icons/fa'
 import Navbar from '../Navbar/Navbar'
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 function CreatePostPage() {
     const [postBody, setPostBody] = useState('')
     const navigate = useNavigate()
+
+    useEffect(() => {
+        if (localStorage.getItem('username') === null) {
+            navigate('/login')
+        }
+    })
 
     function handlePostTextarea(e) {
         setPostBody(e.target.value)
@@ -36,7 +42,7 @@ function CreatePostPage() {
             console.log(data)
             if (response.ok) {
                 setPostBody('')
-                navigate("/explore")
+                navigate('/explore')
             }
         } catch (error) {
             console.log(error)

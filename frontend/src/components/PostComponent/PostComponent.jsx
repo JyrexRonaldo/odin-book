@@ -203,7 +203,7 @@ function PostComponent({
                         <div className="h-8/12 w-full rounded-lg bg-blue-800 max-lg:self-end lg:grid lg:max-w-9/12 lg:grid-cols-[6fr_5fr]">
                             <div className="flex items-center justify-center bg-black max-lg:hidden">
                                 <img
-                                    className="object-fill max-lg:hidden"
+                                    className="h-auto w-full max-lg:hidden"
                                     src="/mass-effect.jpeg"
                                     alt=""
                                 />
@@ -212,7 +212,7 @@ function PostComponent({
                                 <div className="sticky top-0 flex justify-between bg-blue-800 p-2.5">
                                     <p className="text-2xl font-extrabold">
                                         Comments
-                                    </p>{' '}
+                                    </p>
                                     <button
                                         data-comment
                                         type="button"

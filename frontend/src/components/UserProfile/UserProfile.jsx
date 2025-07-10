@@ -14,6 +14,12 @@ function UserProfile() {
     const [triggerRender, setTriggerRender] = useState(0)
 
     useEffect(() => {
+        if (localStorage.getItem('username') === 'undefined') {
+            navigate('/login')
+        }
+    })
+
+    useEffect(() => {
         async function fetchData() {
             try {
                 const response = await fetch(

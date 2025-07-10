@@ -10,8 +10,11 @@ function Likes() {
     const { handleLikesStyles } = useContext(StylesContext)
 
     useEffect(() => {
+        if (localStorage.getItem('username') === null) {
+            navigate('/login')
+        }
         handleLikesStyles()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
