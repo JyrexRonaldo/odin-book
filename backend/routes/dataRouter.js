@@ -20,7 +20,8 @@ dataRouter
 
 dataRouter
   .route("/users/:username")
-  .get(dataController.getUserProfileByUsername);
+  .get(dataController.getUserProfileByUsername)
+  .delete(dataController.deleteUserByUsername);
 
 dataRouter.route("/profile").put(dataController.editProfileInfo);
 

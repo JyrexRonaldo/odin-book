@@ -505,6 +505,16 @@ const createLikeComment = asyncHandler(async (req, res) => {
   }
 });
 
+const deleteUserByUsername = asyncHandler(async (req, res) => {
+  const { username } = req.params;
+  await prisma.user.delete({
+    where: {
+      username,
+    },
+  });
+  res.status(200).json(`User: ${username} deleted`) 
+});
+
 module.exports = {
   getAllUsers,
   followRequestHandler,
@@ -520,4 +530,5 @@ module.exports = {
   getCommentsByPostId,
   deleteCommentById,
   createLikeComment,
+  deleteUserByUsername,
 };
