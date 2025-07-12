@@ -28,7 +28,7 @@ function CreatePostPage() {
         try {
             let imgUrl = null
             const currentImgName =
-                self.crypto.randomUUID() + '.' + selectedImg.type.split('/')[1]
+                self.crypto.randomUUID() + '.' + selectedImg?.type.split('/')[1]
             const { data, error } = await supabase.storage
                 .from('odin-book')
                 .upload(`public/${currentImgName}`, selectedImg)

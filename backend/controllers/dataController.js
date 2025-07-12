@@ -60,7 +60,7 @@ const createPost = asyncHandler(async (req, res) => {
     data: {
       body,
       authorId: +authorId,
-      imgPublicUrl,
+      postImageUrl: imgPublicUrl,
     },
   });
   console.log(req.bodu);

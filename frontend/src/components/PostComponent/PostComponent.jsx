@@ -18,6 +18,7 @@ function PostComponent({
     likeCount,
     isLikedByUser,
     setTriggerRender,
+    postImgUrl
 }) {
     const [showComment, setShowComment] = useState(false)
     const [liked, setLiked] = useState(false)
@@ -154,7 +155,7 @@ function PostComponent({
                     </div>
                 </div>
                 <div className="flex flex-col gap-2">
-                    <img src="/mass-effect.jpeg" alt="" />
+                    <img className='object-cover' src={postImgUrl} alt="" />
                     <p className="px-2.5">{body}</p>
                 </div>
                 <div className="flex gap-2 px-2.5">
