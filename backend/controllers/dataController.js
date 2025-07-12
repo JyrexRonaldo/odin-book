@@ -55,13 +55,14 @@ const followRequestHandler = asyncHandler(async (req, res) => {
 });
 
 const createPost = asyncHandler(async (req, res) => {
-  const { body, authorId } = req.body;
+  const { body, authorId, imgPublicUrl } = req.body;
   await prisma.post.create({
     data: {
       body,
       authorId: +authorId,
     },
   });
+  console.log(req.bodu)
   res.json(req.body);
 });
 

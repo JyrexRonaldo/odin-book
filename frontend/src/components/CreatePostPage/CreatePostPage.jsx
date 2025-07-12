@@ -2,11 +2,12 @@ import { FaCloudUploadAlt } from 'react-icons/fa'
 import Navbar from '../Navbar/Navbar'
 import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import supabase from '../../../supabase/supabase'
 
 function CreatePostPage() {
     const [postBody, setPostBody] = useState('')
-    // const [file, setFile] = useState(null)
     const [selectedImgUrl, setSelectedImgUrl] = useState(null)
+    const [selectedImg, setSelectedImg] = useState(null)
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -19,12 +20,29 @@ function CreatePostPage() {
         setPostBody(e.target.value)
     }
 
-    function handleCancelButton() {
+    async function handleCancelButton() {
         navigate('/explore')
     }
 
     async function handleCreatePostButton() {
         try {
+            let imgUrl = null
+            const currentImgName =
+                self.crypto.randomUUID() + '.' + selectedImg.type.split('/')[1]
+            const { data, error } = await supabase.storage
+                .from('odin-book')
+                .upload(`public/${currentImgName}`, selectedImg)
+
+            const savedImg = data
+
+            if (savedImg) {
+                const { data } = await supabase.storage
+                    .from('odin-book')
+                    .getPublicUrl(`public/${currentImgName}`)
+
+                imgUrl = data.publicUrl
+            }
+
             const response = await fetch(
                 `${import.meta.env.VITE_HOME_DOMAIN}/posts`,
                 {
@@ -36,15 +54,18 @@ function CreatePostPage() {
                     body: JSON.stringify({
                         body: postBody,
                         authorId: localStorage.getItem('userId'),
+                        imgPublicUrl: imgUrl,
                     }),
                 }
             )
 
-            const data = await response.json()
-            console.log(data)
-            if (response.ok) {
+            const responseData = await response.json()
+            console.log(responseData)
+            if (response.ok && error === null) {
                 setPostBody('')
                 navigate('/explore')
+            } else {
+                console.log(error)
             }
         } catch (error) {
             console.log(error)
@@ -52,14 +73,12 @@ function CreatePostPage() {
     }
 
     function handleImageSelector(e) {
-        console.log(e.target.files[0])
+        setSelectedImg(e.target.files[0])
         const file = e.target.files[0]
         if (file) {
             const fileReader = new FileReader()
             fileReader.readAsDataURL(file)
-            // fileReader.onload = console.log(this)
             fileReader.addEventListener('load', function () {
-                console.log(this.result)
                 setSelectedImgUrl(this.result)
             })
         }
@@ -97,11 +116,13 @@ function CreatePostPage() {
                         </div>
                     </div>
                     {/* <div> */}
-                    { selectedImgUrl &&  <img
-                        className="h-auto w-full rounded-lg"
-                        src={selectedImgUrl}
-                        alt=""
-                    />}
+                    {selectedImgUrl && (
+                        <img
+                            className="h-auto w-full rounded-lg"
+                            src={selectedImgUrl}
+                            alt=""
+                        />
+                    )}
                     {/* </div> */}
                     <div className="flex flex-col gap-3">
                         <label
