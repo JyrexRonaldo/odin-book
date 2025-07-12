@@ -39,14 +39,15 @@ model Follows {
 }
 
 model Post {
-  id        Int       @id @default(autoincrement())
-  body      String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId  Int
-  comments  Comment[]
-  likedBy   Likes[]
+  id           Int       @id @default(autoincrement())
+  body         String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  author       User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  postImageUrl String
+  authorId     Int
+  comments     Comment[]
+  likedBy      Likes[]
 }
 
 model Likes {

@@ -60,9 +60,10 @@ const createPost = asyncHandler(async (req, res) => {
     data: {
       body,
       authorId: +authorId,
+      imgPublicUrl,
     },
   });
-  console.log(req.bodu)
+  console.log(req.bodu);
   res.json(req.body);
 });
 
@@ -513,7 +514,7 @@ const deleteUserByUsername = asyncHandler(async (req, res) => {
       username,
     },
   });
-  res.status(200).json(`User: ${username} deleted`) 
+  res.status(200).json(`User: ${username} deleted`);
 });
 
 module.exports = {
