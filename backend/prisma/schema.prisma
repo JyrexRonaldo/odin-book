@@ -44,7 +44,7 @@ model Post {
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
   author       User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  postImageUrl String
+  postImageUrl String?
   authorId     Int
   comments     Comment[]
   likedBy      Likes[]

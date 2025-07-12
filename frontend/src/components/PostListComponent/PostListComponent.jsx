@@ -86,6 +86,7 @@ function PostListComponent({ data, setTriggerRender }) {
                     likeCount={dataItem._count.likedBy}
                     isLikedByUser={isLikedByUser}
                     setTriggerRender={setTriggerRender}
+                    postImgUrl={dataItem.postImageUrl}
                 />
             )
         })

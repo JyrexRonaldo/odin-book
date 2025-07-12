@@ -23,10 +23,13 @@ const postsData = Array.from({ length: 20 }).map((element, index) => {
     authorId -= 10;
   }
 
+  // { width: 1750, height: 1750 }
+
   element = {
     body: faker.lorem.paragraph(),
     authorId,
     createdAt: faker.date.past(),
+    postImageUrl: faker.image.urlPicsumPhotos(),
   };
   return element;
 });
