@@ -15,18 +15,19 @@ datasource db {
 }
 
 model User {
-  id            Int            @id @default(autoincrement())
-  name          String
-  username      String         @unique
-  email         String         @unique
-  bio           String?        @default("Follow me and get to know me! We might end up best friends!")
-  password      String
-  posts         Post[]
-  comments      Comment[]
-  followedBy    Follows[]      @relation("followedBy")
-  following     Follows[]      @relation("following")
-  likedPosts    Likes[]
-  LikedComments CommentLikes[]
+  id             Int            @id @default(autoincrement())
+  name           String
+  username       String         @unique
+  email          String         @unique
+  bio            String?        @default("Follow me and get to know me! We might end up best friends!")
+  avatarImageUrl String?
+  password       String
+  posts          Post[]
+  comments       Comment[]
+  followedBy     Follows[]      @relation("followedBy")
+  following      Follows[]      @relation("following")
+  likedPosts     Likes[]
+  LikedComments  CommentLikes[]
 }
 
 model Follows {

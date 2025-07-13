@@ -26,7 +26,7 @@ function CreatePostPage() {
 
     async function handleCreatePostButton() {
         try {
-            let imgUrl = null
+            let imgPublicUrl = null
             const currentImgName =
                 self.crypto.randomUUID() + '.' + selectedImg?.type.split('/')[1]
             const { data, error } = await supabase.storage
@@ -36,11 +36,11 @@ function CreatePostPage() {
             const savedImg = data
 
             if (savedImg) {
-                const { data } = await supabase.storage
+                const { data } = supabase.storage
                     .from('odin-book')
                     .getPublicUrl(`public/${currentImgName}`)
 
-                imgUrl = data.publicUrl
+                imgPublicUrl = data.publicUrl
             }
 
             const response = await fetch(
@@ -54,7 +54,7 @@ function CreatePostPage() {
                     body: JSON.stringify({
                         body: postBody,
                         authorId: localStorage.getItem('userId'),
-                        imgPublicUrl: imgUrl,
+                        imgPublicUrl,
                     }),
                 }
             )

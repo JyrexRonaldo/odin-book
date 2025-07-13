@@ -331,7 +331,14 @@ const deletePostById = asyncHandler(async (req, res) => {
   res.status(200).json(`PostID: ${postId}  deleted`);
 });
 
-async function handleProfileChange(userId, name, bio) {
+async function handleProfileChange(
+  userId,
+  name,
+  bio,
+  imgPublicUrl,
+  changeType,
+  res
+) {
   await prisma.user.update({
     where: {
       id: userId,
@@ -339,18 +346,7 @@ async function handleProfileChange(userId, name, bio) {
     data: {
       name,
       bio,
-    },
-  });
-}
-
-async function handleProfileChange(userId, name, bio, changeType, res) {
-  await prisma.user.update({
-    where: {
-      id: userId,
-    },
-    data: {
-      name,
-      bio,
+      avatarImageUrl: imgPublicUrl,
     },
   });
   res.status(200).json({ changeType, message: "Change successful" });
@@ -395,11 +391,25 @@ async function handlePasswordChange(
 }
 
 const editProfileInfo = asyncHandler(async (req, res) => {
-  const { changeType, name, bio, username, oldPassword, newPassword } =
-    req.body;
+  const {
+    changeType,
+    name,
+    bio,
+    imgPublicUrl,
+    username,
+    oldPassword,
+    newPassword,
+  } = req.body;
 
   if (changeType === "profile") {
-    await handleProfileChange(req.user.id, name, bio, changeType, res);
+    await handleProfileChange(
+      req.user.id,
+      name,
+      bio,
+      imgPublicUrl,
+      changeType,
+      res
+    );
   } else if (changeType === "username") {
     await handleUsernameChange(req.user.id, username, changeType, res);
   } else if (changeType === "password") {

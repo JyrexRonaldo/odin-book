@@ -2,6 +2,8 @@ import { useContext, useEffect, useState } from 'react'
 import { BiSolidUserCircle } from 'react-icons/bi'
 import { useNavigate } from 'react-router-dom'
 import RenderContext from '../RenderContext/RenderContext'
+import { FaCloudUploadAlt } from 'react-icons/fa'
+import supabase from '../../../supabase/supabase'
 
 function AccountEdit() {
     const [name, setName] = useState('')
@@ -12,10 +14,11 @@ function AccountEdit() {
     const [confirmNewPassword, setconfirmNewPassword] = useState('')
     const [showDeleteDialog, setShowDeleteDialog] = useState(false)
     const [confirmDeleteText, setConfirmDeleteText] = useState('')
+    const [selectedImgUrl, setSelectedImgUrl] = useState(null)
+    const [selectedImg, setSelectedImg] = useState(null)
     const navigate = useNavigate()
     const { setForceUpdate } = useContext(RenderContext)
     let passwordVerification = null
-
 
     useEffect(() => {
         if (localStorage.getItem('username') === null) {
@@ -100,17 +103,41 @@ function AccountEdit() {
     async function handleProfileInfoEdit(changeType) {
         console.log(localStorage.getItem('username'))
 
-        let updateData = {}
-
-        if (changeType === 'profile') {
-            updateData = { changeType, name, bio }
-        } else if (changeType === 'username') {
-            updateData = { changeType, username }
-        } else if (changeType === 'password') {
-            updateData = { changeType, oldPassword, newPassword }
-        }
-
         try {
+            let imgPublicUrl = null
+            const currentImgName =
+                localStorage.getItem('username') +
+                '.' +
+                selectedImg?.type.split('/')[1]
+            const { data, error } = await supabase.storage
+                .from('odin-book')
+                .upload(`avatar/${currentImgName}`, selectedImg, {
+                    upsert: true,
+                })
+
+            if (error) {
+                throw error
+            }
+
+            const savedImg = data
+
+            if (savedImg) {
+                const { data } = supabase.storage
+                    .from('odin-book')
+                    .getPublicUrl(`avatar/${currentImgName}`)
+
+                imgPublicUrl = data.publicUrl
+            }
+            let updateData = {}
+
+            if (changeType === 'profile') {
+                updateData = { changeType, name, bio, imgPublicUrl }
+            } else if (changeType === 'username') {
+                updateData = { changeType, username }
+            } else if (changeType === 'password') {
+                updateData = { changeType, oldPassword, newPassword }
+            }
+
             const response = await fetch(
                 `${import.meta.env.VITE_HOME_DOMAIN}/profile`,
                 {
@@ -127,21 +154,34 @@ function AccountEdit() {
                 navigate('/login')
             }
 
-            const data = await response.json()
-            console.log(data)
-            if (data.changeType === 'username') {
+            const responseData = await response.json()
+            console.log(responseData)
+            if (responseData.changeType === 'username') {
                 localStorage.setItem('username', `${username}`)
                 setForceUpdate({})
                 resetUsernameInputs()
             }
-            if (data.changeType === 'profile') {
+            if (responseData.changeType === 'profile') {
+                setForceUpdate({})
                 resetProfileInputs()
             }
-            if (data.changeType === 'password') {
+            if (responseData.changeType === 'password') {
                 resetPasswordInputs()
             }
         } catch (error) {
             console.log(error)
+        }
+    }
+
+    function handleImageSelector(e) {
+        setSelectedImg(e.target.files[0])
+        const file = e.target.files[0]
+        if (file) {
+            const fileReader = new FileReader()
+            fileReader.readAsDataURL(file)
+            fileReader.addEventListener('load', function () {
+                setSelectedImgUrl(this.result)
+            })
         }
     }
 
@@ -155,19 +195,36 @@ function AccountEdit() {
         <div className="flex w-full max-w-xl flex-col gap-10 text-white">
             <div className="flex flex-col gap-5 rounded-2xl bg-blue-900 p-5">
                 <p className="text-2xl font-bold">Edit Profile Info</p>
-                <div className="flex flex-col items-center text-center">
+                <div className="flex flex-col items-center gap-2.5 text-center">
                     {/* <img src="" alt="" /> */}
                     <div>
-                        <BiSolidUserCircle className="size-30" />
+                        {selectedImgUrl ? (
+                            <img
+                                src={selectedImgUrl}
+                                alt="avatar"
+                                className="size-30 rounded-full object-cover"
+                            />
+                        ) : (
+                            <BiSolidUserCircle className="size-30 rounded-full" />
+                        )}
                     </div>
-                    <p>Update Profile Image</p>
+                    <p className="font-extrabold">Update Profile Image</p>
                     <p>Should be less than 5mb</p>
                     <p>Recommended size:</p>
                     <p>500px x 500px</p>
-                    <div>
-                        <p>Drag Here to Upload Media</p>
-                        <img src={null} alt="" />
-                        <button>Browse Files</button>
+                    <div className="relative flex flex-col items-center gap-2.5 rounded-lg bg-blue-500 p-2.5">
+                        <p className="font-extrabold">
+                            Drag Here to Upload Media
+                        </p>
+                        <FaCloudUploadAlt className="size-8" />
+                        <label htmlFor="avatar">Browse Files</label>
+                        <input
+                            onChange={handleImageSelector}
+                            type="file"
+                            name="avatar"
+                            id="avatar"
+                            className="absolute top-0 h-full w-full bg-red-500/0 text-fuchsia-800/0"
+                        />
                     </div>
                 </div>
 
