@@ -106,15 +106,19 @@ function AccountEdit() {
 
         try {
             let imgPublicUrl = null
+            const oldImgLink = localStorage.getItem('avatar')
+            const oldFileName =
+                oldImgLink.split('/')[oldImgLink.split('/').length - 1]
+
+            await supabase.storage
+                .from('avatars')
+                .remove([`avatar/${oldFileName}`])
+
             const currentImgName =
-                localStorage.getItem('username') +
-                '.' +
-                selectedImg?.type.split('/')[1]
+                self.crypto.randomUUID() + '.' + selectedImg?.type.split('/')[1]
             const { data, error } = await supabase.storage
                 .from('odin-book')
-                .upload(`avatar/${currentImgName}`, selectedImg, {
-                    upsert: true,
-                })
+                .upload(`avatar/${currentImgName}`, selectedImg)
 
             if (error) {
                 throw error
@@ -156,8 +160,6 @@ function AccountEdit() {
             }
 
             const responseData = await response.json()
-            console.log(responseData)
-            console.log(imgPublicUrl)
             if (responseData.changeType === 'username') {
                 localStorage.setItem('username', `${username}`)
                 setForceUpdate({})
