@@ -16,9 +16,10 @@ function AccountEdit() {
     const [confirmDeleteText, setConfirmDeleteText] = useState('')
     const [selectedImgUrl, setSelectedImgUrl] = useState(null)
     const [selectedImg, setSelectedImg] = useState(null)
-    const navigate = useNavigate()
+    const avatarUrl = localStorage.getItem('avatar')
     const { setForceUpdate } = useContext(RenderContext)
     let passwordVerification = null
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (localStorage.getItem('username') === null) {
@@ -156,12 +157,14 @@ function AccountEdit() {
 
             const responseData = await response.json()
             console.log(responseData)
+            console.log(imgPublicUrl)
             if (responseData.changeType === 'username') {
                 localStorage.setItem('username', `${username}`)
                 setForceUpdate({})
                 resetUsernameInputs()
             }
             if (responseData.changeType === 'profile') {
+                localStorage.setItem('avatar', `${imgPublicUrl}`)
                 setForceUpdate({})
                 resetProfileInputs()
             }
@@ -201,6 +204,12 @@ function AccountEdit() {
                         {selectedImgUrl ? (
                             <img
                                 src={selectedImgUrl}
+                                alt="avatar"
+                                className="size-30 rounded-full object-cover"
+                            />
+                        ) : avatarUrl ? (
+                            <img
+                                src={avatarUrl}
                                 alt="avatar"
                                 className="size-30 rounded-full object-cover"
                             />

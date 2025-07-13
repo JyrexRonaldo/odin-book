@@ -3,7 +3,7 @@ import { FaPlus } from 'react-icons/fa6'
 import { FaMinus } from 'react-icons/fa6'
 import { useNavigate } from 'react-router-dom'
 
-function UserCard({ id, name, username, bio, isFollowed, setTriggerRender, followerCount }) {
+function UserCard({ id, name, username, bio, isFollowed, setTriggerRender, followerCount, avatarUrl }) {
     const navigate = useNavigate()
 
     async function handleSendRequest() {
@@ -36,8 +36,17 @@ function UserCard({ id, name, username, bio, isFollowed, setTriggerRender, follo
 
     return (
         <div className="flex h-auto w-full max-w-80 flex-col items-center gap-2 rounded-xl bg-blue-900 p-5 text-center text-white">
-            <img src={null} alt="" />
-            <BiSolidUserCircle className="size-17" />
+            {/* <img src={null} alt="" />
+            <BiSolidUserCircle className="size-17" /> */}
+            {avatarUrl ? (
+                            <img
+                                src={avatarUrl}
+                                alt="avatar"
+                                className="size-17 rounded-full object-cover"
+                            />
+                        ) : (
+                            <BiSolidUserCircle className="size-17" />
+                        )}
 
             <p className="text-2xl font-extrabold">{name}</p>
             <p className="text-xs">{followerCount} followers</p>

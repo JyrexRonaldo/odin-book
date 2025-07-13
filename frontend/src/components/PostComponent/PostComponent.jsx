@@ -18,7 +18,8 @@ function PostComponent({
     likeCount,
     isLikedByUser,
     setTriggerRender,
-    postImgUrl
+    postImgUrl,
+    authorImg
 }) {
     const [showComment, setShowComment] = useState(false)
     const [liked, setLiked] = useState(false)
@@ -144,18 +145,23 @@ function PostComponent({
         <>
             <div className="flex flex-col gap-2 rounded-xl bg-blue-900 py-5 text-white">
                 <div className="flex items-center gap-2.5 px-2.5">
-                    <img
+
+                     {authorImg ? <img
+                        src={authorImg}
+                        className="size-16 rounded-full"
+                        alt="author"
+                    /> :<img
                         src="/morty.jpg"
                         className="size-16 rounded-full"
-                        alt=""
-                    />
+                        alt="author"
+                    />}
                     <div>
                         <p className="font-bold">{name}</p>
                         <p>@{username}</p>
                     </div>
                 </div>
                 <div className="flex flex-col gap-2">
-                    <img className='object-cover' src={postImgUrl} alt="" />
+                    <img className='object-cover max-h-96' src={postImgUrl} alt="" />
                     <p className="px-2.5">{body}</p>
                 </div>
                 <div className="flex gap-2 px-2.5">

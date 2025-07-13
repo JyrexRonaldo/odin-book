@@ -125,6 +125,7 @@ function UserList() {
                 isFollowed={isFollowedValue}
                 setTriggerRender={setTriggerRender}
                 followerCount={followerCount}
+                avatarUrl={data.avatarImageUrl}
             />
         )
     })

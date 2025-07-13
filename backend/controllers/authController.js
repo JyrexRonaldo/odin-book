@@ -57,6 +57,7 @@ const handleSignIn = asyncHandler(async (req, res) => {
     userId: user.id,
     email: user.email,
     username: user.username,
+    avatarUrl: user.avatarImageUrl,
   });
 });
 

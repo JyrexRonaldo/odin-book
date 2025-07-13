@@ -74,6 +74,8 @@ function PostListComponent({ data, setTriggerRender }) {
                 isLikedByUser = true
             }
 
+            console.log(dataItem)
+
             return (
                 <PostComponent
                     key={dataItem.id}
@@ -87,6 +89,7 @@ function PostListComponent({ data, setTriggerRender }) {
                     isLikedByUser={isLikedByUser}
                     setTriggerRender={setTriggerRender}
                     postImgUrl={dataItem.postImageUrl}
+                    authorImg={dataItem.author.avatarImageUrl}
                 />
             )
         })

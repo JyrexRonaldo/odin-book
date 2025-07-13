@@ -12,6 +12,7 @@ const usersData = Array.from({ length: 10 }).map((element, index) => {
     password: faker.internet.password(),
     email: faker.internet.email({ firstName, lastName }),
     bio: faker.person.bio(),
+    avatarImageUrl: faker.image.avatar(),
   };
   return element;
 });

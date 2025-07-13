@@ -31,6 +31,7 @@ function LoginPage() {
             localStorage.setItem('userToken', `${data.token}`)
             localStorage.setItem('userId', `${data.userId}`)
             localStorage.setItem('username', `${data.username}`)
+            localStorage.setItem('avatar', `${data.avatarUrl}`)
             // console.log(data)
             // console.log(localStorage.getItem('userToken'))
             // console.log(response)

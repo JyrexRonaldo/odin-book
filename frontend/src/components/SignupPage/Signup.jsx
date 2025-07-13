@@ -46,10 +46,11 @@ function SignupPage() {
             )
 
             const data = await response.json()
-            console.log(data)
+            // console.log(data)
             localStorage.setItem('userToken', `${data.token}`)
             localStorage.setItem('userId', `${data.userId}`)
             localStorage.setItem('username', `${data.username}`)
+            localStorage.setItem('avatar', `${data.avatarUrl}`)
             if (response.ok) {
                 setSuccessMessage(data.message)
                 setTimeout(() => {

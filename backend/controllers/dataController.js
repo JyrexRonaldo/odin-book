@@ -77,6 +77,7 @@ const getFeed = asyncHandler(async (req, res) => {
         select: {
           name: true,
           username: true,
+          avatarImageUrl: true,
         },
       },
       comments: true,
@@ -108,6 +109,7 @@ const getFeed = asyncHandler(async (req, res) => {
         select: {
           name: true,
           username: true,
+          avatarImageUrl: true,
         },
       },
       comments: true,
@@ -145,6 +147,7 @@ const getAllPost = asyncHandler(async (req, res) => {
         select: {
           name: true,
           username: true,
+          avatarImageUrl: true,
         },
       },
       comments: true,
@@ -183,6 +186,7 @@ const getLikedPost = asyncHandler(async (req, res) => {
         select: {
           name: true,
           username: true,
+          avatarImageUrl: true,
         },
       },
       comments: true,
