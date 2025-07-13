@@ -448,6 +448,7 @@ const getCommentsByPostId = asyncHandler(async (req, res) => {
         select: {
           name: true,
           username: true,
+          avatarImageUrl: true,
         },
       },
     },

@@ -74,8 +74,6 @@ function PostListComponent({ data, setTriggerRender }) {
                 isLikedByUser = true
             }
 
-            console.log(dataItem)
-
             return (
                 <PostComponent
                     key={dataItem.id}

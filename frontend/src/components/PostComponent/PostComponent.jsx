@@ -161,7 +161,7 @@ function PostComponent({
                     </div>
                 </div>
                 <div className="flex flex-col gap-2">
-                    <img className='object-cover max-h-96' src={postImgUrl} alt="" />
+                    <img className='object-cover max-h-96' src={postImgUrl} alt="post image" />
                     <p className="px-2.5">{body}</p>
                 </div>
                 <div className="flex gap-2 px-2.5">
@@ -209,11 +209,13 @@ function PostComponent({
                     >
                         <div className="h-8/12 w-full rounded-lg bg-blue-800 max-lg:self-end lg:grid lg:max-w-9/12 lg:grid-cols-[6fr_5fr]">
                             <div className="flex items-center justify-center bg-black max-lg:hidden">
-                                <img
+                                <img className='object-contain  max-h-96 w-full max-lg:hidden' src={postImgUrl} alt="post image" />
+                                {/* object-cover max-h-96 */}
+                                {/* <img
                                     className="h-auto w-full max-lg:hidden"
                                     src="/mass-effect.jpeg"
                                     alt=""
-                                />
+                                /> */}
                             </div>
                             <div className="flex flex-col overflow-auto bg-blue-800 max-lg:h-full">
                                 <div className="sticky top-0 flex justify-between bg-blue-800 p-2.5">

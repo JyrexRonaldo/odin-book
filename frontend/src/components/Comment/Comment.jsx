@@ -13,6 +13,7 @@ function Comment({
     setTriggerRender,
     isLikedByUser,
     commentLikeCount,
+    authorImg,
 }) {
     const [show, setShow] = useState(false)
     const [likedComment, setLikedComment] = useState(false)
@@ -112,11 +113,19 @@ function Comment({
         <>
             <div className="flex items-center gap-1 p-2.5">
                 <div className="shrink-0">
-                    <img
-                        src="/morty.jpg"
-                        className="size-12 rounded-full"
-                        alt=""
-                    />
+                    {authorImg ? (
+                        <img
+                            src={authorImg}
+                            className="size-12 rounded-full"
+                            alt="author image"
+                        />
+                    ) : (
+                        <img
+                            src="/morty.jpg"
+                            className="size-12 rounded-full"
+                            alt="author image"
+                        />
+                    )}
                 </div>
                 <div className="flex flex-col gap-1">
                     <div className="flex gap-2 text-xs">
