@@ -531,6 +531,33 @@ const deleteUserByUsername = asyncHandler(async (req, res) => {
   res.status(200).json(`User: ${username} deleted`);
 });
 
+const getPostById = asyncHandler(async (req, res) => {
+  const { userId } = req.params;
+  const post = await prisma.user.findUnique({
+    where: {
+      id: +userId,
+    },
+    include: {
+      author: {
+        select: {
+          name: true,
+          username: true,
+          avatarImageUrl: true,
+        },
+      },
+      comments: true,
+      likedBy: true,
+      _count: {
+        select: {
+          comments: true,
+          likedBy: true,
+        },
+      },
+    },
+  });
+  res.status(200).json(post);
+});
+
 module.exports = {
   getAllUsers,
   followRequestHandler,
@@ -547,4 +574,5 @@ module.exports = {
   deleteCommentById,
   createLikeComment,
   deleteUserByUsername,
+  getPostById,
 };
