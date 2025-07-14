@@ -209,14 +209,14 @@ function AccountEdit() {
                                 alt="avatar"
                                 className="size-30 rounded-full object-cover"
                             />
-                        ) : avatarUrl ? (
+                        ) : avatarUrl === 'null' ? (
+                            <BiSolidUserCircle className="size-30 rounded-full" />
+                        ) : (
                             <img
                                 src={avatarUrl}
                                 alt="avatar"
                                 className="size-30 rounded-full object-cover"
                             />
-                        ) : (
-                            <BiSolidUserCircle className="size-30 rounded-full" />
                         )}
                     </div>
                     <p className="font-extrabold">Update Profile Image</p>

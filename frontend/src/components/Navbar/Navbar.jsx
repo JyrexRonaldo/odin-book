@@ -47,14 +47,14 @@ function Navbar() {
                         className="relative flex cursor-pointer items-center gap-3 text-white"
                     >
                         <p className="">{username}</p>
-                        {avatarUrl ? (
+                        {avatarUrl === 'null' ? (
+                            <BiSolidUserCircle className="size-9" />
+                        ) : (
                             <img
                                 src={avatarUrl}
                                 alt="avatar"
                                 className="size-9 rounded-full object-cover"
                             />
-                        ) : (
-                            <BiSolidUserCircle className="size-9" />
                         )}
                         {showDropdown && <Dropdown />}
                     </div>
