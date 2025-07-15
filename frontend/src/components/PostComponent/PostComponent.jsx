@@ -161,7 +161,7 @@ function PostComponent({
                     </div>
                 </div>
                 <div className="flex flex-col gap-2">
-                    <img className='object-cover max-h-96' src={postImgUrl} alt="post image" />
+                    {postImgUrl && <img className='object-cover max-h-96' src={postImgUrl} alt="post image" /> }
                     <p className="px-2.5">{body}</p>
                 </div>
                 <div className="flex gap-2 px-2.5">

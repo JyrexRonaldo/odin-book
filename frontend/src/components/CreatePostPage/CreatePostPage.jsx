@@ -27,20 +27,27 @@ function CreatePostPage() {
     async function handleCreatePostButton() {
         try {
             let imgPublicUrl = null
-            const currentImgName =
-                self.crypto.randomUUID() + '.' + selectedImg?.type.split('/')[1]
-            const { data, error } = await supabase.storage
-                .from('odin-book')
-                .upload(`public/${currentImgName}`, selectedImg)
-
-            const savedImg = data
-
-            if (savedImg) {
-                const { data } = supabase.storage
+            let responseError = null
+            if (selectedImg) {
+                const currentImgName =
+                    self.crypto.randomUUID() +
+                    '.' +
+                    selectedImg?.type.split('/')[1]
+                const { data, error } = await supabase.storage
                     .from('odin-book')
-                    .getPublicUrl(`public/${currentImgName}`)
+                    .upload(`public/${currentImgName}`, selectedImg)
 
-                imgPublicUrl = data.publicUrl
+                    responseError = error
+
+                const savedImg = data
+
+                if (savedImg) {
+                    const { data } = supabase.storage
+                        .from('odin-book')
+                        .getPublicUrl(`public/${currentImgName}`)
+
+                    imgPublicUrl = data.publicUrl
+                }
             }
 
             const response = await fetch(
@@ -61,11 +68,11 @@ function CreatePostPage() {
 
             const responseData = await response.json()
             console.log(responseData)
-            if (response.ok && error === null) {
+            if (response.ok && responseError === null) {
                 setPostBody('')
                 navigate('/explore')
             } else {
-                console.log(error)
+                console.log(responseError)
             }
         } catch (error) {
             console.log(error)
