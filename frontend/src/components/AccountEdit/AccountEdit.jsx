@@ -6,8 +6,8 @@ import { FaCloudUploadAlt } from 'react-icons/fa'
 import supabase from '../../../supabase/supabase'
 
 function AccountEdit() {
-    const [name, setName] = useState('')
-    const [bio, setBio] = useState('')
+    const [name, setName] = useState(localStorage.getItem('name'))
+    const [bio, setBio] = useState(localStorage.getItem('bio'))
     const [username, setUsername] = useState('')
     const [oldPassword, setOldPassword] = useState('')
     const [newPassword, setnewPassword] = useState('')
@@ -86,52 +86,41 @@ function AccountEdit() {
         setconfirmNewPassword(e.currentTarget.value)
     }
 
-    function resetProfileInputs() {
-        setName('')
-        setBio('')
-    }
-
-    function resetUsernameInputs() {
-        setUsername('')
-    }
-
-    function resetPasswordInputs() {
-        setOldPassword('')
-        setnewPassword('')
-        setconfirmNewPassword('')
-    }
-
     async function handleProfileInfoEdit(changeType) {
         console.log(localStorage.getItem('username'))
 
         try {
-            let imgPublicUrl = null
-            const oldImgLink = localStorage.getItem('avatar')
-            const oldFileName =
-                oldImgLink.split('/')[oldImgLink.split('/').length - 1]
+            let imgPublicUrl = avatarUrl
+            if (selectedImg) {
+                const oldImgLink = localStorage.getItem('avatar')
+                const oldFileName =
+                    oldImgLink.split('/')[oldImgLink.split('/').length - 1]
 
-            await supabase.storage
-                .from('avatars')
-                .remove([`avatar/${oldFileName}`])
+                await supabase.storage
+                    .from('avatars')
+                    .remove([`avatar/${oldFileName}`])
 
-            const currentImgName =
-                self.crypto.randomUUID() + '.' + selectedImg?.type.split('/')[1]
-            const { data, error } = await supabase.storage
-                .from('odin-book')
-                .upload(`avatar/${currentImgName}`, selectedImg)
-
-            if (error) {
-                throw error
-            }
-
-            const savedImg = data
-
-            if (savedImg) {
-                const { data } = supabase.storage
+                const currentImgName =
+                    self.crypto.randomUUID() +
+                    '.' +
+                    selectedImg?.type.split('/')[1]
+                const { data, error } = await supabase.storage
                     .from('odin-book')
-                    .getPublicUrl(`avatar/${currentImgName}`)
+                    .upload(`avatar/${currentImgName}`, selectedImg)
 
-                imgPublicUrl = data.publicUrl
+                if (error) {
+                    throw error
+                }
+
+                const savedImg = data
+
+                if (savedImg) {
+                    const { data } = supabase.storage
+                        .from('odin-book')
+                        .getPublicUrl(`avatar/${currentImgName}`)
+
+                    imgPublicUrl = data.publicUrl
+                }
             }
             let updateData = {}
 
@@ -163,16 +152,17 @@ function AccountEdit() {
             if (responseData.changeType === 'username') {
                 localStorage.setItem('username', `${username}`)
                 setForceUpdate({})
-                resetUsernameInputs()
             }
             if (responseData.changeType === 'profile') {
+                console.log(imgPublicUrl)
                 localStorage.setItem('avatar', `${imgPublicUrl}`)
+                localStorage.setItem('bio', `${name}`)
+                localStorage.setItem('name', `${bio}`)
                 setForceUpdate({})
-                resetProfileInputs()
             }
-            if (responseData.changeType === 'password') {
-                resetPasswordInputs()
-            }
+            // if (responseData.changeType === 'password') {
+            //     resetPasswordInputs()
+            // }
         } catch (error) {
             console.log(error)
         }
