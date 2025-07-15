@@ -25,9 +25,6 @@ function PostComponent({
     const [showComment, setShowComment] = useState(false)
     const [liked, setLiked] = useState(false)
     const [likes, setLikes] = useState(likeCount)
-    // const [likedComment, setLikedComment] = useState(false)
-    // const [commentLikes, setcommentLikes] = useState(commentLikeCount)
-
     const [commentText, setCommentText] = useState('')
     const [commentTriggerRender, setCommentTriggerRender] = useState(null)
 
@@ -35,9 +32,6 @@ function PostComponent({
         if (e.target.dataset.comment) {
             setShowComment(!showComment)
         }
-        // console.log(e.target.dataset.comment)
-
-        // console.log(showComment)
     }
 
     createdAt = format(createdAt, 'MMM d, yyyy, h:m a')
@@ -59,14 +53,12 @@ function PostComponent({
             )
 
             const data = await response.json()
-            // console.log(data)
             if (data.message === 'Post liked') {
                 setLiked(true)
             } else {
                 setLiked(false)
             }
             likeCount = data.likeCount._count.likedBy
-            // console.log(likeCount)
             setLikes(likeCount)
             setTriggerRender(self.crypto.randomUUID())
         } catch (error) {

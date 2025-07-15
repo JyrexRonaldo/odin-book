@@ -19,7 +19,6 @@ function Feed() {
 
     useEffect(() => {
         async function fetchData() {
-            // console.log(localStorage.getItem('userToken'))
             try {
                 const response = await fetch(
                     `${import.meta.env.VITE_HOME_DOMAIN}/feed`,
@@ -32,13 +31,10 @@ function Feed() {
                     }
                 )
 
-                // console.log(response.status)
-
                 if (response.status === 401) {
                     navigate('/login')
                 }
                 const data = await response.json()
-                // console.log(data)
                 setFeedData(data)
             } catch (error) {
                 console.log(error)

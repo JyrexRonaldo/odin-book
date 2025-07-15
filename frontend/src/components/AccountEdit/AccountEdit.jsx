@@ -20,6 +20,8 @@ function AccountEdit() {
     const avatarUrl = localStorage.getItem('avatar')
     const { setForceUpdate } = useContext(RenderContext)
     let passwordVerification = null
+    let nameVerification = null
+    let usernameVerification = null
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -90,6 +92,16 @@ function AccountEdit() {
     async function handleProfileInfoEdit(changeType) {
         console.log(localStorage.getItem('username'))
 
+        console.log({ name, username })
+
+        // if (name.length < 3) {
+        //     return
+        // }
+
+        // if (username.length < 3) {
+        //     return
+        // }
+
         try {
             let imgPublicUrl = avatarUrl
             if (selectedImg) {
@@ -126,8 +138,14 @@ function AccountEdit() {
             let updateData = {}
 
             if (changeType === 'profile') {
+                if (name.length < 3) {
+                    return
+                }
                 updateData = { changeType, name, bio, imgPublicUrl }
             } else if (changeType === 'username') {
+                if (username.length < 3) {
+                    return
+                }
                 updateData = { changeType, username }
             } else if (changeType === 'password') {
                 updateData = { changeType, oldPassword, newPassword }
@@ -187,6 +205,14 @@ function AccountEdit() {
         passwordVerification = null
     }
 
+    if (name.length < 3) {
+        nameVerification = 'Name should be at least 3 characters'
+    }
+
+    if (username.length < 3) {
+        usernameVerification = 'Usernames should be at least 3 characters'
+    }
+
     return (
         <div className="flex w-full max-w-xl flex-col gap-10 text-white">
             <div className="flex flex-col gap-5 rounded-2xl bg-blue-900 p-5">
@@ -239,6 +265,7 @@ function AccountEdit() {
                         type="text"
                         id="name"
                     />
+                    <p className="text-sm text-red-400">{nameVerification}</p>
                 </div>
                 <div className="flex flex-col gap-2">
                     <label htmlFor="bio">Bio</label>
@@ -277,6 +304,9 @@ function AccountEdit() {
                         id="username"
                         name="username"
                     />
+                    <p className="text-sm text-red-400">
+                        {usernameVerification}
+                    </p>
                 </div>
                 <button
                     onClick={() => {

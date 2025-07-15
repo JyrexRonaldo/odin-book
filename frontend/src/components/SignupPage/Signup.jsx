@@ -46,7 +46,6 @@ function SignupPage() {
             )
 
             const data = await response.json()
-            // console.log(data)
             localStorage.setItem('userToken', `${data.token}`)
             localStorage.setItem('userId', `${data.userId}`)
             localStorage.setItem('username', `${data.username}`)

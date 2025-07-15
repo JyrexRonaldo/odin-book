@@ -36,8 +36,6 @@ function UserCard({ id, name, username, bio, isFollowed, setTriggerRender, follo
 
     return (
         <div className="flex h-auto w-full max-w-80 flex-col items-center gap-2 rounded-xl bg-blue-900 p-5 text-center text-white">
-            {/* <img src={null} alt="" />
-            <BiSolidUserCircle className="size-17" /> */}
             {avatarUrl ? (
                             <img
                                 src={avatarUrl}

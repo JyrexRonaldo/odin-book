@@ -37,7 +37,6 @@ function FollowCard({
         }
     }
 
-    // isFollowed = true
     return (
         <div className="flex flex-col items-center justify-between gap-2 rounded-xl bg-blue-900 px-5 py-5 text-white">
             <div className="flex w-full max-w-full items-center justify-between">

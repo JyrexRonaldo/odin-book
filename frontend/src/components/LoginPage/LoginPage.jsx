@@ -28,16 +28,12 @@ function LoginPage() {
                 }
             )
             const data = await response.json()
-            console.log(data.name)
             localStorage.setItem('userToken', `${data.token}`)
             localStorage.setItem('userId', `${data.userId}`)
             localStorage.setItem('username', `${data.username}`)
             localStorage.setItem('avatar', `${data.avatarUrl}`)
             localStorage.setItem('name', `${data.name}`)
             localStorage.setItem('bio', `${data.bio}`)
-            // console.log(data)
-            // console.log(localStorage.getItem('userToken'))
-            // console.log(response)
             if (response.ok) {
                 setSuccessMessage(data.message)
                 setTimeout(() => {
