@@ -271,6 +271,7 @@ const getUserProfileByUsername = asyncHandler(async (req, res) => {
             select: {
               name: true,
               username: true,
+              avatarImageUrl: true,
             },
           },
           comments: true,

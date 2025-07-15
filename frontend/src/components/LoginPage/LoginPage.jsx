@@ -28,6 +28,7 @@ function LoginPage() {
                 }
             )
             const data = await response.json()
+            console.log(data.name)
             localStorage.setItem('userToken', `${data.token}`)
             localStorage.setItem('userId', `${data.userId}`)
             localStorage.setItem('username', `${data.username}`)

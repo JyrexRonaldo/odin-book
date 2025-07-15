@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import PostComponent from '../PostComponent/PostComponent'
 import { BiSolidUserCircle } from 'react-icons/bi'
 import { FaPlus } from 'react-icons/fa6'
 import { FaMinus } from 'react-icons/fa6'
 import { useParams, useNavigate } from 'react-router-dom'
 import FollowCard from '../FollowCard/FollowCard'
+import StylesContext from '../StylesContext/StylesContext'
 
 function UserProfile() {
     const navigate = useNavigate()
@@ -12,12 +13,16 @@ function UserProfile() {
     const [profileData, setProfileData] = useState([])
     const [show, setShow] = useState([true, false, false])
     const [triggerRender, setTriggerRender] = useState(0)
+    const { handleUserProfileStyles } = useContext(StylesContext)
 
     useEffect(() => {
         if (localStorage.getItem('username') === 'undefined') {
             navigate('/login')
         }
-    })
+
+        handleUserProfileStyles()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     useEffect(() => {
         async function fetchData() {
@@ -114,6 +119,7 @@ function UserProfile() {
                 followedBy={dataItem._count.followedBy}
                 setTriggerRender={setTriggerRender}
                 isFollowed={isFollowedValue}
+                avatarUrl={dataItem.avatarImageUrl}
             />
         )
     })
@@ -139,6 +145,7 @@ function UserProfile() {
                 followedBy={dataItem._count.followedBy}
                 setTriggerRender={setTriggerRender}
                 isFollowed={isFollowedValue}
+                avatarUrl={dataItem.avatarImageUrl}
             />
         )
     })
@@ -165,6 +172,8 @@ function UserProfile() {
                 likeCount={dataItem._count.likedBy}
                 isLikedByUser={isLikedByUser}
                 setTriggerRender={setTriggerRender}
+                postImgUrl={dataItem.postImageUrl}
+                authorImg={dataItem.author.avatarImageUrl}
             />
         )
     })
@@ -183,7 +192,15 @@ function UserProfile() {
             <div className="flex flex-col gap-5 rounded-2xl bg-blue-900 p-5">
                 <div className="flex flex-col items-center gap-3 text-center">
                     <div>
-                        <BiSolidUserCircle className="size-30" />
+                        {profileData.avatarImageUrl === null ? (
+                            <BiSolidUserCircle className="size-30" />
+                        ) : (
+                            <img
+                                src={profileData.avatarImageUrl}
+                                alt="avatar"
+                                className="size-30 rounded-full object-cover"
+                            />
+                        )}
                     </div>
                     <div>
                         <p>{profileData.name}</p>

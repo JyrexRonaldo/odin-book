@@ -5,6 +5,7 @@ import { IoCloseSharp } from 'react-icons/io5'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { format } from 'date-fns'
+import { BiSolidUserCircle } from 'react-icons/bi'
 import Textarea from '../Textarea/Textarea'
 import CommentList from '../CommentList/CommentList'
 
@@ -19,7 +20,7 @@ function PostComponent({
     isLikedByUser,
     setTriggerRender,
     postImgUrl,
-    authorImg
+    authorImg,
 }) {
     const [showComment, setShowComment] = useState(false)
     const [liked, setLiked] = useState(false)
@@ -67,6 +68,7 @@ function PostComponent({
             likeCount = data.likeCount._count.likedBy
             // console.log(likeCount)
             setLikes(likeCount)
+            setTriggerRender(self.crypto.randomUUID())
         } catch (error) {
             console.log(error)
         }
@@ -145,23 +147,28 @@ function PostComponent({
         <>
             <div className="flex flex-col gap-2 rounded-xl bg-blue-900 py-5 text-white">
                 <div className="flex items-center gap-2.5 px-2.5">
-
-                     {authorImg ? <img
-                        src={authorImg}
-                        className="size-16 rounded-full"
-                        alt="author"
-                    /> :<img
-                        src="/morty.jpg"
-                        className="size-16 rounded-full"
-                        alt="author"
-                    />}
+                    {authorImg ? (
+                        <img
+                            src={authorImg}
+                            className="size-16 rounded-full"
+                            alt="author"
+                        />
+                    ) : (
+                        <BiSolidUserCircle className="size-16 rounded-full" />
+                    )}
                     <div>
                         <p className="font-bold">{name}</p>
                         <p>@{username}</p>
                     </div>
                 </div>
                 <div className="flex flex-col gap-2">
-                    {postImgUrl && <img className='object-cover max-h-96' src={postImgUrl} alt="post image" /> }
+                    {postImgUrl && (
+                        <img
+                            className="max-h-96 object-cover"
+                            src={postImgUrl}
+                            alt="post image"
+                        />
+                    )}
                     <p className="px-2.5">{body}</p>
                 </div>
                 <div className="flex gap-2 px-2.5">
@@ -209,7 +216,11 @@ function PostComponent({
                     >
                         <div className="h-8/12 w-full rounded-lg bg-blue-800 max-lg:self-end lg:grid lg:max-w-9/12 lg:grid-cols-[6fr_5fr]">
                             <div className="flex items-center justify-center bg-black max-lg:hidden">
-                                <img className='object-contain  max-h-96 w-full max-lg:hidden' src={postImgUrl} alt="post image" />
+                                <img
+                                    className="max-h-96 w-full object-contain max-lg:hidden"
+                                    src={postImgUrl}
+                                    alt="post image"
+                                />
                                 {/* object-cover max-h-96 */}
                                 {/* <img
                                     className="h-auto w-full max-lg:hidden"

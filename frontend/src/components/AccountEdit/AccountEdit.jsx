@@ -6,6 +6,7 @@ import { FaCloudUploadAlt } from 'react-icons/fa'
 import supabase from '../../../supabase/supabase'
 
 function AccountEdit() {
+    console.log(localStorage.getItem('name'))
     const [name, setName] = useState(localStorage.getItem('name'))
     const [bio, setBio] = useState(localStorage.getItem('bio'))
     const [username, setUsername] = useState('')
@@ -156,8 +157,8 @@ function AccountEdit() {
             if (responseData.changeType === 'profile') {
                 console.log(imgPublicUrl)
                 localStorage.setItem('avatar', `${imgPublicUrl}`)
-                localStorage.setItem('bio', `${name}`)
-                localStorage.setItem('name', `${bio}`)
+                localStorage.setItem('bio', `${bio}`)
+                localStorage.setItem('name', `${name}`)
                 setForceUpdate({})
             }
             // if (responseData.changeType === 'password') {

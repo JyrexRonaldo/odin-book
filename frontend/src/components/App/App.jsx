@@ -62,6 +62,11 @@ function App() {
         setIconStyles(['default', 'default', 'selected', 'default'])
     }
 
+    function handleUserProfileStyles() {
+        setButtonStyles(['default', 'default', 'default', 'default'])
+        setIconStyles(['default', 'default', 'default', 'default'])
+    }
+
     function handleFeed() {
         handleFeedStyles()
         navigate('/feed')
@@ -134,6 +139,7 @@ function App() {
                                 handleExploreStyles,
                                 handleFindUsersStyles,
                                 handleLikesStyles,
+                                handleUserProfileStyles,
                             }}
                         >
                             <RenderContext.Provider

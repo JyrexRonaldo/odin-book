@@ -51,6 +51,8 @@ function SignupPage() {
             localStorage.setItem('userId', `${data.userId}`)
             localStorage.setItem('username', `${data.username}`)
             localStorage.setItem('avatar', `${data.avatarUrl}`)
+            localStorage.setItem('name', `${data.name}`)
+            localStorage.setItem('bio', `${data.bio}`)
             if (response.ok) {
                 setSuccessMessage(data.message)
                 setTimeout(() => {

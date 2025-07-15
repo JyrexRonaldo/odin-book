@@ -1,5 +1,6 @@
 import { FaPlus } from 'react-icons/fa6'
 import { FaMinus } from 'react-icons/fa6'
+import { BiSolidUserCircle } from 'react-icons/bi'
 
 function FollowCard({
     id,
@@ -10,6 +11,7 @@ function FollowCard({
     followedBy,
     isFollowed,
     setTriggerRender,
+    avatarUrl,
 }) {
     async function handleSendRequest() {
         try {
@@ -40,11 +42,15 @@ function FollowCard({
         <div className="flex flex-col items-center justify-between gap-2 rounded-xl bg-blue-900 px-5 py-5 text-white">
             <div className="flex w-full max-w-full items-center justify-between">
                 <div className="flex items-center gap-2.5">
-                    <img
-                        src="/morty.jpg"
-                        className="size-16 rounded-full"
-                        alt=""
-                    />
+                    {avatarUrl ? (
+                        <img
+                            src={avatarUrl}
+                            className="size-16 rounded-full"
+                            alt=""
+                        />
+                    ) : (
+                        <BiSolidUserCircle className="size-16 rounded-full" />
+                    )}
                     <div>
                         <p className="font-bold">{name}</p>
                         <p>@{username}</p>
