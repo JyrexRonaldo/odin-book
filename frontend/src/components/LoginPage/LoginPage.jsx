@@ -30,12 +30,10 @@ function LoginPage() {
             )
 
             if (response.status === 404) {
-                console.log("year")
                 setErrorMessage('Wrong email')
             }
 
             if (response.status === 401) {
-                console.log("hello")
                 setErrorMessage('Wrong password')
             }
 

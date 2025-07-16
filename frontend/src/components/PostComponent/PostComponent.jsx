@@ -135,6 +135,10 @@ function PostComponent({
         heartIconStyle = 'size-6 text-red-600'
     }
 
+    function handleShareButton() {
+        navigator.clipboard.writeText('Copied text')
+    }
+
     return (
         <>
             <div className="flex flex-col gap-2 rounded-xl bg-blue-900 py-5 text-white">
@@ -175,7 +179,10 @@ function PostComponent({
                         <FaComment className="size-6" />
                         <p>{commentCount}</p>
                     </button>
-                    <button className="ml-auto flex cursor-pointer items-center gap-1">
+                    <button
+                        onClick={handleShareButton}
+                        className="ml-auto flex cursor-pointer items-center gap-1"
+                    >
                         <TbArrowForwardUp className="size-7" />
                     </button>
                 </div>
