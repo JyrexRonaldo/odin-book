@@ -58,7 +58,7 @@ function UserList() {
     if (loading) {
         return (
             <div>
-                <p>Loading...</p>
+                <p className='text-white'>Loading...</p>
             </div>
         )
     }
@@ -66,7 +66,7 @@ function UserList() {
     if (error) {
         return (
             <div>
-                <p>A network error was encounted</p>
+                <p className='text-white'>A network error was encounted</p>
             </div>
         )
     }

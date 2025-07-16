@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { ImHeart } from 'react-icons/im'
 import Textarea from '../Textarea/Textarea'
 import { intervalToDuration } from 'date-fns'
+import { BiSolidUserCircle } from 'react-icons/bi'
 
 function Comment({
     id,
@@ -18,6 +19,7 @@ function Comment({
     const [show, setShow] = useState(false)
     const [likedComment, setLikedComment] = useState(false)
     const [commentLikes, setCommentLikes] = useState(commentLikeCount)
+    const [commentText, setCommentText] = useState('')
 
     async function handleDeleteButton() {
         try {
@@ -46,6 +48,38 @@ function Comment({
 
     function handleEditButton() {
         setShow(!show)
+    }
+
+    function handleCommentField(e) {
+        setCommentText(e.target.value)
+    }
+
+    async function handleSendComment() {
+        try {
+            const response = await fetch(
+                `${import.meta.env.VITE_HOME_DOMAIN}/comments`,
+                {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `${localStorage.getItem('userToken')}`,
+                    },
+                    body: JSON.stringify({
+                        commentId : id,
+                        editComment: commentText,
+                    }),
+                }
+            )
+
+            const data = await response.json()
+            console.log(data)
+            setCommentTriggerRender(self.crypto.randomUUID())
+            setTriggerRender(self.crypto.randomUUID())
+            setCommentText('')
+            setShow(false)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     async function handleLikeButton() {
@@ -117,11 +151,7 @@ function Comment({
                             alt="author image"
                         />
                     ) : (
-                        <img
-                            src="/morty.jpg"
-                            className="size-12 rounded-full"
-                            alt="author image"
-                        />
+                        <BiSolidUserCircle className="size-12 rounded-full" />
                     )}
                 </div>
                 <div className="flex flex-col gap-1">
@@ -157,7 +187,14 @@ function Comment({
                     <p>{commentLikes}</p>
                 </button>
             </div>
-            {show && <Textarea placeholderText={'Edit comment'}></Textarea>}
+            {show && (
+                <Textarea
+                    sendButtonHandler={handleSendComment}
+                    textFieldHandler={handleCommentField}
+                    textFieldValue={commentText}
+                    placeholderText={'Edit comment'}
+                ></Textarea>
+            )}
         </>
     )
 }

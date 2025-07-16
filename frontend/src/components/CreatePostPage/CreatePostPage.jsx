@@ -8,6 +8,7 @@ function CreatePostPage() {
     const [postBody, setPostBody] = useState('')
     const [selectedImgUrl, setSelectedImgUrl] = useState(null)
     const [selectedImg, setSelectedImg] = useState(null)
+    let postTextVerification = null
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -37,7 +38,7 @@ function CreatePostPage() {
                     .from('odin-book')
                     .upload(`public/${currentImgName}`, selectedImg)
 
-                    responseError = error
+                responseError = error
 
                 const savedImg = data
 
@@ -89,6 +90,10 @@ function CreatePostPage() {
                 setSelectedImgUrl(this.result)
             })
         }
+    }
+
+    if (postBody.length <= 1) {
+        postTextVerification = 'Post must have text content'
     }
 
     return (
@@ -147,6 +152,9 @@ function CreatePostPage() {
                             id="postText"
                             rows={5}
                         ></textarea>
+                        <p className="text-sm text-red-400">
+                            {postTextVerification}
+                        </p>
                     </div>
                     <div className="flex gap-3">
                         <button

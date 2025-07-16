@@ -6,6 +6,7 @@ function LoginPage() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [successMessage, setSuccessMessage] = useState(null)
+    const [errorMessage, setErrorMessage] = useState(null)
     const navigate = useNavigate()
 
     function handleEmailInput(e) {
@@ -27,6 +28,17 @@ function LoginPage() {
                     body: JSON.stringify({ email, password }),
                 }
             )
+
+            if (response.status === 404) {
+                console.log("year")
+                setErrorMessage('Wrong email')
+            }
+
+            if (response.status === 401) {
+                console.log("hello")
+                setErrorMessage('Wrong password')
+            }
+
             const data = await response.json()
             localStorage.setItem('userToken', `${data.token}`)
             localStorage.setItem('userId', `${data.userId}`)
@@ -36,6 +48,7 @@ function LoginPage() {
             localStorage.setItem('bio', `${data.bio}`)
             if (response.ok) {
                 setSuccessMessage(data.message)
+                setErrorMessage('')
                 setTimeout(() => {
                     navigate('/explore')
                 }, 250)
@@ -99,6 +112,9 @@ function LoginPage() {
                                 />
                                 <p className="text-sm text-green-400">
                                     {successMessage}
+                                </p>
+                                <p className="text-sm text-red-400">
+                                    {errorMessage}
                                 </p>
                             </div>
                         </div>

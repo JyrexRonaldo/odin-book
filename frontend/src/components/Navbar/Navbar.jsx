@@ -24,7 +24,7 @@ function Navbar() {
     return (
         <>
             <nav className="mx-auto flex h-20 w-full max-w-6xl items-center justify-between px-4">
-                <Link to="/">
+                <Link to="/explore">
                     <h1 className="cursor-pointer text-3xl font-bold text-white">
                         Book
                     </h1>

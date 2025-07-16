@@ -36,9 +36,8 @@ dataRouter.route("/posts/:userId").get(dataController.getPostById);
 dataRouter
   .route("/comments")
   .post(dataController.createCommentHandler)
-  .delete(dataController.deleteCommentById);
-
-dataRouter.route("/comments/:commentId").put(dataController.editCommentById);
+  .delete(dataController.deleteCommentById)
+  .put(dataController.editCommentById);
 
 dataRouter.route("/comments/:postId").get(dataController.getCommentsByPostId);
 

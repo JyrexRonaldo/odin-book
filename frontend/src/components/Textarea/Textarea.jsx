@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { BiSolidUserCircle } from 'react-icons/bi'
 
 function Textarea({
     textFieldValue,

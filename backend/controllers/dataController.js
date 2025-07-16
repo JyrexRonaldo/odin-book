@@ -570,6 +570,7 @@ const editCommentById = asyncHandler(async (req, res) => {
       comment : editComment
     }
   });
+  res.status(200).json("Comment edited");
 });
 
 module.exports = {
