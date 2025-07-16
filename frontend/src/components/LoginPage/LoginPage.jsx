@@ -30,11 +30,11 @@ function LoginPage() {
             )
 
             if (response.status === 404) {
-                setErrorMessage('Wrong email')
+                setErrorMessage('User not found')
             }
 
             if (response.status === 401) {
-                setErrorMessage('Wrong password')
+                setErrorMessage('Invalid password')
             }
 
             const data = await response.json()
@@ -56,22 +56,55 @@ function LoginPage() {
         }
     }
 
+    async function handleLogInAsGuest() {
+        try {
+            const guestName = `John Doe`
+            const guestUsername = `User-${self.crypto.randomUUID()}`
+
+            const response = await fetch(
+                `${import.meta.env.VITE_HOME_DOMAIN}/auth/signup`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: guestName,
+                        username: guestUsername,
+                        email: `${self.crypto.randomUUID()}@gmail.com `,
+                        password: `Aa123`,
+                    }),
+                }
+            )
+
+            const data = await response.json()
+            localStorage.setItem('userToken', `${data.token}`)
+            localStorage.setItem('userId', `${data.userId}`)
+            localStorage.setItem('username', `${data.username}`)
+            localStorage.setItem('avatar', `${data.avatarUrl}`)
+            localStorage.setItem('name', `${data.name}`)
+            localStorage.setItem('bio', `${data.bio}`)
+            if (response.ok) {
+                setSuccessMessage(data.message)
+                setTimeout(() => {
+                    navigate('/explore')
+                }, 250)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <>
             <div className="grid min-h-screen grid-rows-[auto_1fr] bg-blue-950">
                 <AuthNavBar />
                 <div className="flex items-center justify-center">
-                    <form className="mx-5 flex min-h-7/12 w-full max-w-md flex-col justify-between rounded-lg bg-blue-900 p-5 text-white">
+                    <form className="mx-5 flex w-full max-w-md flex-col gap-10 rounded-lg bg-blue-900 p-5 text-white">
                         <div>
                             <p className="text-2xl font-bold">Log In</p>
                             <p className="text-sm">Log in to jump back in!</p>
                         </div>
-                        <div className="self-center">
-                            <button className="rounded-lg bg-white p-3 text-black">
-                                Continue with Google
-                            </button>
-                        </div>
-                        <div className="self-center">OR</div>
                         <div className="flex flex-col gap-5">
                             <div className="flex flex-col gap-1.5">
                                 <label
@@ -116,13 +149,20 @@ function LoginPage() {
                                 </p>
                             </div>
                         </div>
-                        <div>
+                        <div className="flex flex-col items-center gap-5">
                             <button
                                 type="button"
                                 onClick={handleLoginButton}
-                                className="h-10 cursor-pointer rounded-lg bg-blue-500 px-3 py-1 text-black"
+                                className="h-10 w-xs cursor-pointer rounded-lg bg-blue-500 px-3 py-1 text-black"
                             >
                                 Log In
+                            </button>
+                            <button
+                                type="button"
+                                onClick={handleLogInAsGuest}
+                                className="w-xs rounded-lg bg-white p-3 text-black"
+                            >
+                                Log in as Guest
                             </button>
                         </div>
                     </form>

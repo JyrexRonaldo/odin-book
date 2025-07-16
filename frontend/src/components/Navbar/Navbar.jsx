@@ -6,7 +6,7 @@ import { useState } from 'react'
 function Navbar() {
     const navigate = useNavigate()
     const [showDropdown, setShowDropdown] = useState(false)
-    const username = localStorage.getItem('username')
+    const name = localStorage.getItem('name')
     const avatarUrl = localStorage.getItem('avatar')
 
     function handleCreatePost() {
@@ -46,7 +46,7 @@ function Navbar() {
                         onClick={handleDropdown}
                         className="relative flex cursor-pointer items-center gap-3 text-white"
                     >
-                        <p className="">{username}</p>
+                        <p className="max-w-28 truncate">{name}</p>
                         {avatarUrl === 'null' ? (
                             <BiSolidUserCircle className="size-9" />
                         ) : (
