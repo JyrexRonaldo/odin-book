@@ -184,7 +184,10 @@ function PostComponent({
                         onClick={handleShareButton}
                         className="ml-auto flex cursor-pointer items-center gap-1"
                     >
-                        <TbArrowForwardUp onClick={handleShareButton} className="size-7" />
+                        <TbArrowForwardUp
+                            onClick={handleShareButton}
+                            className="size-7"
+                        />
                     </button>
                 </div>
                 <div>
@@ -216,11 +219,17 @@ function PostComponent({
                     >
                         <div className="h-8/12 w-full rounded-lg bg-blue-800 max-lg:self-end lg:grid lg:max-w-9/12 lg:grid-cols-[6fr_5fr]">
                             <div className="flex items-center justify-center bg-black max-lg:hidden">
-                                {postImgUrl &&  <img
-                                    className="max-h-96 w-full object-contain max-lg:hidden"
-                                    src={postImgUrl}
-                                    alt="post image"
-                                />}
+                                {postImgUrl ? (
+                                    <img
+                                        className="max-h-96 w-full object-contain max-lg:hidden"
+                                        src={postImgUrl}
+                                        alt="post image"
+                                    />
+                                ) : (
+                                    <div className="flex h-full w-full items-center justify-center bg-blue-600">
+                                        <p>{body}</p>
+                                    </div>
+                                )}
                             </div>
                             <div className="flex flex-col overflow-auto bg-blue-800 max-lg:h-full">
                                 <div className="sticky top-0 flex justify-between bg-blue-800 p-2.5">
