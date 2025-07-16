@@ -136,7 +136,8 @@ function PostComponent({
     }
 
     function handleShareButton() {
-        navigator.clipboard.writeText('Copied text')
+        navigator.clipboard.writeText(`${window.location.origin}/posts/${id}`)
+        //  console.log(`${window.location.origin}/posts/${id}`);
     }
 
     return (
@@ -183,7 +184,7 @@ function PostComponent({
                         onClick={handleShareButton}
                         className="ml-auto flex cursor-pointer items-center gap-1"
                     >
-                        <TbArrowForwardUp className="size-7" />
+                        <TbArrowForwardUp onClick={handleShareButton} className="size-7" />
                     </button>
                 </div>
                 <div>

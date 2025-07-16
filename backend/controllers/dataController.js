@@ -579,6 +579,23 @@ const getPostByPostId = asyncHandler(async (req, res) => {
     where: {
       id: +postId,
     },
+    include: {
+      author: {
+        select: {
+          name: true,
+          username: true,
+          avatarImageUrl: true,
+        },
+      },
+      comments: true,
+      likedBy: true,
+      _count: {
+        select: {
+          comments: true,
+          likedBy: true,
+        },
+      },
+    },
   });
   res.status(200).json(post)
 });

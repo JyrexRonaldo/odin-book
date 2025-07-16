@@ -11,6 +11,7 @@ import Dropdown from './components/Dropdown/Dropdown'
 import Feed from './components/Feed/Feed'
 import Explore from './components/Explore/Explore'
 import Likes from './components/Likes/Likes'
+import PostItem from './components/PostItem/PostItem'
 
 const routes = [
     {
@@ -24,6 +25,7 @@ const routes = [
             { path: '/users', element: <UserList /> },
             { path: '/likes', element: <Likes /> },
             { path: '/users/:username', element: <UserProfile /> },
+            { path: '/posts/:postId', element: <PostItem /> },
         ],
         errorElement: <ErrorPage />,
     },
