@@ -43,7 +43,6 @@ const followRequestHandler = asyncHandler(async (req, res) => {
     });
     res.status(201).json("User unfollowed");
   } else {
-    // console.log("is following")
     await prisma.follows.create({
       data: {
         followedById: +followeeId,

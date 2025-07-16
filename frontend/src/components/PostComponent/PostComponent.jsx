@@ -34,7 +34,7 @@ function PostComponent({
         }
     }
 
-    createdAt = format(createdAt, 'MMM d, yyyy, h:m a')
+    createdAt = format(createdAt, 'MMM d, yyyy, hh:mm a')
 
     async function handleLikeButton() {
         try {
@@ -216,11 +216,11 @@ function PostComponent({
                     >
                         <div className="h-8/12 w-full rounded-lg bg-blue-800 max-lg:self-end lg:grid lg:max-w-9/12 lg:grid-cols-[6fr_5fr]">
                             <div className="flex items-center justify-center bg-black max-lg:hidden">
-                                <img
+                                {postImgUrl &&  <img
                                     className="max-h-96 w-full object-contain max-lg:hidden"
                                     src={postImgUrl}
                                     alt="post image"
-                                />
+                                />}
                             </div>
                             <div className="flex flex-col overflow-auto bg-blue-800 max-lg:h-full">
                                 <div className="sticky top-0 flex justify-between bg-blue-800 p-2.5">

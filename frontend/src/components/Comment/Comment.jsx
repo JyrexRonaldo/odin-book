@@ -48,6 +48,7 @@ function Comment({
 
     function handleEditButton() {
         setShow(!show)
+        setCommentText(commentBody)
     }
 
     function handleCommentField(e) {
@@ -55,6 +56,10 @@ function Comment({
     }
 
     async function handleSendComment() {
+        if (show === true && commentText === '') {
+            return
+        }
+
         try {
             const response = await fetch(
                 `${import.meta.env.VITE_HOME_DOMAIN}/comments`,

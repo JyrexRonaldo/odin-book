@@ -14,7 +14,7 @@ function Navbar() {
     }
 
     function handleHomeButton() {
-        navigate('/')
+        navigate('/explore')
     }
 
     function handleDropdown() {
