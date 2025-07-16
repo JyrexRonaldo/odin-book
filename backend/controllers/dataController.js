@@ -560,6 +560,18 @@ const getPostById = asyncHandler(async (req, res) => {
   res.status(200).json(post);
 });
 
+const editCommentById = asyncHandler(async (req, res) => {
+  const { commentId, editComment } = req.body;
+  await prisma.comment.update({
+    where: {
+      id: +commentId,
+    },
+    data: {
+      comment : editComment
+    }
+  });
+});
+
 module.exports = {
   getAllUsers,
   followRequestHandler,
@@ -577,4 +589,5 @@ module.exports = {
   createLikeComment,
   deleteUserByUsername,
   getPostById,
+  editCommentById,
 };

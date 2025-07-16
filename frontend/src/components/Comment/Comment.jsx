@@ -73,13 +73,10 @@ function Comment({
                 commentLikeCount = data.commentLikeCount._count.likedBy
                 setLikedComment(false)
             }
-            // console.log(likeCount)
             setCommentLikes(commentLikeCount)
         } catch (error) {
             console.log(error)
         }
-
-        // setLikedComment(!likedComment)
     }
 
     useEffect(() => {
@@ -141,7 +138,7 @@ function Comment({
                                 className="cursor-pointer"
                                 onClick={handleEditButton}
                             >
-                                Edit
+                                {show ? 'Cancel' : 'Edit'}
                             </button>
                             <button
                                 className="cursor-pointer text-red-600"
@@ -160,9 +157,7 @@ function Comment({
                     <p>{commentLikes}</p>
                 </button>
             </div>
-            {show && (
-                <Textarea placeholderText={"What's on your mind"}></Textarea>
-            )}
+            {show && <Textarea placeholderText={'Edit comment'}></Textarea>}
         </>
     )
 }

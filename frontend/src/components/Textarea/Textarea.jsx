@@ -6,9 +6,19 @@ function Textarea({
     sendButtonHandler,
     placeholderText,
 }) {
+    const avatarUrl = localStorage.getItem('avatar')
+
     return (
         <div className="sticky bottom-0 mt-auto flex items-center justify-between gap-2 bg-blue-800 p-2.5">
-            <img src="/morty.jpg" className="size-12 rounded-full" alt="" />
+            {avatarUrl === 'null' ? (
+                <BiSolidUserCircle className="size-9" />
+            ) : (
+                <img
+                    src={avatarUrl}
+                    alt="avatar"
+                    className="size-12 rounded-full"
+                />
+            )}
 
             <textarea
                 className="grow resize-none rounded-[7px] bg-white px-2 py-1 text-black"
