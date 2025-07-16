@@ -213,12 +213,6 @@ function PostComponent({
                                     src={postImgUrl}
                                     alt="post image"
                                 />
-                                {/* object-cover max-h-96 */}
-                                {/* <img
-                                    className="h-auto w-full max-lg:hidden"
-                                    src="/mass-effect.jpeg"
-                                    alt=""
-                                /> */}
                             </div>
                             <div className="flex flex-col overflow-auto bg-blue-800 max-lg:h-full">
                                 <div className="sticky top-0 flex justify-between bg-blue-800 p-2.5">

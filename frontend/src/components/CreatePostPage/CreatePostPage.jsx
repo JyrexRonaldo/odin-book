@@ -51,6 +51,10 @@ function CreatePostPage() {
                 }
             }
 
+            if (postBody.length <= 1 && selectedImgUrl === null) {
+                return
+            }
+
             const response = await fetch(
                 `${import.meta.env.VITE_HOME_DOMAIN}/posts`,
                 {
@@ -92,8 +96,8 @@ function CreatePostPage() {
         }
     }
 
-    if (postBody.length <= 1) {
-        postTextVerification = 'Post must have text content'
+    if (postBody.length <= 1 && selectedImgUrl === null) {
+        postTextVerification = 'Post must have text or image content'
     }
 
     return (
