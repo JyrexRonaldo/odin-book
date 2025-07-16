@@ -533,32 +533,32 @@ const deleteUserByUsername = asyncHandler(async (req, res) => {
   res.status(200).json(`User: ${username} deleted`);
 });
 
-const getPostById = asyncHandler(async (req, res) => {
-  const { userId } = req.params;
-  const post = await prisma.user.findUnique({
-    where: {
-      id: +userId,
-    },
-    include: {
-      author: {
-        select: {
-          name: true,
-          username: true,
-          avatarImageUrl: true,
-        },
-      },
-      comments: true,
-      likedBy: true,
-      _count: {
-        select: {
-          comments: true,
-          likedBy: true,
-        },
-      },
-    },
-  });
-  res.status(200).json(post);
-});
+// const getPostById = asyncHandler(async (req, res) => {
+//   const { userId } = req.params;
+//   const post = await prisma.user.findUnique({
+//     where: {
+//       id: +userId,
+//     },
+//     include: {
+//       author: {
+//         select: {
+//           name: true,
+//           username: true,
+//           avatarImageUrl: true,
+//         },
+//       },
+//       comments: true,
+//       likedBy: true,
+//       _count: {
+//         select: {
+//           comments: true,
+//           likedBy: true,
+//         },
+//       },
+//     },
+//   });
+//   res.status(200).json(post);
+// });
 
 const editCommentById = asyncHandler(async (req, res) => {
   const { commentId, editComment } = req.body;
@@ -567,10 +567,20 @@ const editCommentById = asyncHandler(async (req, res) => {
       id: +commentId,
     },
     data: {
-      comment : editComment
-    }
+      comment: editComment,
+    },
   });
   res.status(200).json("Comment edited");
+});
+
+const getPostByPostId = asyncHandler(async (req, res) => {
+  const { postId } = req.params;
+  const post = await prisma.post.findUnique({
+    where: {
+      id: +postId,
+    },
+  });
+  res.status(200).json(post)
 });
 
 module.exports = {
@@ -589,6 +599,7 @@ module.exports = {
   deleteCommentById,
   createLikeComment,
   deleteUserByUsername,
-  getPostById,
+  // getPostById,
   editCommentById,
+  getPostByPostId,
 };

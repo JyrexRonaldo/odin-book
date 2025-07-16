@@ -31,7 +31,9 @@ dataRouter
   .post(dataController.createPost)
   .delete(dataController.deletePostById);
 
-dataRouter.route("/posts/:userId").get(dataController.getPostById);
+// dataRouter.route("/posts/:userId").get(dataController.getPostById);
+
+dataRouter.route("/posts/:postId").get(dataController.getPostByPostId);
 
 dataRouter
   .route("/comments")
