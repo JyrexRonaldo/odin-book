@@ -20,9 +20,9 @@ function MessageView() {
     }
 
     return (
-        <div className="h-screen bg-red-600 text-white lg:grid lg:grid-cols-[1fr_2fr]">
-            <div className="h-screen bg-green-600 max-lg:hidden">
-                <div className="grid grid-cols-[min-content_auto_min-content] items-center gap-4 bg-amber-800 p-4">
+        <div className="h-screen bg-[url('/wallpaper.jpeg')] bg-cover text-white lg:grid lg:grid-cols-[1fr_2fr]">
+            <div className="h-screen border-r border-blue-600 bg-blue-950 max-lg:hidden">
+                <div className="grid grid-cols-[min-content_auto_min-content] items-center gap-4 border-b border-blue-600 p-4">
                     {avatarUrl === 'null' ? (
                         <BiSolidUserCircle className="size-14" />
                     ) : (
@@ -32,11 +32,11 @@ function MessageView() {
                             className="size-14 rounded-full object-cover"
                         />
                     )}
-                    <div className="flex justify-center rounded-lg bg-blue-900 p-3">
+                    <div className="flex justify-center rounded-lg bg-blue-900/70 p-3">
                         <input
                             onChange={handleSearchInput}
                             value={searchInput}
-                            className="mr-3 w-full bg-blue-900"
+                            className="mr-3 w-full focus:outline-none"
                             type="search"
                             name="userSearch"
                             id="userSearch"
@@ -62,15 +62,32 @@ function MessageView() {
                     </p>
                 </div>
             </div>
-            <div className="h-screen bg-yellow-600">
-                <div className="flex h-full flex-col justify-between bg-fuchsia-700/50">
-                    <div className="grid grid-cols-[auto_1fr] bg-emerald-700">
-                        <button className='min-w-23 bg-cyan-400 flex justify-center items-center'>
+            <div className="h-screen">
+                <div className="flex h-full flex-col justify-between bg-blue-950/60">
+                    <div className="grid grid-cols-[auto_1fr] bg-blue-900">
+                        <button className="flex min-w-23 items-center justify-center">
                             <MdOutlineKeyboardBackspace className="size-8" />
                         </button>
-                        <ContactCard avatarUrl={'null'} />
+                        <div className="flex h-24 max-w-full items-center gap-3 px-6">
+                            {avatarUrl === 'null' ? (
+                                <BiSolidUserCircle className="size-18" />
+                            ) : (
+                                <img
+                                    src={avatarUrl}
+                                    alt="avatar"
+                                    className="size-14 rounded-full object-cover"
+                                />
+                            )}
+                            <div>
+                                <p className="font-extrabold">Name</p>
+                                <p className="font-extralight">@Username</p>
+                                <p className="text-xs">Date Joined</p>
+                            </div>
+                        </div>
                     </div>
-                    <div></div>
+                    <div className=' h-full'>
+                        Contact list
+                    </div>
                     <div>
                         <TextInput />
                     </div>
