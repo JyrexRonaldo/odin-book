@@ -10,6 +10,7 @@ import Feed from './components/Feed/Feed'
 import Explore from './components/Explore/Explore'
 import Likes from './components/Likes/Likes'
 import PostItem from './components/PostItem/PostItem'
+import MessageView from './components/MessageView/MessageView'
 
 const routes = [
     {
@@ -30,6 +31,7 @@ const routes = [
     { path: '/login', element: <LoginPage /> },
     { path: '/signup', element: <Signup /> },
     { path: '/post/create', element: <CreatePostPage /> },
+    { path: '/messenger', element: <MessageView /> },
 ]
 
 export default routes

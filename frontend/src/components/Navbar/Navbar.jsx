@@ -21,6 +21,10 @@ function Navbar() {
         setShowDropdown(!showDropdown)
     }
 
+    function handleMessenderButton() {
+        navigate('/messenger')
+    }
+
     return (
         <>
             <nav className="mx-auto flex h-20 w-full max-w-6xl items-center justify-between px-4">
@@ -31,10 +35,18 @@ function Navbar() {
                 </Link>
                 <div className="flex gap-3">
                     <button
+                        type="button"
                         onClick={handleHomeButton}
-                        className="cursor-pointer rounded-lg px-3 py-1 text-blue-500 hover:underline hover:underline-offset-4 max-md:hidden"
+                        className="cursor-pointer rounded-lg p-0 text-blue-500 hover:underline hover:underline-offset-4 max-md:hidden"
                     >
                         Home
+                    </button>
+                    <button
+                        type="button"
+                        onClick={handleMessenderButton}
+                        className="cursor-pointer rounded-lg p-0 text-blue-500 hover:underline hover:underline-offset-4 max-md:hidden"
+                    >
+                        Messenger
                     </button>
                     <button
                         onClick={handleCreatePost}
@@ -42,7 +54,8 @@ function Navbar() {
                     >
                         Create Post
                     </button>
-                    <div
+                    <button
+                        type="button"
                         onClick={handleDropdown}
                         className="relative flex cursor-pointer items-center gap-3 text-white"
                     >
@@ -57,7 +70,7 @@ function Navbar() {
                             />
                         )}
                         {showDropdown && <Dropdown />}
-                    </div>
+                    </button>
                 </div>
             </nav>
         </>
