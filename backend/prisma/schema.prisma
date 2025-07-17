@@ -15,19 +15,21 @@ datasource db {
 }
 
 model User {
-  id             Int            @id @default(autoincrement())
-  name           String
-  username       String         @unique
-  email          String         @unique
-  bio            String?        @default("Follow me and get to know me! We might end up best friends!")
-  avatarImageUrl String?
-  password       String
-  posts          Post[]
-  comments       Comment[]
-  followedBy     Follows[]      @relation("followedBy")
-  following      Follows[]      @relation("following")
-  likedPosts     Likes[]
-  LikedComments  CommentLikes[]
+  id               Int            @id @default(autoincrement())
+  name             String
+  username         String         @unique
+  email            String         @unique
+  bio              String?        @default("Follow me and get to know me! We might end up best friends!")
+  avatarImageUrl   String?
+  password         String
+  posts            Post[]
+  comments         Comment[]
+  followedBy       Follows[]      @relation("followedBy")
+  following        Follows[]      @relation("following")
+  outgoingMessages Messages[]     @relation("sender")
+  incomingMessages Messages[]     @relation("receiver")
+  likedPosts       Likes[]
+  LikedComments    CommentLikes[]
 }
 
 model Follows {
@@ -79,4 +81,15 @@ model Comment {
   post      Post           @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId    Int
   likedBy   CommentLikes[]
+}
+
+model Messages {
+  id         Int      @id @default(autoincrement())
+  message    String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  sender     User           @relation("sender", fields: [senderId], references: [id], onDelete: Cascade)
+  senderId   Int
+  receiver   User           @relation("receiver",fields: [receiverId], references: [id], onDelete: Cascade)
+  receiverId Int
 }
