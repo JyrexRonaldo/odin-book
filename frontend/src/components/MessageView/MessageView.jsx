@@ -5,6 +5,7 @@ import { IoMdSearch } from 'react-icons/io'
 import { useState } from 'react'
 import ContactCard from '../ContactCard/ContactCard'
 import TextInput from '../TextInput/TextInput'
+import MessageBubble from '../MessageBubble/MessageBubble'
 
 function MessageView() {
     const navigate = useNavigate()
@@ -85,8 +86,32 @@ function MessageView() {
                             </div>
                         </div>
                     </div>
-                    <div className=' h-full'>
-                        Contact list
+                    <div className='h-full flex flex-col items-end gap-2 overflow-y-auto px-4'>
+                
+                        <MessageBubble message={'Hello test message'} />
+                        <MessageBubble message={'Hello test message'} />
+                        <MessageBubble message={'Hello test message'} />
+                        <MessageBubble message={'Hello test message'} />
+                        <MessageBubble message={'Hello test message'} />
+                        <MessageBubble message={'Hello test message'} />
+                        <MessageBubble message={'Hello test message'} />
+                        <MessageBubble message={'Hello test message'} />
+                        <MessageBubble message={'Hello test message'} />
+                        <MessageBubble message={'Hello test message'} />
+                        <MessageBubble message={'Hello test message'} />
+                        <MessageBubble message={'Hello test message'} />
+                        <MessageBubble message={'Hello test message'} />
+                        <MessageBubble message={'Hello test message'} />
+                        <MessageBubble message={'Hello test message'} />
+                        <MessageBubble message={'Hello test message'} />
+                        <MessageBubble message={'Hello test message'} />
+                        <MessageBubble message={'Hello test message'} />
+                        <MessageBubble message={'Hello test message'} />
+                        <MessageBubble message={'Hello test message'} />
+                        <MessageBubble message={'Hello test message'} />
+                        <MessageBubble message={'Hello test message'} />
+                        <MessageBubble message={'Hello test message'} />
+                        <MessageBubble message={'Hello test message'} />
                     </div>
                     <div>
                         <TextInput />
