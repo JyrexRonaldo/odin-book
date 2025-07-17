@@ -139,7 +139,7 @@ function UserList() {
                     className="mr-3 w-full bg-blue-900"
                     type="search"
                     name="userSearch"
-                    id=""
+                    id="userSearch"
                     placeholder="Search by Username"
                 />
                 <IoMdSearch className="size-7" />
