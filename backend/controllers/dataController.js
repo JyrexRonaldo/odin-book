@@ -608,10 +608,26 @@ const createMessage = asyncHandler(async (req, res) => {
     data: {
       message: messageBody,
       senderId: req.user.id,
-      receiverId,
+      receiverId: +receiverId,
     },
   });
-  res.status(200).json(message)
+  res.status(200).json(message);
+});
+
+const getMessagesByUserId = asyncHandler(async (req, res) => {
+  const [userId] = req.params;
+  const messages = await prisma.messages.findMany({
+    where: {
+      AND: [
+        { senderId: { in: [req.user.id, userId] } },
+        { receiverId: { in: [req.user.id, userId] } },
+      ],
+    },
+    orderBy: {
+      createdAt: 'asc'
+    }
+  });
+  res.status(200).json(messages);
 });
 
 module.exports = {
@@ -633,5 +649,6 @@ module.exports = {
   // getPostById,
   editCommentById,
   getPostByPostId,
-  createMessage
+  createMessage,
+  getMessagesByUserId
 };
