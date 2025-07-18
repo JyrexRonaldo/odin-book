@@ -13,6 +13,7 @@ const usersData = Array.from({ length: 10 }).map((element, index) => {
     email: faker.internet.email({ firstName, lastName }),
     bio: faker.person.bio(),
     avatarImageUrl: faker.image.avatar(),
+    dateJoined: faker.date.past(),
   };
   return element;
 });

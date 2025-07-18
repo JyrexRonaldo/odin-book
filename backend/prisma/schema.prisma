@@ -21,6 +21,7 @@ model User {
   email            String         @unique
   bio              String?        @default("Follow me and get to know me! We might end up best friends!")
   avatarImageUrl   String?
+  dateJoined       DateTime       @default(now())
   password         String
   posts            Post[]
   comments         Comment[]

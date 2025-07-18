@@ -4,6 +4,9 @@ const bcrypt = require("bcryptjs");
 
 const getAllUsers = asyncHandler(async (req, res) => {
   const allUsers = await prisma.user.findMany({
+    omit: {
+      password: true,
+    },
     include: {
       followedBy: true,
       following: true,
@@ -596,7 +599,7 @@ const getPostByPostId = asyncHandler(async (req, res) => {
       },
     },
   });
-  res.status(200).json(post)
+  res.status(200).json(post);
 });
 
 module.exports = {
