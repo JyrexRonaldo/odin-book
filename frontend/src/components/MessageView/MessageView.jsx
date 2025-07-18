@@ -12,9 +12,10 @@ function MessageView() {
     const avatarUrl = localStorage.getItem('avatar')
     const [users, setUsers] = useState()
     const [name, setName] = useState('')
+    const [userId, setUserId] = useState(null)
     const [username, setUsername] = useState('')
     const [dateJoined, setDateJoined] = useState('')
-    const [displayChatView, setDisplayChatView] = useState(false)
+    const [showChatBox, setShowChatBox] = useState(false)
 
     useEffect(() => {
         async function fetchData() {
@@ -57,6 +58,7 @@ function MessageView() {
         return (
             <ContactCard
                 key={user.id}
+                id={user.id}
                 name={user.name}
                 username={user.username}
                 dateJoined={user.dateJoined}
@@ -64,7 +66,8 @@ function MessageView() {
                 setName={setName}
                 setUsername={setUsername}
                 setDateJoined={setDateJoined}
-                setDisplayChatView={setDisplayChatView}
+                setUserId={setUserId}
+                setShowChatBox={setShowChatBox}
             />
         )
     })
@@ -110,13 +113,16 @@ function MessageView() {
                 </div>
             </div>
             <div className="h-screen">
-                <ChatBox
-                    avatarUrl={avatarUrl}
-                    displayChatView={displayChatView}
-                    name={name}
-                    username={username}
-                    dateJoined={dateJoined}
-                />
+                {showChatBox && (
+                    <ChatBox
+                        userId={userId}
+                        avatarUrl={avatarUrl}
+                        // displayChatView={displayChatView}
+                        name={name}
+                        username={username}
+                        dateJoined={dateJoined}
+                    />
+                )}
             </div>
         </div>
     )

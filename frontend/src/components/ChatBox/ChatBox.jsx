@@ -2,20 +2,49 @@ import MessageBubble from '../MessageBubble/MessageBubble'
 import { MdOutlineKeyboardBackspace } from 'react-icons/md'
 import { BiSolidUserCircle } from 'react-icons/bi'
 import TextInput from '../TextInput/TextInput'
+import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 
-function ChatBox({ avatarUrl, displayChatView, name, username, dateJoined }) {
-    let viewValue = 'close'
-    const chatViewStyles = {
-        open: 'flex h-full flex-col justify-between bg-blue-950/60',
-        close: 'hidden',
-    }
+function ChatBox({
+    avatarUrl,
+    // displayChatView,
+    name,
+    username,
+    dateJoined,
+    userId,
+}) {
+    const navigate = useNavigate()
+    const [messages, setMessages] = useState([])
 
-    if (displayChatView) {
-        viewValue = 'open'
-    }
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await fetch(
+                    `${import.meta.env.VITE_HOME_DOMAIN}/messages/${userId}`,
+                    {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `${localStorage.getItem('userToken')}`,
+                        },
+                    }
+                )
+
+                if (response.status === 401) {
+                    navigate('/login')
+                }
+                const data = await response.json()
+                setMessages(data)
+                console.log(data)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        fetchData()
+    }, [navigate, userId])
 
     return (
-        <div className={`${chatViewStyles[viewValue]}`}>
+        <div className="flex h-full flex-col justify-between bg-blue-950/60">
             <div className="grid grid-cols-[auto_1fr] bg-blue-900">
                 <button className="flex min-w-23 items-center justify-center lg:hidden">
                     <MdOutlineKeyboardBackspace className="size-8" />

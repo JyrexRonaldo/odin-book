@@ -615,12 +615,12 @@ const createMessage = asyncHandler(async (req, res) => {
 });
 
 const getMessagesByUserId = asyncHandler(async (req, res) => {
-  const [userId] = req.params;
+  const {userId} = req.params;
   const messages = await prisma.messages.findMany({
     where: {
       AND: [
-        { senderId: { in: [req.user.id, userId] } },
-        { receiverId: { in: [req.user.id, userId] } },
+        { senderId: { in: [req.user.id, +userId] } },
+        { receiverId: { in: [req.user.id, +userId] } },
       ],
     },
     orderBy: {

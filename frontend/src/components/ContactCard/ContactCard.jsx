@@ -2,6 +2,7 @@ import { BiSolidUserCircle } from 'react-icons/bi'
 import { format } from 'date-fns'
 
 function ContactCard({
+    id,
     name,
     username,
     dateJoined,
@@ -9,7 +10,8 @@ function ContactCard({
     setName,
     setUsername,
     setDateJoined,
-    setDisplayChatView,
+    setUserId,
+    setShowChatBox
 }) {
     dateJoined = format(dateJoined, 'MMM d, yyyy, hh:mm a')
 
@@ -17,7 +19,8 @@ function ContactCard({
         setName(name)
         setUsername(username)
         setDateJoined(dateJoined)
-        setDisplayChatView(true)
+        setUserId(id)
+        setShowChatBox(true)
     }
 
     return (
