@@ -624,8 +624,8 @@ const getMessagesByUserId = asyncHandler(async (req, res) => {
       ],
     },
     orderBy: {
-      createdAt: 'asc'
-    }
+      createdAt: "asc",
+    },
   });
   res.status(200).json(messages);
 });
@@ -650,5 +650,5 @@ module.exports = {
   editCommentById,
   getPostByPostId,
   createMessage,
-  getMessagesByUserId
+  getMessagesByUserId,
 };

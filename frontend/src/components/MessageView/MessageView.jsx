@@ -2,16 +2,45 @@ import { useNavigate } from 'react-router-dom'
 import { BiSolidUserCircle } from 'react-icons/bi'
 import { MdOutlineKeyboardBackspace } from 'react-icons/md'
 import { IoMdSearch } from 'react-icons/io'
-import { useState } from 'react'
 import ContactCard from '../ContactCard/ContactCard'
 import ChatBox from '../ChatBox/CHatBox'
-
-
+import { useState, useEffect } from 'react'
 
 function MessageView() {
+    const [users, setUsers] = useState()
     const navigate = useNavigate()
     const [searchInput, setSearchInput] = useState('')
     const avatarUrl = localStorage.getItem('avatar')
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await fetch(
+                    `${import.meta.env.VITE_HOME_DOMAIN}/users`,
+                    {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `${localStorage.getItem('userToken')}`,
+                        },
+                    }
+                )
+
+                if (response.status === 401) {
+                    navigate('/login')
+                }
+
+                const data = await response.json()
+
+                setUsers(data)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        fetchData()
+    }, [navigate])
+
+    console.log(users)
 
     function handleSearchInput(e) {
         setSearchInput(e.target.value)
@@ -20,6 +49,18 @@ function MessageView() {
     function handleHomeButton() {
         navigate('/explore')
     }
+
+    const userContactCardComponents = users?.map((user) => {
+        // const  dateJoined = 
+        return (
+            <ContactCard
+                name={user.name}
+                username={user.username}
+                dateJoined={user.dateJoined}
+                avatarUrl={user.avatarImageUrl}
+            />
+        )
+    })
 
     return (
         <div className="h-screen bg-[url('/wallpaper.jpeg')] bg-cover text-white lg:grid lg:grid-cols-[1fr_2fr]">
@@ -55,30 +96,7 @@ function MessageView() {
                     </button>
                 </div>
                 <div className="scrollbar-hide overflow-y-scroll">
-                    <ContactCard avatarUrl={'null'} />
-                    <ContactCard avatarUrl={'null'} />
-                    <ContactCard avatarUrl={'null'} />
-                    <ContactCard avatarUrl={'null'} />
-                    <ContactCard avatarUrl={'null'} />
-                    <ContactCard avatarUrl={'null'} />
-                    <ContactCard avatarUrl={'null'} />
-                    <ContactCard avatarUrl={'null'} />
-                    <ContactCard avatarUrl={'null'} />
-                    <ContactCard avatarUrl={'null'} />
-                    <ContactCard avatarUrl={'null'} />
-                    <ContactCard avatarUrl={'null'} />
-                    <ContactCard avatarUrl={'null'} />
-                    <ContactCard avatarUrl={'null'} />
-                    <ContactCard avatarUrl={'null'} />
-                    <ContactCard avatarUrl={'null'} />
-                    <ContactCard avatarUrl={'null'} />
-                    <ContactCard avatarUrl={'null'} />
-                    <ContactCard avatarUrl={'null'} />
-                    <ContactCard avatarUrl={'null'} />
-                    <ContactCard avatarUrl={'null'} />
-                    <ContactCard avatarUrl={'null'} />
-                    <ContactCard avatarUrl={'null'} />
-                    <ContactCard avatarUrl={'null'} />
+                    {userContactCardComponents}
                     <p className="mt-auto text-center text-xs text-blue-400">
                         -End of contacts-
                     </p>
