@@ -1,8 +1,9 @@
 import { BiSolidUserCircle } from 'react-icons/bi'
 
 function ContactCard({ avatarUrl }) {
+
     return (
-        <div className="flex h-24 max-w-full items-center gap-3 border-b border-blue-600/70 px-6">
+        <div className="flex hover:bg-blue-900 h-24 max-w-full items-center gap-3 border-b border-blue-600/70 px-6">
             {avatarUrl === 'null' ? (
                 <BiSolidUserCircle className="size-18" />
             ) : (

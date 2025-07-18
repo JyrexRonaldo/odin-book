@@ -22,7 +22,7 @@ function MessageView() {
 
     return (
         <div className="h-screen bg-[url('/wallpaper.jpeg')] bg-cover text-white lg:grid lg:grid-cols-[1fr_2fr]">
-            <div className="h-screen border-r border-blue-600 bg-blue-950 max-lg:hidden">
+            <div className="flex h-screen flex-col border-r border-blue-600 bg-blue-950 max-lg:hidden">
                 <div className="grid grid-cols-[min-content_auto_min-content] items-center gap-4 border-b border-blue-600 p-4">
                     {avatarUrl === 'null' ? (
                         <BiSolidUserCircle className="size-14" />
@@ -53,7 +53,27 @@ function MessageView() {
                         Home
                     </button>
                 </div>
-                <div>
+                <div className="scrollbar-hide overflow-y-scroll">
+                    <ContactCard avatarUrl={'null'} />
+                    <ContactCard avatarUrl={'null'} />
+                    <ContactCard avatarUrl={'null'} />
+                    <ContactCard avatarUrl={'null'} />
+                    <ContactCard avatarUrl={'null'} />
+                    <ContactCard avatarUrl={'null'} />
+                    <ContactCard avatarUrl={'null'} />
+                    <ContactCard avatarUrl={'null'} />
+                    <ContactCard avatarUrl={'null'} />
+                    <ContactCard avatarUrl={'null'} />
+                    <ContactCard avatarUrl={'null'} />
+                    <ContactCard avatarUrl={'null'} />
+                    <ContactCard avatarUrl={'null'} />
+                    <ContactCard avatarUrl={'null'} />
+                    <ContactCard avatarUrl={'null'} />
+                    <ContactCard avatarUrl={'null'} />
+                    <ContactCard avatarUrl={'null'} />
+                    <ContactCard avatarUrl={'null'} />
+                    <ContactCard avatarUrl={'null'} />
+                    <ContactCard avatarUrl={'null'} />
                     <ContactCard avatarUrl={'null'} />
                     <ContactCard avatarUrl={'null'} />
                     <ContactCard avatarUrl={'null'} />
@@ -86,8 +106,7 @@ function MessageView() {
                             </div>
                         </div>
                     </div>
-                    <div className='h-full flex flex-col items-end gap-2 overflow-y-auto px-4'>
-                
+                    <div className="scrollbar-hide flex h-full flex-col items-end gap-2 overflow-y-auto px-4">
                         <MessageBubble message={'Hello test message'} />
                         <MessageBubble message={'Hello test message'} />
                         <MessageBubble message={'Hello test message'} />
