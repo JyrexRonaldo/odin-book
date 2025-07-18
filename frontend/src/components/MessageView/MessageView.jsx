@@ -5,6 +5,7 @@ import { IoMdSearch } from 'react-icons/io'
 import ContactCard from '../ContactCard/ContactCard'
 import ChatBox from '../ChatBox/CHatBox'
 import { useState, useEffect } from 'react'
+import TextInputContext from '../TextInputContext/TextInputContext'
 
 function MessageView() {
     const navigate = useNavigate()
@@ -16,6 +17,7 @@ function MessageView() {
     const [username, setUsername] = useState('')
     const [dateJoined, setDateJoined] = useState('')
     const [showChatBox, setShowChatBox] = useState(false)
+    const [messageBody, setMessageBody] = useState('')
 
     useEffect(() => {
         async function fetchData() {
@@ -45,6 +47,34 @@ function MessageView() {
         fetchData()
     }, [navigate])
 
+    async function createMessagHandler() {
+        try {
+            const response = await fetch(
+                `${import.meta.env.VITE_HOME_DOMAIN}/messages`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `${localStorage.getItem('userToken')}`,
+                    },
+                    body: JSON.stringify({
+                        messageBody,
+                        receiverId: userId,
+                    }),
+                }
+            )
+
+            const data = await response.json()
+            console.log(data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    function textInputFieldHandler(e) {
+        setMessageBody(e.target.value)
+    }
+
     function handleSearchInput(e) {
         setSearchInput(e.target.value)
     }
@@ -71,6 +101,8 @@ function MessageView() {
             />
         )
     })
+
+    console.log(messageBody)
 
     return (
         <div className="h-screen bg-[url('/wallpaper.jpeg')] bg-cover text-white lg:grid lg:grid-cols-[1fr_2fr]">
@@ -112,18 +144,20 @@ function MessageView() {
                     </p>
                 </div>
             </div>
-            <div className="h-screen">
-                {showChatBox && (
-                    <ChatBox
-                        userId={userId}
-                        avatarUrl={avatarUrl}
-                        // displayChatView={displayChatView}
-                        name={name}
-                        username={username}
-                        dateJoined={dateJoined}
-                    />
-                )}
-            </div>
+            <TextInputContext.Provider value={{ createMessagHandler, textInputFieldHandler, messageBody }}>
+                <div className="h-screen">
+                    {showChatBox && (
+                        <ChatBox
+                            userId={userId}
+                            avatarUrl={avatarUrl}
+                            // displayChatView={displayChatView}
+                            name={name}
+                            username={username}
+                            dateJoined={dateJoined}
+                        />
+                    )}
+                </div>
+            </TextInputContext.Provider>
         </div>
     )
 }

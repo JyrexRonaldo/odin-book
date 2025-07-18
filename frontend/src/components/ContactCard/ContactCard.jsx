@@ -13,7 +13,7 @@ function ContactCard({
     setUserId,
     setShowChatBox
 }) {
-    dateJoined = format(dateJoined, 'MMM d, yyyy, hh:mm a')
+    dateJoined = format(dateJoined, 'MMM d, yyyy')
 
     function handleChatView() {
         setName(name)
