@@ -3,10 +3,19 @@ import { MdOutlineKeyboardBackspace } from 'react-icons/md'
 import { BiSolidUserCircle } from 'react-icons/bi'
 import TextInput from '../TextInput/TextInput'
 
+function ChatBox({ avatarUrl, displayChatView, name, username, dateJoined }) {
+    let viewValue = 'close'
+    const chatViewStyles = {
+        open: 'flex h-full flex-col justify-between bg-blue-950/60',
+        close: 'hidden',
+    }
 
-function ChatBox({avatarUrl}) {
+    if (displayChatView) {
+        viewValue = 'open'
+    }
+
     return (
-        <div className="flex h-full flex-col justify-between bg-blue-950/60">
+        <div className={`${chatViewStyles[viewValue]}`}>
             <div className="grid grid-cols-[auto_1fr] bg-blue-900">
                 <button className="flex min-w-23 items-center justify-center lg:hidden">
                     <MdOutlineKeyboardBackspace className="size-8" />
@@ -22,9 +31,9 @@ function ChatBox({avatarUrl}) {
                         />
                     )}
                     <div>
-                        <p className="font-extrabold">Name</p>
-                        <p className="font-extralight">@Username</p>
-                        <p className="text-xs">Date Joined</p>
+                        <p className="font-extrabold">{name}</p>
+                        <p className="text-xs font-extralight">{`@${username}`}</p>
+                        <p className="text-xs">Joined {dateJoined}</p>
                     </div>
                 </div>
             </div>

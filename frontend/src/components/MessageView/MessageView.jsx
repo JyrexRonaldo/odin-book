@@ -7,10 +7,14 @@ import ChatBox from '../ChatBox/CHatBox'
 import { useState, useEffect } from 'react'
 
 function MessageView() {
-    const [users, setUsers] = useState()
     const navigate = useNavigate()
     const [searchInput, setSearchInput] = useState('')
     const avatarUrl = localStorage.getItem('avatar')
+    const [users, setUsers] = useState()
+    const [name, setName] = useState('')
+    const [username, setUsername] = useState('')
+    const [dateJoined, setDateJoined] = useState('')
+    const [displayChatView, setDisplayChatView] = useState(false)
 
     useEffect(() => {
         async function fetchData() {
@@ -40,8 +44,6 @@ function MessageView() {
         fetchData()
     }, [navigate])
 
-    console.log(users)
-
     function handleSearchInput(e) {
         setSearchInput(e.target.value)
     }
@@ -51,13 +53,18 @@ function MessageView() {
     }
 
     const userContactCardComponents = users?.map((user) => {
-        // const  dateJoined = 
+        // const  dateJoined =
         return (
             <ContactCard
+                key={user.id}
                 name={user.name}
                 username={user.username}
                 dateJoined={user.dateJoined}
                 avatarUrl={user.avatarImageUrl}
+                setName={setName}
+                setUsername={setUsername}
+                setDateJoined={setDateJoined}
+                setDisplayChatView={setDisplayChatView}
             />
         )
     })
@@ -103,7 +110,13 @@ function MessageView() {
                 </div>
             </div>
             <div className="h-screen">
-                <ChatBox avatarUrl={avatarUrl} />
+                <ChatBox
+                    avatarUrl={avatarUrl}
+                    displayChatView={displayChatView}
+                    name={name}
+                    username={username}
+                    dateJoined={dateJoined}
+                />
             </div>
         </div>
     )

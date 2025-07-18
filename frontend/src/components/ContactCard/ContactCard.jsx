@@ -1,12 +1,30 @@
 import { BiSolidUserCircle } from 'react-icons/bi'
 import { format } from 'date-fns'
 
-function ContactCard({ name, username, dateJoined, avatarUrl }) {
+function ContactCard({
+    name,
+    username,
+    dateJoined,
+    avatarUrl,
+    setName,
+    setUsername,
+    setDateJoined,
+    setDisplayChatView,
+}) {
+    dateJoined = format(dateJoined, 'MMM d, yyyy, hh:mm a')
 
-    dateJoined =  format(dateJoined, 'MMM d, yyyy, hh:mm a')
+    function handleChatView() {
+        setName(name)
+        setUsername(username)
+        setDateJoined(dateJoined)
+        setDisplayChatView(true)
+    }
 
     return (
-        <div className="flex h-24 max-w-full items-center gap-3 border-b border-blue-600/70 px-6 hover:bg-blue-900">
+        <div
+            onClick={handleChatView}
+            className="flex h-24 max-w-full items-center gap-3 border-b border-blue-600/70 px-6 hover:bg-blue-900"
+        >
             {avatarUrl === 'null' ? (
                 <BiSolidUserCircle className="size-18" />
             ) : (
@@ -18,7 +36,7 @@ function ContactCard({ name, username, dateJoined, avatarUrl }) {
             )}
             <div>
                 <p className="font-extrabold">{name}</p>
-                <p className="font-extralight text-xs">{`@${username}`}</p>
+                <p className="text-xs font-extralight">{`@${username}`}</p>
                 <p className="text-xs">Joined {dateJoined}</p>
             </div>
         </div>
