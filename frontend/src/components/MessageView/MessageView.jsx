@@ -23,17 +23,17 @@ function MessageView() {
     return (
         <div className="h-screen bg-[url('/wallpaper.jpeg')] bg-cover text-white lg:grid lg:grid-cols-[1fr_2fr]">
             <div className="flex h-screen flex-col border-r border-blue-600 bg-blue-950 max-lg:hidden">
-                <div className="grid grid-cols-[min-content_auto_min-content] items-center gap-4 border-b border-blue-600 p-4">
+                <div className="flex items-center gap-4 border-b border-blue-600 p-4">
                     {avatarUrl === 'null' ? (
-                        <BiSolidUserCircle className="size-14" />
+                        <BiSolidUserCircle className="size-14 shrink-0" />
                     ) : (
                         <img
                             src={avatarUrl}
                             alt="avatar"
-                            className="size-14 rounded-full object-cover"
+                            className="size-14 shrink-0 rounded-full object-cover"
                         />
                     )}
-                    <div className="flex justify-center rounded-lg bg-blue-900/70 p-3">
+                    <div className="flex grow justify-center rounded-lg bg-blue-900/70 p-3">
                         <input
                             onChange={handleSearchInput}
                             value={searchInput}
