@@ -88,8 +88,8 @@ model Messages {
   message    String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-  sender     User           @relation("sender", fields: [senderId], references: [id], onDelete: Cascade)
+  sender     User     @relation("sender", fields: [senderId], references: [id], onDelete: Cascade)
   senderId   Int
-  receiver   User           @relation("receiver",fields: [receiverId], references: [id], onDelete: Cascade)
+  receiver   User     @relation("receiver", fields: [receiverId], references: [id], onDelete: Cascade)
   receiverId Int
 }
