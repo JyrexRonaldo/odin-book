@@ -43,4 +43,6 @@ dataRouter
 
 dataRouter.route("/comments/:postId").get(dataController.getCommentsByPostId);
 
+dataRouter.route("/messages").post(dataController.createMessage)
+
 module.exports = dataRouter;

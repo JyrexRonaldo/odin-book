@@ -602,6 +602,18 @@ const getPostByPostId = asyncHandler(async (req, res) => {
   res.status(200).json(post);
 });
 
+const createMessage = asyncHandler(async (req, res) => {
+  const { messageBody, receiverId } = req.body;
+  const message = await prisma.messages.create({
+    data: {
+      message: messageBody,
+      senderId: req.user.id,
+      receiverId,
+    },
+  });
+  res.status(200).json(message)
+});
+
 module.exports = {
   getAllUsers,
   followRequestHandler,
@@ -621,4 +633,5 @@ module.exports = {
   // getPostById,
   editCommentById,
   getPostByPostId,
+  createMessage
 };
