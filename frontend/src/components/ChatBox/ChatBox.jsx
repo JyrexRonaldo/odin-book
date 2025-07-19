@@ -59,7 +59,7 @@ function ChatBox({
                     <MdOutlineKeyboardBackspace className="size-8" />
                 </button>
                 <div className="flex h-24 max-w-full items-center gap-3 px-6">
-                    {avatarUrl === 'null' ? (
+                    {avatarUrl === null ? (
                         <BiSolidUserCircle className="size-18" />
                     ) : (
                         <img

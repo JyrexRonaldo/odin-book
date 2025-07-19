@@ -30,7 +30,7 @@ function ContactCard({
             onClick={handleChatView}
             className="flex h-24 max-w-full items-center gap-3 border-b border-blue-600/70 px-6 hover:bg-blue-900"
         >
-            {avatarUrl === 'null' ? (
+            { avatarUrl === null ? (
                 <BiSolidUserCircle className="size-18" />
             ) : (
                 <img

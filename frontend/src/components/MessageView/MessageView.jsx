@@ -11,7 +11,7 @@ import MessageBubbleTriggerContext from '../MessageBubbleTriggerContext/MessageB
 function MessageView() {
     const navigate = useNavigate()
     const [searchInput, setSearchInput] = useState('')
-    const [contactAvatarUrl,setContactAvatarUrl]  = useState('')
+    const [contactAvatarUrl, setContactAvatarUrl] = useState('')
     const avatarUrl = localStorage.getItem('avatar')
     const [contacts, setContacts] = useState()
     const [name, setName] = useState('')
@@ -52,7 +52,10 @@ function MessageView() {
     }, [navigate])
 
     async function createMessagHandler(e) {
-        if ( e.type === 'keyup' && e.key !== 'Enter') {
+        if (e.type === 'keyup' && e.key !== 'Enter') {
+            return
+        }
+        if (messageBody.trim() === '') {
             return
         }
         console.log(e.type)
@@ -93,26 +96,29 @@ function MessageView() {
         navigate('/explore')
     }
 
-    const userContactCardComponents = contacts?.map((user) => {
-        console.log(user)
-        return (
-            <ContactCard
-                key={user.id}
-                id={user.id}
-                name={user.name}
-                username={user.username}
-                dateJoined={user.dateJoined}
-                avatarUrl={user.avatarImageUrl}
-                setName={setName}
-                setUsername={setUsername}
-                setDateJoined={setDateJoined}
-                setUserId={setUserId}
-                setShowChatBox={setShowChatBox}
-                setContactAvatarUrl={setContactAvatarUrl}
-
-            />
-        )
-    })
+    const userContactCardComponents = contacts
+        ?.filter((user) => {
+            if (user.id !== +localStorage.getItem('userId')) return true
+        })
+        .map((user) => {
+            console.log(user)
+            return (
+                <ContactCard
+                    key={user.id}
+                    id={user.id}
+                    name={user.name}
+                    username={user.username}
+                    dateJoined={user.dateJoined}
+                    avatarUrl={user.avatarImageUrl}
+                    setName={setName}
+                    setUsername={setUsername}
+                    setDateJoined={setDateJoined}
+                    setUserId={setUserId}
+                    setShowChatBox={setShowChatBox}
+                    setContactAvatarUrl={setContactAvatarUrl}
+                />
+            )
+        })
 
     console.log(messageBody)
 
