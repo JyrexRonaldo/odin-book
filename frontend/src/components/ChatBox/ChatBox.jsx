@@ -8,11 +8,10 @@ import MessageBubbleTriggerContext from '../MessageBubbleTriggerContext/MessageB
 
 function ChatBox({
     avatarUrl,
-    // displayChatView,
     name,
     username,
     dateJoined,
-    userId,
+    contactId,
 }) {
     const navigate = useNavigate()
     const [messages, setMessages] = useState([])
@@ -24,7 +23,7 @@ function ChatBox({
         async function fetchData() {
             try {
                 const response = await fetch(
-                    `${import.meta.env.VITE_HOME_DOMAIN}/messages/${userId}`,
+                    `${import.meta.env.VITE_HOME_DOMAIN}/messages/${contactId}`,
                     {
                         method: 'GET',
                         headers: {
@@ -39,24 +38,29 @@ function ChatBox({
                 }
                 const data = await response.json()
                 setMessages(data)
-                console.log(data)
             } catch (error) {
                 console.log(error)
             }
         }
         fetchData()
-    }, [navigate, userId, messageBubbleTriggerRender])
+    }, [navigate, contactId, messageBubbleTriggerRender])
 
     const messageComponents = messages?.map((data) => {
-        console.log(data)
-        return <MessageBubble key={data.id} message={data.message} senderId={data.senderId} />
+        return (
+            <MessageBubble
+                key={data.id}
+                id={data.id}
+                message={data.message}
+                senderId={data.senderId}
+            />
+        )
     })
 
     return (
         <div className="flex h-full flex-col justify-between bg-blue-950/60">
             <div className="grid grid-cols-[auto_1fr] bg-blue-900">
                 <button className="flex min-w-23 items-center justify-center lg:hidden">
-                    <MdOutlineKeyboardBackspace className="size-8" />
+                    <MdOutlineKeyboardBackspace className="size-8 cursor-pointer" />
                 </button>
                 <div className="flex h-24 max-w-full items-center gap-3 px-6">
                     {avatarUrl === null ? (

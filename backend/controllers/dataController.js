@@ -637,7 +637,7 @@ const deleteMessageById = asyncHandler(async (req, res) => {
       id: +messageId,
     },
   });
-  res.status(200).json(`MessageID: ${commentId}  deleted`);
+  res.status(200).json(`MessageID: ${messageId}  deleted`);
 });
 
 module.exports = {

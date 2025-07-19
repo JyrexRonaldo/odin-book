@@ -20,7 +20,7 @@ function MessageView() {
     const [showChatBox, setShowChatBox] = useState(false)
     const [messageBody, setMessageBody] = useState('')
     const [contactSearchInput, setContactSearchInput] = useState('')
-    const [messageBubbleTriggerRender, seMessageBubbleTriggerRender] =
+    const [messageBubbleTriggerRender, setMessageBubbleTriggerRender] =
         useState(null)
 
     useEffect(() => {
@@ -58,7 +58,6 @@ function MessageView() {
         if (messageBody.trim() === '') {
             return
         }
-        console.log(e.type)
         try {
             const response = await fetch(
                 `${import.meta.env.VITE_HOME_DOMAIN}/messages`,
@@ -78,7 +77,7 @@ function MessageView() {
             const data = await response.json()
             console.log(data)
             setMessageBody('')
-            seMessageBubbleTriggerRender(self.crypto.randomUUID())
+            setMessageBubbleTriggerRender(self.crypto.randomUUID())
         } catch (error) {
             console.log(error)
         }
@@ -108,7 +107,6 @@ function MessageView() {
             }
         })
         .map((user) => {
-            console.log(user)
             return (
                 <ContactCard
                     key={user.id}
@@ -132,7 +130,6 @@ function MessageView() {
             if (user.id !== +localStorage.getItem('userId')) return true
         })
         .map((user) => {
-            console.log(user)
             return (
                 <ContactCard
                     key={user.id}
@@ -151,11 +148,9 @@ function MessageView() {
             )
         })
 
-    console.log(messageBody)
-
     return (
         <div className="h-screen bg-[url('/wallpaper.jpeg')] bg-cover text-white lg:grid lg:grid-cols-[1fr_2fr]">
-            <div className="flex h-screen flex-col border-r border-blue-600 bg-blue-950 max-lg:hidden">
+            <div className="flex h-screen flex-col border-r border-blue-600 bg-blue-950">
                 <div className="flex items-center gap-4 border-b border-blue-600 p-4">
                     {avatarUrl === 'null' ? (
                         <BiSolidUserCircle className="size-14 shrink-0" />
@@ -181,7 +176,7 @@ function MessageView() {
                     <button
                         type="button"
                         onClick={handleHomeButton}
-                        className="cursor-pointer rounded-lg p-0 text-blue-500 hover:underline hover:underline-offset-4 max-md:hidden"
+                        className="cursor-pointer rounded-lg p-0 text-blue-500 hover:underline hover:underline-offset-4 "
                     >
                         Home
                     </button>
@@ -195,20 +190,23 @@ function MessageView() {
                     </p>
                 </div>
             </div>
-            <MessageBubbleTriggerContext.Provider
-                value={{ messageBubbleTriggerRender }}
-            >
-                <TextInputContext.Provider
+            <div className="h-screen">
+                <MessageBubbleTriggerContext.Provider
                     value={{
-                        createMessagHandler,
-                        textInputFieldHandler,
-                        messageBody,
+                        messageBubbleTriggerRender,
+                        setMessageBubbleTriggerRender,
                     }}
                 >
-                    <div className="h-screen">
+                    <TextInputContext.Provider
+                        value={{
+                            createMessagHandler,
+                            textInputFieldHandler,
+                            messageBody,
+                        }}
+                    >
                         {showChatBox && (
                             <ChatBox
-                                userId={userId}
+                                contactId={userId}
                                 avatarUrl={contactAvatarUrl}
                                 // displayChatView={displayChatView}
                                 name={name}
@@ -216,9 +214,9 @@ function MessageView() {
                                 dateJoined={dateJoined}
                             />
                         )}
-                    </div>
-                </TextInputContext.Provider>
-            </MessageBubbleTriggerContext.Provider>
+                    </TextInputContext.Provider>
+                </MessageBubbleTriggerContext.Provider>
+            </div>
         </div>
     )
 }

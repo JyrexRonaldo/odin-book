@@ -44,7 +44,7 @@ function Navbar() {
                     <button
                         type="button"
                         onClick={handleMessenderButton}
-                        className="cursor-pointer rounded-lg p-0 text-blue-500 hover:underline hover:underline-offset-4 max-md:hidden"
+                        className="cursor-pointer rounded-lg p-0 text-blue-500 hover:underline hover:underline-offset-4 "
                     >
                         Messenger
                     </button>
