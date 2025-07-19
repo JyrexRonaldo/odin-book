@@ -48,8 +48,7 @@ function ChatBox({
     }, [navigate, userId, messageBubbleTriggerRender])
 
     const messageComponents = messages?.map((data) => {
-        console.log(data)
-        return <MessageBubble message={data.message} />
+        return <MessageBubble key={data.id} message={data.message} />
     })
 
     return (

@@ -17,6 +17,7 @@ function TextInput() {
                 className="mr-3 w-full bg-blue-900 focus:outline-none"
                 value={messageBody}
                 onChange={textInputFieldHandler}
+                onKeyUp={createMessagHandler}
             />
             <button
                 onClick={createMessagHandler}

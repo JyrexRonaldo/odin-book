@@ -50,7 +50,11 @@ function MessageView() {
         fetchData()
     }, [navigate])
 
-    async function createMessagHandler() {
+    async function createMessagHandler(e) {
+        if ( e.type === 'keyup' && e.key !== 'Enter') {
+            return
+        }
+        console.log(e.type)
         try {
             const response = await fetch(
                 `${import.meta.env.VITE_HOME_DOMAIN}/messages`,
