@@ -148,9 +148,22 @@ function MessageView() {
             )
         })
 
+    const contactListStyles = {
+        chatBoxClosed:
+            'flex h-screen flex-col border-r border-blue-600 bg-blue-950',
+        chatBoxOpened:
+            'flex h-screen flex-col border-r border-blue-600 bg-blue-950 max-lg:hidden',
+    }
+
+    let mobileViewStyles = 'chatBoxClosed'
+
+    if (showChatBox) {
+        mobileViewStyles = 'chatBoxOpened'
+    }
+
     return (
         <div className="h-screen bg-[url('/wallpaper.jpeg')] bg-cover text-white lg:grid lg:grid-cols-[1fr_2fr]">
-            <div className="flex h-screen flex-col border-r border-blue-600 bg-blue-950">
+            <div className={`${contactListStyles[mobileViewStyles]}`}>
                 <div className="flex items-center gap-4 border-b border-blue-600 p-4">
                     {avatarUrl === 'null' ? (
                         <BiSolidUserCircle className="size-14 shrink-0" />
@@ -176,7 +189,7 @@ function MessageView() {
                     <button
                         type="button"
                         onClick={handleHomeButton}
-                        className="cursor-pointer rounded-lg p-0 text-blue-500 hover:underline hover:underline-offset-4 "
+                        className="cursor-pointer rounded-lg p-0 text-blue-500 hover:underline hover:underline-offset-4"
                     >
                         Home
                     </button>
@@ -212,6 +225,7 @@ function MessageView() {
                                 name={name}
                                 username={username}
                                 dateJoined={dateJoined}
+                                setShowChatBox={setShowChatBox}
                             />
                         )}
                     </TextInputContext.Provider>

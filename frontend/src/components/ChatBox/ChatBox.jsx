@@ -12,6 +12,7 @@ function ChatBox({
     username,
     dateJoined,
     contactId,
+    setShowChatBox,
 }) {
     const navigate = useNavigate()
     const [messages, setMessages] = useState([])
@@ -56,10 +57,17 @@ function ChatBox({
         )
     })
 
+    function handleViewSwitch() {
+        setShowChatBox(false)
+    }
+
     return (
         <div className="flex h-full flex-col justify-between bg-blue-950/60">
             <div className="grid grid-cols-[auto_1fr] bg-blue-900">
-                <button className="flex min-w-23 items-center justify-center lg:hidden">
+                <button
+                    onClick={handleViewSwitch}
+                    className="flex min-w-23 items-center justify-center lg:hidden"
+                >
                     <MdOutlineKeyboardBackspace className="size-8 cursor-pointer" />
                 </button>
                 <div className="flex h-24 max-w-full items-center gap-3 px-6">
