@@ -615,7 +615,7 @@ const createMessage = asyncHandler(async (req, res) => {
 });
 
 const getMessagesByUserId = asyncHandler(async (req, res) => {
-  const {userId} = req.params;
+  const { userId } = req.params;
   const messages = await prisma.messages.findMany({
     where: {
       AND: [
@@ -628,6 +628,16 @@ const getMessagesByUserId = asyncHandler(async (req, res) => {
     },
   });
   res.status(200).json(messages);
+});
+
+const deleteMessageById = asyncHandler(async (req, res) => {
+  const { messageId } = req.body;
+  await prisma.messages.delete({
+    where: {
+      id: +messageId,
+    },
+  });
+  res.status(200).json(`MessageID: ${commentId}  deleted`);
 });
 
 module.exports = {
@@ -651,4 +661,5 @@ module.exports = {
   getPostByPostId,
   createMessage,
   getMessagesByUserId,
+  deleteMessageById,
 };
