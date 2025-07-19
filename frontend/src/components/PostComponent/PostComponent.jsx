@@ -91,6 +91,9 @@ function PostComponent({
     }
 
     async function handleSendComment() {
+        if (commentText.trim() === '') {
+            return
+        }
         try {
             const response = await fetch(
                 `${import.meta.env.VITE_HOME_DOMAIN}/comments`,

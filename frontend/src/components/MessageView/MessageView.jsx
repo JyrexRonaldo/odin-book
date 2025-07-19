@@ -10,7 +10,6 @@ import MessageBubbleTriggerContext from '../MessageBubbleTriggerContext/MessageB
 
 function MessageView() {
     const navigate = useNavigate()
-    const [searchInput, setSearchInput] = useState('')
     const [contactAvatarUrl, setContactAvatarUrl] = useState('')
     const avatarUrl = localStorage.getItem('avatar')
     const [contacts, setContacts] = useState()
@@ -20,6 +19,7 @@ function MessageView() {
     const [dateJoined, setDateJoined] = useState('')
     const [showChatBox, setShowChatBox] = useState(false)
     const [messageBody, setMessageBody] = useState('')
+    const [contactSearchInput, setContactSearchInput] = useState('')
     const [messageBubbleTriggerRender, seMessageBubbleTriggerRender] =
         useState(null)
 
@@ -89,12 +89,43 @@ function MessageView() {
     }
 
     function handleSearchInput(e) {
-        setSearchInput(e.target.value)
+        setContactSearchInput(e.target.value)
     }
 
     function handleHomeButton() {
         navigate('/explore')
     }
+
+    const filteredContacts = contacts
+        ?.filter((user) => {
+            if (user.id !== +localStorage.getItem('userId')) return true
+        })
+        .filter((data) => {
+            if (data.username.startsWith(contactSearchInput)) {
+                return true
+            } else {
+                return false
+            }
+        })
+        .map((user) => {
+            console.log(user)
+            return (
+                <ContactCard
+                    key={user.id}
+                    id={user.id}
+                    name={user.name}
+                    username={user.username}
+                    dateJoined={user.dateJoined}
+                    avatarUrl={user.avatarImageUrl}
+                    setName={setName}
+                    setUsername={setUsername}
+                    setDateJoined={setDateJoined}
+                    setUserId={setUserId}
+                    setShowChatBox={setShowChatBox}
+                    setContactAvatarUrl={setContactAvatarUrl}
+                />
+            )
+        })
 
     const userContactCardComponents = contacts
         ?.filter((user) => {
@@ -138,7 +169,7 @@ function MessageView() {
                     <div className="flex grow justify-center rounded-lg bg-blue-900/70 p-3">
                         <input
                             onChange={handleSearchInput}
-                            value={searchInput}
+                            value={contactSearchInput}
                             className="mr-3 w-full focus:outline-none"
                             type="search"
                             name="userSearch"
@@ -156,7 +187,9 @@ function MessageView() {
                     </button>
                 </div>
                 <div className="scrollbar-hide overflow-y-scroll">
-                    {userContactCardComponents}
+                    {contactSearchInput
+                        ? filteredContacts
+                        : userContactCardComponents}
                     <p className="mt-auto text-center text-xs text-blue-400">
                         -End of contacts-
                     </p>

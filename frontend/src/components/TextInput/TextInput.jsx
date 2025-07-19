@@ -7,10 +7,7 @@ function TextInput() {
     const { createMessagHandler, textInputFieldHandler, messageBody } = useContext(TextInputContext)
 
     return (
-        <div className="mx-auto mb-5 grid max-w-11/12 grid-cols-[min-content_auto_min-content] items-center gap-4 rounded-lg bg-blue-900 p-4 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-blue-900">
-            <button type="button" className="cursor-pointer">
-                <MdOutlineInsertEmoticon className="size-7" />
-            </button>
+        <div className="mx-auto mb-5 grid max-w-11/12 grid-cols-[auto_min-content] items-center gap-4 rounded-lg bg-blue-900 p-4 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-blue-900">
             <input
                 type="text"
                 placeholder="Type message here 😉"
