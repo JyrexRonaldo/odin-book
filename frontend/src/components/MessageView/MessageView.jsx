@@ -6,6 +6,7 @@ import ContactCard from '../ContactCard/ContactCard'
 import ChatBox from '../ChatBox/CHatBox'
 import { useState, useEffect } from 'react'
 import TextInputContext from '../TextInputContext/TextInputContext'
+import MessageBubbleTriggerContext from '../MessageBubbleTriggerContext/MessageBubbleTriggerContext'
 
 function MessageView() {
     const navigate = useNavigate()
@@ -18,6 +19,8 @@ function MessageView() {
     const [dateJoined, setDateJoined] = useState('')
     const [showChatBox, setShowChatBox] = useState(false)
     const [messageBody, setMessageBody] = useState('')
+    const [messageBubbleTriggerRender, seMessageBubbleTriggerRender] =
+        useState(null)
 
     useEffect(() => {
         async function fetchData() {
@@ -66,6 +69,8 @@ function MessageView() {
 
             const data = await response.json()
             console.log(data)
+            setMessageBody('')
+            seMessageBubbleTriggerRender(self.crypto.randomUUID())
         } catch (error) {
             console.log(error)
         }
@@ -144,20 +149,30 @@ function MessageView() {
                     </p>
                 </div>
             </div>
-            <TextInputContext.Provider value={{ createMessagHandler, textInputFieldHandler, messageBody }}>
-                <div className="h-screen">
-                    {showChatBox && (
-                        <ChatBox
-                            userId={userId}
-                            avatarUrl={avatarUrl}
-                            // displayChatView={displayChatView}
-                            name={name}
-                            username={username}
-                            dateJoined={dateJoined}
-                        />
-                    )}
-                </div>
-            </TextInputContext.Provider>
+            <MessageBubbleTriggerContext.Provider
+                value={{ messageBubbleTriggerRender }}
+            >
+                <TextInputContext.Provider
+                    value={{
+                        createMessagHandler,
+                        textInputFieldHandler,
+                        messageBody,
+                    }}
+                >
+                    <div className="h-screen">
+                        {showChatBox && (
+                            <ChatBox
+                                userId={userId}
+                                avatarUrl={avatarUrl}
+                                // displayChatView={displayChatView}
+                                name={name}
+                                username={username}
+                                dateJoined={dateJoined}
+                            />
+                        )}
+                    </div>
+                </TextInputContext.Provider>
+            </MessageBubbleTriggerContext.Provider>
         </div>
     )
 }

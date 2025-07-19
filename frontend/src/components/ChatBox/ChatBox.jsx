@@ -3,7 +3,8 @@ import { MdOutlineKeyboardBackspace } from 'react-icons/md'
 import { BiSolidUserCircle } from 'react-icons/bi'
 import TextInput from '../TextInput/TextInput'
 import { useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import MessageBubbleTriggerContext from '../MessageBubbleTriggerContext/MessageBubbleTriggerContext'
 
 function ChatBox({
     avatarUrl,
@@ -15,6 +16,9 @@ function ChatBox({
 }) {
     const navigate = useNavigate()
     const [messages, setMessages] = useState([])
+    const { messageBubbleTriggerRender } = useContext(
+        MessageBubbleTriggerContext
+    )
 
     useEffect(() => {
         async function fetchData() {
@@ -41,7 +45,12 @@ function ChatBox({
             }
         }
         fetchData()
-    }, [navigate, userId])
+    }, [navigate, userId, messageBubbleTriggerRender])
+
+    const messageComponents = messages?.map((data) => {
+        console.log(data)
+        return <MessageBubble message={data.message} />
+    })
 
     return (
         <div className="flex h-full flex-col justify-between bg-blue-950/60">
@@ -67,30 +76,7 @@ function ChatBox({
                 </div>
             </div>
             <div className="scrollbar-hide flex h-full flex-col items-end gap-2 overflow-y-auto px-4">
-                <MessageBubble message={'Hello test message'} />
-                <MessageBubble message={'Hello test message'} />
-                <MessageBubble message={'Hello test message'} />
-                <MessageBubble message={'Hello test message'} />
-                <MessageBubble message={'Hello test message'} />
-                <MessageBubble message={'Hello test message'} />
-                <MessageBubble message={'Hello test message'} />
-                <MessageBubble message={'Hello test message'} />
-                <MessageBubble message={'Hello test message'} />
-                <MessageBubble message={'Hello test message'} />
-                <MessageBubble message={'Hello test message'} />
-                <MessageBubble message={'Hello test message'} />
-                <MessageBubble message={'Hello test message'} />
-                <MessageBubble message={'Hello test message'} />
-                <MessageBubble message={'Hello test message'} />
-                <MessageBubble message={'Hello test message'} />
-                <MessageBubble message={'Hello test message'} />
-                <MessageBubble message={'Hello test message'} />
-                <MessageBubble message={'Hello test message'} />
-                <MessageBubble message={'Hello test message'} />
-                <MessageBubble message={'Hello test message'} />
-                <MessageBubble message={'Hello test message'} />
-                <MessageBubble message={'Hello test message'} />
-                <MessageBubble message={'Hello test message'} />
+                {messageComponents}
             </div>
             <div>
                 <TextInput />
