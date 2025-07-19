@@ -11,8 +11,9 @@ import MessageBubbleTriggerContext from '../MessageBubbleTriggerContext/MessageB
 function MessageView() {
     const navigate = useNavigate()
     const [searchInput, setSearchInput] = useState('')
+    const [contactAvatarUrl,setContactAvatarUrl]  = useState('')
     const avatarUrl = localStorage.getItem('avatar')
-    const [users, setUsers] = useState()
+    const [contacts, setContacts] = useState()
     const [name, setName] = useState('')
     const [userId, setUserId] = useState(null)
     const [username, setUsername] = useState('')
@@ -42,7 +43,7 @@ function MessageView() {
 
                 const data = await response.json()
 
-                setUsers(data)
+                setContacts(data)
             } catch (error) {
                 console.log(error)
             }
@@ -92,8 +93,8 @@ function MessageView() {
         navigate('/explore')
     }
 
-    const userContactCardComponents = users?.map((user) => {
-        // const  dateJoined =
+    const userContactCardComponents = contacts?.map((user) => {
+        console.log(user)
         return (
             <ContactCard
                 key={user.id}
@@ -107,6 +108,8 @@ function MessageView() {
                 setDateJoined={setDateJoined}
                 setUserId={setUserId}
                 setShowChatBox={setShowChatBox}
+                setContactAvatarUrl={setContactAvatarUrl}
+
             />
         )
     })
@@ -167,7 +170,7 @@ function MessageView() {
                         {showChatBox && (
                             <ChatBox
                                 userId={userId}
-                                avatarUrl={avatarUrl}
+                                avatarUrl={contactAvatarUrl}
                                 // displayChatView={displayChatView}
                                 name={name}
                                 username={username}

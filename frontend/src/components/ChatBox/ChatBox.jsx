@@ -48,7 +48,8 @@ function ChatBox({
     }, [navigate, userId, messageBubbleTriggerRender])
 
     const messageComponents = messages?.map((data) => {
-        return <MessageBubble key={data.id} message={data.message} />
+        console.log(data)
+        return <MessageBubble key={data.id} message={data.message} senderId={data.senderId} />
     })
 
     return (
@@ -74,7 +75,7 @@ function ChatBox({
                     </div>
                 </div>
             </div>
-            <div className="scrollbar-hide flex h-full flex-col items-end gap-2 overflow-y-auto px-4">
+            <div className="scrollbar-hide flex h-full flex-col justify-end gap-2 overflow-y-auto px-4 pb-3">
                 {messageComponents}
             </div>
             <div>

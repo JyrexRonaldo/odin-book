@@ -11,7 +11,8 @@ function ContactCard({
     setUsername,
     setDateJoined,
     setUserId,
-    setShowChatBox
+    setShowChatBox,
+    setContactAvatarUrl,
 }) {
     dateJoined = format(dateJoined, 'MMM d, yyyy')
 
@@ -20,6 +21,7 @@ function ContactCard({
         setUsername(username)
         setDateJoined(dateJoined)
         setUserId(id)
+        setContactAvatarUrl(avatarUrl)
         setShowChatBox(true)
     }
 
