@@ -640,6 +640,21 @@ const deleteMessageById = asyncHandler(async (req, res) => {
   res.status(200).json(`MessageID: ${messageId}  deleted`);
 });
 
+
+  const editMessageById = asyncHandler(async (req, res) => {
+    const { messageBody, messageId } = req.body;
+  // const { commentId, editComment } = req.body;
+  await prisma.messages.update({
+    where: {
+      id: +messageId,
+    },
+    data: {
+      message: messageBody,
+    },
+  });
+  res.status(200).json("Message edited");
+});
+
 module.exports = {
   getAllUsers,
   followRequestHandler,
@@ -662,4 +677,5 @@ module.exports = {
   createMessage,
   getMessagesByUserId,
   deleteMessageById,
+  editMessageById,
 };

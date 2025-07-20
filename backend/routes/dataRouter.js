@@ -43,7 +43,11 @@ dataRouter
 
 dataRouter.route("/comments/:postId").get(dataController.getCommentsByPostId);
 
-dataRouter.route("/messages").post(dataController.createMessage).delete(dataController.deleteMessageById);
+dataRouter
+  .route("/messages")
+  .post(dataController.createMessage)
+  .delete(dataController.deleteMessageById)
+  .put(dataController.editMessageById);
 
 dataRouter.route("/messages/:userId").get(dataController.getMessagesByUserId);
 
