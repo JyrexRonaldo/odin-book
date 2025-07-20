@@ -1,8 +1,11 @@
 import { RiDeleteBinLine } from 'react-icons/ri'
+import { FaRegEdit } from 'react-icons/fa'
 import MessageBubbleTriggerContext from '../MessageBubbleTriggerContext/MessageBubbleTriggerContext'
 import { useContext } from 'react'
+import TextInputContext from '../TextInputContext/TextInputContext'
 
 function MessageBubble({ id, message, senderId }) {
+    const { setIsEdit, setMessageBody, setMessageId } = useContext(TextInputContext)
     const { setMessageBubbleTriggerRender } = useContext(
         MessageBubbleTriggerContext
     )
@@ -35,6 +38,12 @@ function MessageBubble({ id, message, senderId }) {
         }
     }
 
+    function messageEdithandler() {
+        setMessageBody(message)
+        setIsEdit(true)
+        setMessageId(id)
+    }
+
     const messageStyleVariants = {
         incomingBubble:
             'self-start rounded-t-2xl rounded-r-2xl bg-slate-300 px-4 py-2 text-black',
@@ -46,13 +55,14 @@ function MessageBubble({ id, message, senderId }) {
         <span className={`${messageStyleVariants[bubbleStyles]}`}>
             <p>{message}</p>
             {senderId === +localStorage.getItem('userId') && (
-                <button
-                    onClick={messageDeleteHandler}
-                    type="button"
-                    className="hidden group-hover:inline"
-                >
-                    <RiDeleteBinLine className="text-red-600" />
-                </button>
+                <div className="hidden items-center gap-1 group-hover:flex">
+                    <button onClick={messageEdithandler} type="button">
+                        <FaRegEdit className="text-slate-200" />
+                    </button>
+                    <button onClick={messageDeleteHandler} type="button">
+                        <RiDeleteBinLine className="text-red-600" />
+                    </button>
+                </div>
             )}
         </span>
     )

@@ -3,7 +3,7 @@ import { BiSolidUserCircle } from 'react-icons/bi'
 import { MdOutlineKeyboardBackspace } from 'react-icons/md'
 import { IoMdSearch } from 'react-icons/io'
 import ContactCard from '../ContactCard/ContactCard'
-import ChatBox from '../ChatBox/CHatBox'
+import ChatBox from '../ChatBox/ChatBox'
 import { useState, useEffect } from 'react'
 import TextInputContext from '../TextInputContext/TextInputContext'
 import MessageBubbleTriggerContext from '../MessageBubbleTriggerContext/MessageBubbleTriggerContext'
@@ -20,6 +20,8 @@ function MessageView() {
     const [showChatBox, setShowChatBox] = useState(false)
     const [messageBody, setMessageBody] = useState('')
     const [contactSearchInput, setContactSearchInput] = useState('')
+    const [messageId, setMessageId] = useState(null)
+    const [isEdit, setIsEdit] = useState(false)
     const [messageBubbleTriggerRender, setMessageBubbleTriggerRender] =
         useState(null)
 
@@ -58,25 +60,41 @@ function MessageView() {
         if (messageBody.trim() === '') {
             return
         }
+        let method = null
+        let requestbody = null
+        if (isEdit) {
+            method = 'PUT'
+            requestbody = {
+                messageBody,
+                messageId,
+            }
+        } else {
+            method = 'POST'
+            requestbody = {
+                messageBody,
+                receiverId: userId,
+            }
+        }
+
         try {
             const response = await fetch(
                 `${import.meta.env.VITE_HOME_DOMAIN}/messages`,
                 {
-                    method: 'POST',
+                    method: method,
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `${localStorage.getItem('userToken')}`,
                     },
-                    body: JSON.stringify({
-                        messageBody,
-                        receiverId: userId,
-                    }),
+                    body: JSON.stringify(requestbody),
                 }
             )
 
             const data = await response.json()
             console.log(data)
             setMessageBody('')
+            if (isEdit) {
+                setIsEdit(false)
+            }
             setMessageBubbleTriggerRender(self.crypto.randomUUID())
         } catch (error) {
             console.log(error)
@@ -215,6 +233,10 @@ function MessageView() {
                             createMessagHandler,
                             textInputFieldHandler,
                             messageBody,
+                            setMessageBody,
+                            setMessageId,
+                            isEdit,
+                            setIsEdit,
                         }}
                     >
                         {showChatBox && (
