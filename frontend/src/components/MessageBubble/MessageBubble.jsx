@@ -5,7 +5,7 @@ import { useContext } from 'react'
 import TextInputContext from '../TextInputContext/TextInputContext'
 
 function MessageBubble({ id, message, senderId }) {
-    const { setIsEdit, setMessageBody, setMessageId } = useContext(TextInputContext)
+    const { setIsEdit, setMessageBody, setMessageId, inputRef } = useContext(TextInputContext)
     const { setMessageBubbleTriggerRender } = useContext(
         MessageBubbleTriggerContext
     )
@@ -42,6 +42,7 @@ function MessageBubble({ id, message, senderId }) {
         setMessageBody(message)
         setIsEdit(true)
         setMessageId(id)
+        inputRef.current.focus()
     }
 
     const messageStyleVariants = {

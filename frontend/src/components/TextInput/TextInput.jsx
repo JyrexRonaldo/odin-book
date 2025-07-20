@@ -5,7 +5,7 @@ import { useContext } from 'react'
 import TextInputContext from '../TextInputContext/TextInputContext'
 
 function TextInput() {
-    const { createMessagHandler, textInputFieldHandler,setMessageBody, messageBody, setIsEdit,isEdit } =
+    const { createMessagHandler, textInputFieldHandler,setMessageBody, inputRef,messageBody, setIsEdit,isEdit } =
         useContext(TextInputContext)
 
         function cancelEditHandler() {
@@ -16,6 +16,7 @@ function TextInput() {
     return (
         <div className="mx-auto mb-5 grid max-w-11/12 grid-cols-[auto_min-content] items-center gap-4 rounded-lg bg-blue-900 p-4 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-blue-900">
             <input
+            ref={inputRef}
                 type="text"
                 placeholder="Type message here 😉"
                 className="mr-3 w-full bg-blue-900 focus:outline-none"

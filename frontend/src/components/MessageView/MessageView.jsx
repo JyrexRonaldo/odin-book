@@ -4,7 +4,7 @@ import { MdOutlineKeyboardBackspace } from 'react-icons/md'
 import { IoMdSearch } from 'react-icons/io'
 import ContactCard from '../ContactCard/ContactCard'
 import ChatBox from '../ChatBox/ChatBox'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import TextInputContext from '../TextInputContext/TextInputContext'
 import MessageBubbleTriggerContext from '../MessageBubbleTriggerContext/MessageBubbleTriggerContext'
 
@@ -22,6 +22,7 @@ function MessageView() {
     const [contactSearchInput, setContactSearchInput] = useState('')
     const [messageId, setMessageId] = useState(null)
     const [isEdit, setIsEdit] = useState(false)
+    const inputRef = useRef(null)
     const [messageBubbleTriggerRender, setMessageBubbleTriggerRender] =
         useState(null)
 
@@ -237,6 +238,7 @@ function MessageView() {
                             setMessageId,
                             isEdit,
                             setIsEdit,
+                            inputRef
                         }}
                     >
                         {showChatBox && (
