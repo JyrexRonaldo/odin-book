@@ -1,12 +1,12 @@
 import { useNavigate } from 'react-router-dom'
 import { BiSolidUserCircle } from 'react-icons/bi'
-import { MdOutlineKeyboardBackspace } from 'react-icons/md'
 import { IoMdSearch } from 'react-icons/io'
 import ContactCard from '../ContactCard/ContactCard'
 import ChatBox from '../ChatBox/ChatBox'
 import { useState, useEffect, useRef } from 'react'
 import TextInputContext from '../TextInputContext/TextInputContext'
 import MessageBubbleTriggerContext from '../MessageBubbleTriggerContext/MessageBubbleTriggerContext'
+import socket from '../../../socket-io/sockets'
 
 function MessageView() {
     const navigate = useNavigate()
@@ -25,6 +25,12 @@ function MessageView() {
     const inputRef = useRef(null)
     const [messageBubbleTriggerRender, setMessageBubbleTriggerRender] =
         useState(null)
+
+        useEffect(() => {
+            socket.on('message', () => {
+                setMessageBubbleTriggerRender(self.crypto.randomUUID())
+            } )
+        }, [])
 
     useEffect(() => {
         async function fetchData() {
@@ -76,7 +82,7 @@ function MessageView() {
                 receiverId: userId,
             }
         }
-
+        
         try {
             const response = await fetch(
                 `${import.meta.env.VITE_HOME_DOMAIN}/messages`,
@@ -89,14 +95,14 @@ function MessageView() {
                     body: JSON.stringify(requestbody),
                 }
             )
-
+            
             const data = await response.json()
             console.log(data)
             setMessageBody('')
             if (isEdit) {
                 setIsEdit(false)
             }
-            setMessageBubbleTriggerRender(self.crypto.randomUUID())
+            socket.emit('message') 
         } catch (error) {
             console.log(error)
         }
@@ -222,7 +228,7 @@ function MessageView() {
                     </p>
                 </div>
             </div>
-            <div className="h-screen">
+            <div className="h-screen empty:hidden">
                 <MessageBubbleTriggerContext.Provider
                     value={{
                         messageBubbleTriggerRender,

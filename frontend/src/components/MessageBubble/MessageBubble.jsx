@@ -3,12 +3,10 @@ import { FaRegEdit } from 'react-icons/fa'
 import MessageBubbleTriggerContext from '../MessageBubbleTriggerContext/MessageBubbleTriggerContext'
 import { useContext } from 'react'
 import TextInputContext from '../TextInputContext/TextInputContext'
+import socket from '../../../socket-io/sockets'
 
 function MessageBubble({ id, message, senderId }) {
     const { setIsEdit, setMessageBody, setMessageId, inputRef } = useContext(TextInputContext)
-    const { setMessageBubbleTriggerRender } = useContext(
-        MessageBubbleTriggerContext
-    )
     let bubbleStyles = 'outgoingBubble'
     if (senderId !== +localStorage.getItem('userId')) {
         bubbleStyles = 'incomingBubble'
@@ -32,7 +30,7 @@ function MessageBubble({ id, message, senderId }) {
 
             const data = await response.json()
             console.log(data)
-            setMessageBubbleTriggerRender(self.crypto.randomUUID())
+            socket.emit('message') 
         } catch (error) {
             console.log(error)
         }
