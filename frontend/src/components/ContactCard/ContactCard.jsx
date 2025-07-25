@@ -13,6 +13,8 @@ function ContactCard({
     setUserId,
     setShowChatBox,
     setContactAvatarUrl,
+    selectedContactId,
+    setSelectedContactId,
 }) {
     dateJoined = format(dateJoined, 'MMM d, yyyy')
 
@@ -23,14 +25,30 @@ function ContactCard({
         setUserId(id)
         setContactAvatarUrl(avatarUrl)
         setShowChatBox(true)
+        setSelectedContactId(id)
+    }
+
+    const selectedStyles = {
+        default:
+            'flex h-24 max-w-full items-center gap-3 border-b border-blue-600/70 px-6 hover:bg-blue-900',
+        selected:
+            'flex h-24 max-w-full items-center gap-3 border-b border-blue-600/70 bg-blue-900 px-6',
+    }
+
+    let selectedStyle = null
+
+    if (selectedContactId === id) {
+        selectedStyle = 'selected'
+    } else {
+        selectedStyle = 'default'
     }
 
     return (
         <div
             onClick={handleChatView}
-            className="flex h-24 max-w-full items-center gap-3 border-b border-blue-600/70 px-6 hover:bg-blue-900"
+            className={`${selectedStyles[selectedStyle]}`}
         >
-            { avatarUrl === null ? (
+            {avatarUrl === null ? (
                 <BiSolidUserCircle className="size-18" />
             ) : (
                 <img

@@ -25,12 +25,13 @@ function MessageView() {
     const inputRef = useRef(null)
     const [messageBubbleTriggerRender, setMessageBubbleTriggerRender] =
         useState(null)
+    const [selectedContactId, setSelectedContactId] = useState(null)
 
-        useEffect(() => {
-            socket.on('message', () => {
-                setMessageBubbleTriggerRender(self.crypto.randomUUID())
-            } )
-        }, [])
+    useEffect(() => {
+        socket.on('message', () => {
+            setMessageBubbleTriggerRender(self.crypto.randomUUID())
+        })
+    }, [])
 
     useEffect(() => {
         async function fetchData() {
@@ -82,7 +83,7 @@ function MessageView() {
                 receiverId: userId,
             }
         }
-        
+
         try {
             const response = await fetch(
                 `${import.meta.env.VITE_HOME_DOMAIN}/messages`,
@@ -95,14 +96,14 @@ function MessageView() {
                     body: JSON.stringify(requestbody),
                 }
             )
-            
+
             const data = await response.json()
             console.log(data)
             setMessageBody('')
             if (isEdit) {
                 setIsEdit(false)
             }
-            socket.emit('message') 
+            socket.emit('message')
         } catch (error) {
             console.log(error)
         }
@@ -146,6 +147,8 @@ function MessageView() {
                     setUserId={setUserId}
                     setShowChatBox={setShowChatBox}
                     setContactAvatarUrl={setContactAvatarUrl}
+                    selectedContactId={selectedContactId}
+                    setSelectedContactId={setSelectedContactId}
                 />
             )
         })
@@ -169,6 +172,8 @@ function MessageView() {
                     setUserId={setUserId}
                     setShowChatBox={setShowChatBox}
                     setContactAvatarUrl={setContactAvatarUrl}
+                    selectedContactId={selectedContactId}
+                    setSelectedContactId={setSelectedContactId}
                 />
             )
         })
@@ -244,7 +249,7 @@ function MessageView() {
                             setMessageId,
                             isEdit,
                             setIsEdit,
-                            inputRef
+                            inputRef,
                         }}
                     >
                         {showChatBox && (
