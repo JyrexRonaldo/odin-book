@@ -1,5 +1,5 @@
 import { useEffect, useContext, useState } from 'react'
-import StylesContext from '../StylesContext/StylesContext'
+import StylesContext from '../../contexts/StylesContext/StylesContext'
 import { useNavigate, useParams } from 'react-router-dom'
 import PostComponent from '../PostComponent/PostComponent'
 

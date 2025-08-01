@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { BiSolidUserCircle } from 'react-icons/bi'
 import { useNavigate } from 'react-router-dom'
-import RenderContext from '../RenderContext/RenderContext'
+import RenderContext from '../../contexts/RenderContext/RenderContext'
 import { FaCloudUploadAlt } from 'react-icons/fa'
 import supabase from '../../../supabase/supabase'
 

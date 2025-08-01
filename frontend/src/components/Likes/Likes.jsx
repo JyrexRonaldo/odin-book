@@ -1,11 +1,11 @@
 import { useState, useEffect, useContext } from 'react'
 import PostListComponent from '../PostListComponent/PostListComponent'
 import { useNavigate } from 'react-router-dom'
-import StylesContext from '../StylesContext/StylesContext'
+import StylesContext from '../../contexts/StylesContext/StylesContext'
 
 function Likes() {
     const [likesData, setLikesData] = useState([])
-    const [triggerRender, setTriggerRender] = useState(0)
+    // const [triggerRender, setTriggerRender] = useState(0)
     const navigate = useNavigate()
     const { handleLikesStyles } = useContext(StylesContext)
 
@@ -42,13 +42,14 @@ function Likes() {
             }
         }
         fetchData()
-    }, [navigate, triggerRender])
+    }, [navigate])
 
     return (
         <>
             <PostListComponent
                 data={likesData}
-                setTriggerRender={setTriggerRender}
+                // setTriggerRender={setTriggerRender}
+                setData={setLikesData}
             />
         </>
     )

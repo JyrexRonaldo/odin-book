@@ -2,7 +2,7 @@ import { IoMdSearch } from 'react-icons/io'
 import UserCard from '../UserCard/UserCard'
 import { useEffect, useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import StylesContext from '../StylesContext/StylesContext'
+import StylesContext from '../../contexts/StylesContext/StylesContext'
 
 function UserList() {
     const [userData, setUserData] = useState(null)

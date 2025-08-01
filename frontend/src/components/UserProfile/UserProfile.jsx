@@ -5,7 +5,7 @@ import { FaPlus } from 'react-icons/fa6'
 import { FaMinus } from 'react-icons/fa6'
 import { useParams, useNavigate } from 'react-router-dom'
 import FollowCard from '../FollowCard/FollowCard'
-import StylesContext from '../StylesContext/StylesContext'
+import StylesContext from '../../contexts/StylesContext/StylesContext'
 
 function UserProfile() {
     const navigate = useNavigate()
