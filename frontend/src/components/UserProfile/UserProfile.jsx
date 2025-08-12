@@ -12,7 +12,10 @@ function UserProfile() {
     const { username } = useParams()
     const [profileData, setProfileData] = useState([])
     const [show, setShow] = useState([true, false, false])
-    const [triggerRender, setTriggerRender] = useState(0)
+    const [isUserFollowed, setIsUserFollowed] = useState(null)
+    const [followerNumbers, setFollowerNumbers] = useState(null)
+    const [followingNumber, setFollowingNumber] = useState(null)
+    // const [triggerRender, setTriggerRender] = useState(0)
     const { handleUserProfileStyles } = useContext(StylesContext)
 
     useEffect(() => {
@@ -44,12 +47,24 @@ function UserProfile() {
 
                 const data = await response.json()
                 setProfileData(data)
+                let isFollowed = data.followedBy?.some((element) => {
+                    return (
+                        element.following.id === +localStorage.getItem('userId')
+                    )
+                })
+                setIsUserFollowed(isFollowed)
+                setFollowerNumbers(data._count?.followedBy)
+                setFollowingNumber(data._count?.following)
             } catch (error) {
                 console.log(error)
             }
         }
         fetchData()
-    }, [navigate, username, triggerRender])
+    }, [
+        navigate,
+        username,
+        // triggerRender
+    ])
 
     function handleTabView(tabName) {
         if (tabName === 'post') {
@@ -61,7 +76,31 @@ function UserProfile() {
         }
     }
 
-    async function handleSendRequest() {
+    // async function handleSendRequest() {
+    //     try {
+    //         const response = await fetch(
+    //             `${import.meta.env.VITE_HOME_DOMAIN}/users`,
+    //             {
+    //                 method: 'POST',
+    //                 headers: {
+    //                     'Content-Type': 'application/json',
+    //                     Authorization: `${localStorage.getItem('userToken')}`,
+    //                 },
+    //                 body: JSON.stringify({
+    //                     followeeId: `${profileData.id}`,
+    //                 }),
+    //             }
+    //         )
+
+    //         const data = await response.json()
+    //         console.log(data)
+    //         setTriggerRender(self.crypto.randomUUID())
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
+
+    async function handleUserFollow() {
         try {
             const response = await fetch(
                 `${import.meta.env.VITE_HOME_DOMAIN}/users`,
@@ -79,15 +118,47 @@ function UserProfile() {
 
             const data = await response.json()
             console.log(data)
-            setTriggerRender(self.crypto.randomUUID())
+            setFollowerNumbers(followerNumbers + 1)
+            setIsUserFollowed(true)
+            if (username === localStorage.getItem("username")) {
+                setFollowingNumber(followingNumber + 1)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async function handleUserUnFollow() {
+        try {
+            const response = await fetch(
+                `${import.meta.env.VITE_HOME_DOMAIN}/users`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `${localStorage.getItem('userToken')}`,
+                    },
+                    body: JSON.stringify({
+                        followeeId: `${profileData.id}`,
+                    }),
+                }
+            )
+
+            const data = await response.json()
+            console.log(data)
+            setFollowerNumbers(followerNumbers - 1)
+            setIsUserFollowed(false)
+            if (username === localStorage.getItem("username")) {
+                setFollowingNumber(followingNumber - 1)
+            }
         } catch (error) {
             console.log(error)
         }
     }
 
     const postCount = profileData._count?.posts
-    const follwersCount = profileData._count?.followedBy
-    const followingCount = profileData._count?.following
+    // const follwersCount = profileData._count?.followedBy
+    // const followingCount = profileData._count?.following
 
     const postsData = profileData?.posts
 
@@ -100,13 +171,8 @@ function UserProfile() {
     )
 
     const followerCards = followerData?.map((dataItem) => {
-        let isFollowedValue = null
-        dataItem.followedBy.forEach((element) => {
-            if (element.followingId === +localStorage.getItem('userId')) {
-                isFollowedValue = true
-            } else {
-                isFollowedValue = false
-            }
+        let isFollowedValue = dataItem.followedBy.forEach((element) => {
+            return element.followingId === +localStorage.getItem('userId')
         })
         return (
             <FollowCard
@@ -117,7 +183,7 @@ function UserProfile() {
                 bio={dataItem.bio}
                 following={dataItem._count.following}
                 followedBy={dataItem._count.followedBy}
-                setTriggerRender={setTriggerRender}
+                // setTriggerRender={setTriggerRender}
                 isFollowed={isFollowedValue}
                 avatarUrl={dataItem.avatarImageUrl}
             />
@@ -126,13 +192,8 @@ function UserProfile() {
 
     const followingCards = followingData?.map((dataItem) => {
         // console.log(dataItem)
-        let isFollowedValue = null
-        dataItem.followedBy.forEach((element) => {
-            if (element.followingId === +localStorage.getItem('userId')) {
-                isFollowedValue = true
-            } else {
-                isFollowedValue = false
-            }
+        let isFollowedValue = dataItem.followedBy.some((element) => {
+            return element.followingId === +localStorage.getItem('userId')
         })
         return (
             <FollowCard
@@ -143,7 +204,7 @@ function UserProfile() {
                 bio={dataItem.bio}
                 following={dataItem._count.following}
                 followedBy={dataItem._count.followedBy}
-                setTriggerRender={setTriggerRender}
+                // setTriggerRender={setTriggerRender}
                 isFollowed={isFollowedValue}
                 avatarUrl={dataItem.avatarImageUrl}
             />
@@ -171,21 +232,17 @@ function UserProfile() {
                 commentCount={dataItem._count.comments}
                 likeCount={dataItem._count.likedBy}
                 isLikedByUser={isLikedByUser}
-                setTriggerRender={setTriggerRender}
+                // setTriggerRender={setTriggerRender}
                 postImgUrl={dataItem.postImageUrl}
                 authorImg={dataItem.author.avatarImageUrl}
             />
         )
     })
 
-    let isFollowed = null
-    profileData.followedBy?.forEach((element) => {
-        if (element.following.id === +localStorage.getItem('userId')) {
-            isFollowed = true
-        } else {
-            isFollowed = false
-        }
-    })
+    // let isFollowed = null
+    // profileData.followedBy?.some((element) => {
+    //     return element.following.id === +localStorage.getItem('userId')
+    // })
 
     return (
         <div className="flex w-full max-w-xl flex-col gap-10 text-white">
@@ -206,9 +263,9 @@ function UserProfile() {
                         <p>{profileData.name}</p>
                         <p>@{profileData.username}</p>
                     </div>
-                    {isFollowed ? (
+                    {isUserFollowed ? (
                         <button
-                            onClick={handleSendRequest}
+                            onClick={handleUserUnFollow}
                             className="flex cursor-pointer items-center gap-2 rounded-lg border-2 border-blue-500 bg-black px-3 py-1 text-blue-500"
                         >
                             Unfollow
@@ -216,7 +273,7 @@ function UserProfile() {
                         </button>
                     ) : (
                         <button
-                            onClick={handleSendRequest}
+                            onClick={handleUserFollow}
                             className="flex cursor-pointer items-center gap-2 rounded-lg border-2 border-blue-500 bg-blue-500 px-3 py-1 text-black"
                         >
                             Follow
@@ -239,7 +296,7 @@ function UserProfile() {
                             }}
                             className="flex cursor-pointer gap-3"
                         >
-                            <p>Followers</p> <p>{follwersCount}</p>
+                            <p>Followers</p> <p>{followerNumbers}</p>
                         </button>
                         <button
                             onClick={() => {
@@ -247,7 +304,7 @@ function UserProfile() {
                             }}
                             className="flex cursor-pointer gap-3"
                         >
-                            <p>Following</p> <p>{followingCount}</p>
+                            <p>Following</p> <p>{followingNumber}</p>
                         </button>
                     </div>
                 </div>

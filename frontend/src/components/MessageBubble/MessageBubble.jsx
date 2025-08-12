@@ -1,6 +1,5 @@
 import { RiDeleteBinLine } from 'react-icons/ri'
 import { FaRegEdit } from 'react-icons/fa'
-import MessageBubbleTriggerContext from '../MessageBubbleTriggerContext/MessageBubbleTriggerContext'
 import { useContext } from 'react'
 import TextInputContext from '../TextInputContext/TextInputContext'
 import socket from '../../../socket-io/sockets'

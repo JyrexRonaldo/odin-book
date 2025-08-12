@@ -54,6 +54,7 @@ const commentsData = Array.from({ length: 40 }).map((element, index) => {
     comment: faker.lorem.sentence(),
     authorId,
     postId,
+    createdAt: faker.date.past(),
   };
   return element;
 });
