@@ -20,40 +20,28 @@ const getAllUsers = asyncHandler(async (req, res) => {
   res.json(allUsers);
 });
 
-const followRequestHandler = asyncHandler(async (req, res) => {
+const followUser = asyncHandler(async (req, res) => {
   const { followeeId } = req.body;
-
-  const allFollows = await prisma.follows.findMany();
-
-  let followAction = false;
-  allFollows.forEach((follow) => {
-    if (
-      follow.followedById === +followeeId &&
-      follow.followingId === req.user.id
-    ) {
-      followAction = true;
-    }
+  const response = await prisma.follows.create({
+    data: {
+      followedById: +followeeId,
+      followingId: req.user.id,
+    },
   });
+  res.status(201).json({ user: response, message: "User followed" });
+});
 
-  if (followAction) {
-    await prisma.follows.delete({
-      where: {
-        followingId_followedById: {
-          followedById: +followeeId,
-          followingId: req.user.id,
-        },
-      },
-    });
-    res.status(201).json("User unfollowed");
-  } else {
-    await prisma.follows.create({
-      data: {
+const unFollowUser = asyncHandler(async (req, res) => {
+  const { followeeId } = req.body;
+  const response = await prisma.follows.delete({
+    where: {
+      followingId_followedById: {
         followedById: +followeeId,
         followingId: req.user.id,
       },
-    });
-    res.status(201).json("User followed");
-  }
+    },
+  });
+  res.status(201).json({ user: response, message: "User unfollowed" });
 });
 
 const createPost = asyncHandler(async (req, res) => {
@@ -687,7 +675,6 @@ const editMessageById = asyncHandler(async (req, res) => {
 
 module.exports = {
   getAllUsers,
-  followRequestHandler,
   createPost,
   getFeed,
   createCommentHandler,
@@ -708,4 +695,6 @@ module.exports = {
   getMessagesByUserId,
   deleteMessageById,
   editMessageById,
+  followUser,
+  unFollowUser,
 };
