@@ -55,8 +55,6 @@ function CommentList({
                 commentBody={dataItem.comment}
                 authorUsername={dataItem.author.username}
                 createdAt={dataItem.createdAt}
-                // setCommentTriggerRender={setCommentTriggerRender}
-                // setTriggerRender={setTriggerRender}
                 commentLikeCount={commentCount}
                 isLikedByUser={isLikedByUser}
                 authorImg={dataItem.author.avatarImageUrl}

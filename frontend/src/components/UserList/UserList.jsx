@@ -44,6 +44,7 @@ function UserList() {
                 }
 
                 const data = await response.json()
+                console.log(data)
                 setUserData(data)
             } catch (error) {
                 console.log(error)
@@ -58,7 +59,7 @@ function UserList() {
     if (loading) {
         return (
             <div>
-                <p className='text-white'>Loading...</p>
+                <p className="text-white">Loading...</p>
             </div>
         )
     }
@@ -66,7 +67,7 @@ function UserList() {
     if (error) {
         return (
             <div>
-                <p className='text-white'>A network error was encounted</p>
+                <p className="text-white">A network error was encounted</p>
             </div>
         )
     }
@@ -80,14 +81,9 @@ function UserList() {
             }
         })
         .map((data) => {
-            let isFollowedValue = null
             const followerCount = data._count.followedBy
-            data.followedBy.forEach((element) => {
-                if (element.followingId === +localStorage.getItem('userId')) {
-                    isFollowedValue = true
-                } else {
-                    isFollowedValue = false
-                }
+            let isFollowedValue = data.followedBy.some((element) => {
+                return element.followingId === +localStorage.getItem('userId')
             })
 
             return (
@@ -105,14 +101,9 @@ function UserList() {
         })
 
     const userCards = userData.map((data) => {
-        let isFollowedValue = null
         const followerCount = data._count.followedBy
-        data.followedBy.forEach((element) => {
-            if (element.followingId === +localStorage.getItem('userId')) {
-                isFollowedValue = true
-            } else {
-                isFollowedValue = false
-            }
+        let isFollowedValue = data.followedBy.some((element) => {
+            return element.followingId === +localStorage.getItem('userId')
         })
 
         return (

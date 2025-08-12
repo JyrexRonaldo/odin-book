@@ -5,7 +5,6 @@ import StylesContext from '../../contexts/StylesContext/StylesContext'
 
 function Feed() {
     const [feedData, setFeedData] = useState([])
-    // const [triggerRender, setTriggerRender] = useState(0)
     const navigate = useNavigate()
     const { handleFeedStyles } = useContext(StylesContext)
 
@@ -41,16 +40,12 @@ function Feed() {
             }
         }
         fetchData()
-    }, [
-        navigate,
-        // triggerRender
-    ])
+    }, [navigate])
 
     return (
         <>
             <PostListComponent
                 data={feedData}
-                // setTriggerRender={setTriggerRender}
                 setData={setFeedData}
             />
         </>

@@ -10,8 +10,6 @@ function Comment({
     commentBody,
     authorUsername,
     createdAt,
-    // setCommentTriggerRender,
-    // setTriggerRender,
     isLikedByUser,
     commentLikeCount,
     authorImg,
@@ -20,9 +18,9 @@ function Comment({
     commentPosition,
 }) {
     const [show, setShow] = useState(false)
-    const [likedComment, setLikedComment] = useState(isLikedByUser)
-    // const [commentLikes, setCommentLikes] = useState(commentLikeCount)
+    const [likedComment, setLikedComment] = useState(false)
     const [commentText, setCommentText] = useState('')
+    const [initialRender, setInitialRender] = useState(true)
 
     async function handleDeleteButton() {
         try {
@@ -41,15 +39,10 @@ function Comment({
             )
 
             const responseData = await response.json()
-            console.log(responseData)
-            console.log(commentsData)
             const remainingData = commentsData.filter(
                 (data) => responseData.id !== data.id
             )
-            console.log(remainingData)
             setCommentsData(remainingData)
-            // setCommentTriggerRender(self.crypto.randomUUID())
-            // setTriggerRender(self.crypto.randomUUID())
         } catch (error) {
             console.log(error)
         }
@@ -88,8 +81,6 @@ function Comment({
             const responseData = await response.json()
             commentsData.splice(commentPosition, 1, responseData)
             setCommentsData([...commentsData])
-            // setCommentTriggerRender(self.crypto.randomUUID())
-            // setTriggerRender(self.crypto.randomUUID())
             setCommentText('')
             setShow(false)
         } catch (error) {
@@ -114,39 +105,31 @@ function Comment({
             )
 
             const data = await response.json()
-            console.log(data)
             if (data.message === 'Comment liked') {
-                // commentLikeCount = data.commentLikeCount._count.likedBy
-                // setCommentLikes(commentLikes + 1)
                 setLikedComment(true)
-            } else  if (data.message === 'Comment unliked') {
-                // commentLikeCount = data.commentLikeCount._count.likedBy
-                // setCommentLikes(commentLikes - 1)
+                setInitialRender(false)
+            } else if (data.message === 'Comment unliked') {
                 setLikedComment(false)
+                setInitialRender(false)
             }
-            // setCommentLikes(commentLikeCount)
         } catch (error) {
             console.log(error)
         }
     }
 
-    // useEffect(() => {
-    //     if (isLikedByUser) {
-    //         setLikedComment(true)
-    //         setCommentLikes(commentLikes + 1)
-    //     } else {
-    //         setLikedComment(false)
-    //     }
-
-    // }, [isLikedByUser])
-
     let heartIconStyle = 'size-6'
-    let  commentTotalCount = commentLikeCount
+    let commentTotalCount = commentLikeCount
 
     if (likedComment) {
         heartIconStyle = 'size-6 text-red-600'
         commentTotalCount += 1
-        // setCommentLikes(commentLikes + 1)
+    }
+
+    if (initialRender) {
+        if (isLikedByUser) {
+            heartIconStyle = 'size-6 text-red-600'
+            commentTotalCount += 1
+        }
     }
 
     const durationSinceCreated = intervalToDuration({

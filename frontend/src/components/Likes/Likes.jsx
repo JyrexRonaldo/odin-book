@@ -5,7 +5,6 @@ import StylesContext from '../../contexts/StylesContext/StylesContext'
 
 function Likes() {
     const [likesData, setLikesData] = useState([])
-    // const [triggerRender, setTriggerRender] = useState(0)
     const navigate = useNavigate()
     const { handleLikesStyles } = useContext(StylesContext)
 
@@ -48,7 +47,6 @@ function Likes() {
         <>
             <PostListComponent
                 data={likesData}
-                // setTriggerRender={setTriggerRender}
                 setData={setLikesData}
             />
         </>
