@@ -53,7 +53,7 @@ function MessageBubble({ id, message, senderId }) {
         <span className={`${messageStyleVariants[bubbleStyles]}`}>
             <p>{message}</p>
             {senderId === +localStorage.getItem('userId') && (
-                <div className="hidden items-center gap-1 group-hover:flex">
+                <div className="hidden items-center gap-1 max-lg:flex group-hover:flex">
                     <button onClick={messageEdithandler} type="button">
                         <FaRegEdit className="text-slate-200" />
                     </button>
