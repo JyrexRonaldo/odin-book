@@ -20,40 +20,28 @@ const getAllUsers = asyncHandler(async (req, res) => {
   res.json(allUsers);
 });
 
-const followRequestHandler = asyncHandler(async (req, res) => {
+const followUser = asyncHandler(async (req, res) => {
   const { followeeId } = req.body;
-
-  const allFollows = await prisma.follows.findMany();
-
-  let followAction = false;
-  allFollows.forEach((follow) => {
-    if (
-      follow.followedById === +followeeId &&
-      follow.followingId === req.user.id
-    ) {
-      followAction = true;
-    }
+  const response = await prisma.follows.create({
+    data: {
+      followedById: +followeeId,
+      followingId: req.user.id,
+    },
   });
+  res.status(201).json({ user: response, message: "User followed" });
+});
 
-  if (followAction) {
-    await prisma.follows.delete({
-      where: {
-        followingId_followedById: {
-          followedById: +followeeId,
-          followingId: req.user.id,
-        },
-      },
-    });
-    res.status(201).json("User unfollowed");
-  } else {
-    await prisma.follows.create({
-      data: {
+const unFollowUser = asyncHandler(async (req, res) => {
+  const { followeeId } = req.body;
+  const response = await prisma.follows.delete({
+    where: {
+      followingId_followedById: {
         followedById: +followeeId,
         followingId: req.user.id,
       },
-    });
-    res.status(201).json("User followed");
-  }
+    },
+  });
+  res.status(201).json({ user: response, message: "User unfollowed" });
 });
 
 const createPost = asyncHandler(async (req, res) => {
@@ -65,7 +53,7 @@ const createPost = asyncHandler(async (req, res) => {
       postImageUrl: imgPublicUrl,
     },
   });
-  console.log(req.bodu);
+  console.log(req.body);
   res.json(req.body);
 });
 
@@ -132,14 +120,29 @@ const getFeed = asyncHandler(async (req, res) => {
 
 const createCommentHandler = asyncHandler(async (req, res) => {
   const { comment, postId } = req.body;
-  await prisma.comment.create({
+  const newComment = await prisma.comment.create({
     data: {
       comment,
       authorId: req.user.id,
       postId: +postId,
     },
+    include: {
+      likedBy: true,
+      _count: {
+        select: {
+          likedBy: true,
+        },
+      },
+      author: {
+        select: {
+          name: true,
+          username: true,
+          avatarImageUrl: true,
+        },
+      },
+    },
   });
-  res.status(200).json("Comment created");
+  res.status(200).json(newComment);
 });
 
 const getAllPost = asyncHandler(async (req, res) => {
@@ -330,12 +333,13 @@ const getUserProfileByUsername = asyncHandler(async (req, res) => {
 
 const deletePostById = asyncHandler(async (req, res) => {
   const { postId } = req.body;
-  await prisma.post.delete({
+  const deletedData = await prisma.post.delete({
     where: {
       id: +postId,
     },
   });
-  res.status(200).json(`PostID: ${postId}  deleted`);
+  console.log(deletedData);
+  res.status(200).json(deletedData);
 });
 
 async function handleProfileChange(
@@ -461,12 +465,12 @@ const getCommentsByPostId = asyncHandler(async (req, res) => {
 
 const deleteCommentById = asyncHandler(async (req, res) => {
   const { commentId } = req.body;
-  await prisma.comment.delete({
+  const deletedComment = await prisma.comment.delete({
     where: {
       id: +commentId,
     },
   });
-  res.status(200).json(`CommentID: ${commentId}  deleted`);
+  res.status(200).json(deletedComment);
 });
 
 const createLikeComment = asyncHandler(async (req, res) => {
@@ -489,19 +493,19 @@ const createLikeComment = asyncHandler(async (req, res) => {
         },
       },
     });
-    const commentLikeCount = await prisma.comment.findUnique({
-      where: {
-        id: +commentId,
-      },
-      select: {
-        _count: {
-          select: {
-            likedBy: true,
-          },
-        },
-      },
-    });
-    res.status(200).json({ message: "Comment unliked", commentLikeCount });
+    // const commentLikeCount = await prisma.comment.findUnique({
+    //   where: {
+    //     id: +commentId,
+    //   },
+    //   select: {
+    //     _count: {
+    //       select: {
+    //         likedBy: true,
+    //       },
+    //     },
+    //   },
+    // });
+    res.status(200).json({ message: "Comment unliked" });
   } else {
     await prisma.commentLikes.create({
       data: {
@@ -509,19 +513,19 @@ const createLikeComment = asyncHandler(async (req, res) => {
         commentId: +commentId,
       },
     });
-    const commentLikeCount = await prisma.comment.findUnique({
-      where: {
-        id: +commentId,
-      },
-      select: {
-        _count: {
-          select: {
-            likedBy: true,
-          },
-        },
-      },
-    });
-    res.status(200).json({ message: "Comment liked", commentLikeCount });
+    // const commentLikeCount = await prisma.comment.findUnique({
+    //   where: {
+    //     id: +commentId,
+    //   },
+    //   select: {
+    //     _count: {
+    //       select: {
+    //         likedBy: true,
+    //       },
+    //     },
+    //   },
+    // });
+    res.status(200).json({ message: "Comment liked" });
   }
 });
 
@@ -564,15 +568,30 @@ const deleteUserByUsername = asyncHandler(async (req, res) => {
 
 const editCommentById = asyncHandler(async (req, res) => {
   const { commentId, editComment } = req.body;
-  await prisma.comment.update({
+  const editedComment = await prisma.comment.update({
     where: {
       id: +commentId,
     },
     data: {
       comment: editComment,
     },
+    include: {
+      likedBy: true,
+      _count: {
+        select: {
+          likedBy: true,
+        },
+      },
+      author: {
+        select: {
+          name: true,
+          username: true,
+          avatarImageUrl: true,
+        },
+      },
+    },
   });
-  res.status(200).json("Comment edited");
+  res.status(200).json(editedComment);
 });
 
 const getPostByPostId = asyncHandler(async (req, res) => {
@@ -640,9 +659,8 @@ const deleteMessageById = asyncHandler(async (req, res) => {
   res.status(200).json(`MessageID: ${messageId}  deleted`);
 });
 
-
-  const editMessageById = asyncHandler(async (req, res) => {
-    const { messageBody, messageId } = req.body;
+const editMessageById = asyncHandler(async (req, res) => {
+  const { messageBody, messageId } = req.body;
   // const { commentId, editComment } = req.body;
   await prisma.messages.update({
     where: {
@@ -657,7 +675,6 @@ const deleteMessageById = asyncHandler(async (req, res) => {
 
 module.exports = {
   getAllUsers,
-  followRequestHandler,
   createPost,
   getFeed,
   createCommentHandler,
@@ -678,4 +695,6 @@ module.exports = {
   getMessagesByUserId,
   deleteMessageById,
   editMessageById,
+  followUser,
+  unFollowUser,
 };

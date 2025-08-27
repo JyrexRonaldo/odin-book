@@ -1,7 +1,9 @@
 import PostComponent from '../PostComponent/PostComponent'
 import { useState } from 'react'
 
-function PostListComponent({ data, setTriggerRender }) {
+function PostListComponent({ data, setData
+    // setTriggerRender
+ }) {
     const [currentTab, setCurrentTab] = useState('Latest')
     const [buttonStyles, setButtonStyles] = useState([
         'default',
@@ -20,15 +22,15 @@ function PostListComponent({ data, setTriggerRender }) {
         if (e.target.textContent === 'Popular') {
             setButtonStyles(['selected', 'default', 'default'])
             setCurrentTab('Popular')
-            setTriggerRender(self.crypto.randomUUID())
+            // setTriggerRender(self.crypto.randomUUID())
         } else if (e.target.textContent === 'Latest') {
             setButtonStyles(['default', 'selected', 'default'])
             setCurrentTab('Latest')
-            setTriggerRender(self.crypto.randomUUID())
+            // setTriggerRender(self.crypto.randomUUID())
         } else if (e.target.textContent === 'Oldest') {
             setButtonStyles(['default', 'default', 'selected'])
             setCurrentTab('Oldest')
-            setTriggerRender(self.crypto.randomUUID())
+            // setTriggerRender(self.crypto.randomUUID())
         }
     }
 
@@ -85,9 +87,11 @@ function PostListComponent({ data, setTriggerRender }) {
                     commentCount={dataItem._count.comments}
                     likeCount={dataItem._count.likedBy}
                     isLikedByUser={isLikedByUser}
-                    setTriggerRender={setTriggerRender}
+                    // setTriggerRender={setTriggerRender}
                     postImgUrl={dataItem.postImageUrl}
                     authorImg={dataItem.author.avatarImageUrl}
+                    data={data}
+                    setData={setData}
                 />
             )
         })
@@ -130,9 +134,7 @@ function PostListComponent({ data, setTriggerRender }) {
                     Oldest
                 </button>
             </nav>
-            <div className="flex flex-col gap-8">
-                {dataCards}
-            </div>
+            <div className="flex flex-col gap-8">{dataCards}</div>
         </div>
     )
 }

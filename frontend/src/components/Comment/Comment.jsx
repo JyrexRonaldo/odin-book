@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { ImHeart } from 'react-icons/im'
 import Textarea from '../Textarea/Textarea'
 import { intervalToDuration } from 'date-fns'
@@ -10,16 +10,17 @@ function Comment({
     commentBody,
     authorUsername,
     createdAt,
-    setCommentTriggerRender,
-    setTriggerRender,
     isLikedByUser,
     commentLikeCount,
     authorImg,
+    commentsData,
+    setCommentsData,
+    commentPosition,
 }) {
     const [show, setShow] = useState(false)
     const [likedComment, setLikedComment] = useState(false)
-    const [commentLikes, setCommentLikes] = useState(commentLikeCount)
     const [commentText, setCommentText] = useState('')
+    const [initialRender, setInitialRender] = useState(true)
 
     async function handleDeleteButton() {
         try {
@@ -37,10 +38,11 @@ function Comment({
                 }
             )
 
-            const data = await response.json()
-            console.log(data)
-            setCommentTriggerRender(self.crypto.randomUUID())
-            setTriggerRender(self.crypto.randomUUID())
+            const responseData = await response.json()
+            const remainingData = commentsData.filter(
+                (data) => responseData.id !== data.id
+            )
+            setCommentsData(remainingData)
         } catch (error) {
             console.log(error)
         }
@@ -55,7 +57,7 @@ function Comment({
         setCommentText(e.target.value)
     }
 
-    async function handleSendComment() {
+    async function handleEditComment(commentPosition) {
         if (show === true && commentText === '') {
             return
         }
@@ -70,16 +72,15 @@ function Comment({
                         Authorization: `${localStorage.getItem('userToken')}`,
                     },
                     body: JSON.stringify({
-                        commentId : id,
+                        commentId: id,
                         editComment: commentText,
                     }),
                 }
             )
 
-            const data = await response.json()
-            console.log(data)
-            setCommentTriggerRender(self.crypto.randomUUID())
-            setTriggerRender(self.crypto.randomUUID())
+            const responseData = await response.json()
+            commentsData.splice(commentPosition, 1, responseData)
+            setCommentsData([...commentsData])
             setCommentText('')
             setShow(false)
         } catch (error) {
@@ -104,32 +105,31 @@ function Comment({
             )
 
             const data = await response.json()
-            console.log(data)
             if (data.message === 'Comment liked') {
-                commentLikeCount = data.commentLikeCount._count.likedBy
                 setLikedComment(true)
-            } else {
-                commentLikeCount = data.commentLikeCount._count.likedBy
+                setInitialRender(false)
+            } else if (data.message === 'Comment unliked') {
                 setLikedComment(false)
+                setInitialRender(false)
             }
-            setCommentLikes(commentLikeCount)
         } catch (error) {
             console.log(error)
         }
     }
 
-    useEffect(() => {
-        if (isLikedByUser) {
-            setLikedComment(true)
-        } else {
-            setLikedComment(false)
-        }
-    }, [isLikedByUser])
-
     let heartIconStyle = 'size-6'
+    let commentTotalCount = commentLikeCount
 
     if (likedComment) {
         heartIconStyle = 'size-6 text-red-600'
+        commentTotalCount += 1
+    }
+
+    if (initialRender) {
+        if (isLikedByUser) {
+            heartIconStyle = 'size-6 text-red-600'
+            commentTotalCount += 1
+        }
     }
 
     const durationSinceCreated = intervalToDuration({
@@ -189,12 +189,14 @@ function Comment({
                     className="ml-auto flex cursor-pointer flex-col items-center gap-1"
                 >
                     <ImHeart className={`${heartIconStyle}`} />
-                    <p>{commentLikes}</p>
+                    <p>{commentTotalCount}</p>
                 </button>
             </div>
             {show && (
                 <Textarea
-                    sendButtonHandler={handleSendComment}
+                    sendButtonHandler={() => {
+                        handleEditComment(commentPosition)
+                    }}
                     textFieldHandler={handleCommentField}
                     textFieldValue={commentText}
                     placeholderText={'Edit comment'}

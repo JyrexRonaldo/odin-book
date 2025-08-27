@@ -1,6 +1,7 @@
 import { FaPlus } from 'react-icons/fa6'
 import { FaMinus } from 'react-icons/fa6'
 import { BiSolidUserCircle } from 'react-icons/bi'
+import { useState } from 'react'
 
 function FollowCard({
     id,
@@ -10,10 +11,14 @@ function FollowCard({
     following,
     followedBy,
     isFollowed,
-    setTriggerRender,
+    // setTriggerRender,
     avatarUrl,
 }) {
-    async function handleSendRequest() {
+    const [isUserFollowed, setIsUserFollowed] = useState(isFollowed)
+    const [followingNumber, setFollowingNumber] = useState(following)
+    const [followByNumber, setFollowByNumber] = useState(followedBy)
+    
+    async function handleUserFollow() {
         try {
             const response = await fetch(
                 `${import.meta.env.VITE_HOME_DOMAIN}/users`,
@@ -31,7 +36,40 @@ function FollowCard({
 
             const data = await response.json()
             console.log(data)
-            setTriggerRender(self.crypto.randomUUID())
+            setFollowByNumber(followByNumber + 1)
+            setIsUserFollowed(true)
+            if (id === +localStorage.getItem('userId')) {
+                setFollowingNumber(followingNumber + 1)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async function handleUserUnFollow() {
+        try {
+            const response = await fetch(
+                `${import.meta.env.VITE_HOME_DOMAIN}/users`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `${localStorage.getItem('userToken')}`,
+                    },
+                    body: JSON.stringify({
+                        followeeId: `${id}`,
+                    }),
+                }
+            )
+
+            const data = await response.json()
+            console.log(data)
+            setFollowByNumber(followByNumber - 1)
+            // setFollowerNumbers(followerNumbers - 1)
+            setIsUserFollowed(false)
+            if (id === +localStorage.getItem('userId')) {
+                setFollowingNumber(followingNumber - 1)
+            }
         } catch (error) {
             console.log(error)
         }
@@ -55,9 +93,9 @@ function FollowCard({
                         <p>@{username}</p>
                     </div>
                 </div>
-                {isFollowed ? (
+                {isUserFollowed ? (
                     <button
-                        onClick={handleSendRequest}
+                        onClick={handleUserUnFollow}
                         className="mr-2.5 flex cursor-pointer items-center gap-2 rounded-lg border-2 border-blue-500 bg-black px-3 py-1 text-blue-500"
                     >
                         Unfollow
@@ -65,7 +103,7 @@ function FollowCard({
                     </button>
                 ) : (
                     <button
-                        onClick={handleSendRequest}
+                        onClick={handleUserFollow}
                         className="mr-2.5 flex cursor-pointer items-center gap-2 rounded-lg border-2 border-blue-500 bg-blue-500 px-3 py-1 text-black"
                     >
                         Follow
@@ -74,8 +112,8 @@ function FollowCard({
                 )}
             </div>
             <div className="flex gap-3 self-start text-xs">
-                <p>Followers: {followedBy}</p>
-                <p>Following: {following}</p>
+                <p>Followers:  {followByNumber}</p>
+                <p>Following:  {followingNumber}</p>
             </div>
             <div className="self-start">
                 <p>{bio}</p>

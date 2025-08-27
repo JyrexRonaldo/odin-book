@@ -1,11 +1,10 @@
 import { useEffect, useState, useContext } from 'react'
 import PostListComponent from '../PostListComponent/PostListComponent'
 import { useNavigate } from 'react-router-dom'
-import StylesContext from '../StylesContext/StylesContext'
+import StylesContext from '../../contexts/StylesContext/StylesContext'
 
 function Feed() {
     const [feedData, setFeedData] = useState([])
-    const [triggerRender, setTriggerRender] = useState(0)
     const navigate = useNavigate()
     const { handleFeedStyles } = useContext(StylesContext)
 
@@ -41,13 +40,13 @@ function Feed() {
             }
         }
         fetchData()
-    }, [navigate, triggerRender])
+    }, [navigate])
 
     return (
         <>
             <PostListComponent
                 data={feedData}
-                setTriggerRender={setTriggerRender}
+                setData={setFeedData}
             />
         </>
     )

@@ -1,11 +1,10 @@
 import { useEffect, useState, useContext } from 'react'
 import PostListComponent from '../PostListComponent/PostListComponent'
 import { useNavigate } from 'react-router-dom'
-import StylesContext from '../StylesContext/StylesContext'
+import StylesContext from '../../contexts/StylesContext/StylesContext'
 
 function Explore() {
     const [exploreData, setExploreData] = useState([])
-    const [triggerRender, setTriggerRender] = useState(0)
     const navigate = useNavigate()
     const { handleExploreStyles } = useContext(StylesContext)
 
@@ -41,15 +40,13 @@ function Explore() {
             }
         }
         fetchData()
-    }, [navigate, triggerRender])
-
-    // console.log(exploreData)
+    }, [navigate])
 
     return (
         <>
             <PostListComponent
                 data={exploreData}
-                setTriggerRender={setTriggerRender}
+                setData={setExploreData}
             />
         </>
     )

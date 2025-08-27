@@ -9,6 +9,7 @@ function SignupPage() {
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [successMessage, setSuccessMessage] = useState(null)
+    const [errorMessage, setErrorMessage] = useState(null)
     const navigate = useNavigate()
     let passwordVerification = null
 
@@ -30,6 +31,10 @@ function SignupPage() {
     }
 
     async function handleSignUpButton() {
+        if (email === '' || password === '' || name === '' || username === '' ) {
+            setErrorMessage("Various fields cannot be empty")
+            return
+        }
         if (password !== confirmPassword) {
             return
         }
@@ -178,6 +183,9 @@ function SignupPage() {
                                 />
                                 <p className="text-sm text-red-400">
                                     {passwordVerification}
+                                </p>
+                                <p className="text-sm text-red-400">
+                                    {errorMessage}
                                 </p>
                                 <p className="text-sm text-green-400">
                                     {successMessage}

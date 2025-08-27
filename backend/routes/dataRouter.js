@@ -16,7 +16,8 @@ dataRouter.route("/comment-likes").post(dataController.createLikeComment);
 dataRouter
   .route("/users")
   .get(dataController.getAllUsers)
-  .post(dataController.followRequestHandler);
+  .post(dataController.followUser)
+  .delete(dataController.unFollowUser)
 
 dataRouter
   .route("/users/:username")

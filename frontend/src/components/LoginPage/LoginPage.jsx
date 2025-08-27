@@ -17,6 +17,10 @@ function LoginPage() {
     }
 
     async function handleLoginButton() {
+        if (email === '' || password === '') {
+            setErrorMessage("Email and password fields cannot be empty")
+            return
+        }
         try {
             const response = await fetch(
                 `${import.meta.env.VITE_HOME_DOMAIN}/auth/signin`,

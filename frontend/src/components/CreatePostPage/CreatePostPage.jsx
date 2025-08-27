@@ -96,7 +96,7 @@ function CreatePostPage() {
         }
     }
 
-    if (postBody.length <= 1 && selectedImgUrl === null) {
+    if (postBody.length < 1 && selectedImgUrl === null) {
         postTextVerification = 'Post must have text or image content'
     }
 

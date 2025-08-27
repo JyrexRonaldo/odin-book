@@ -2,12 +2,12 @@ import { ImHeart } from 'react-icons/im'
 import { FaComment } from 'react-icons/fa'
 import { TbArrowForwardUp } from 'react-icons/tb'
 import { IoCloseSharp } from 'react-icons/io5'
-import { useState } from 'react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { format } from 'date-fns'
 import { BiSolidUserCircle } from 'react-icons/bi'
 import Textarea from '../Textarea/Textarea'
 import CommentList from '../CommentList/CommentList'
+// import FeedDataContext from '../../contexts/FeedDataContext/FeedDataContext'
 
 function PostComponent({
     id,
@@ -18,15 +18,19 @@ function PostComponent({
     commentCount,
     likeCount,
     isLikedByUser,
-    setTriggerRender,
+    // setTriggerRender,
     postImgUrl,
     authorImg,
+    data,
+    setData,
 }) {
     const [showComment, setShowComment] = useState(false)
     const [liked, setLiked] = useState(false)
     const [likes, setLikes] = useState(likeCount)
     const [commentText, setCommentText] = useState('')
-    const [commentTriggerRender, setCommentTriggerRender] = useState(null)
+    const [commentsData, setCommentsData] = useState([])
+    // const [commentTriggerRender, setCommentTriggerRender] = useState(null)
+    // const { feedData } = useContext(FeedDataContext)
 
     function handleShowComment(e) {
         if (e.target.dataset.comment) {
@@ -60,7 +64,7 @@ function PostComponent({
             }
             likeCount = data.likeCount._count.likedBy
             setLikes(likeCount)
-            setTriggerRender(self.crypto.randomUUID())
+            // setTriggerRender(self.crypto.randomUUID())
         } catch (error) {
             console.log(error)
         }
@@ -82,9 +86,15 @@ function PostComponent({
                 }
             )
 
-            const data = await response.json()
+            const responseData = await response.json()
+            console.log(responseData)
             console.log(data)
-            setTriggerRender(self.crypto.randomUUID())
+            const remainingData = data.filter(
+                (data) => responseData.id !== data.id
+            )
+            console.log(remainingData, 'Line 92')
+            setData(remainingData)
+            // setTriggerRender(self.crypto.randomUUID())
         } catch (error) {
             console.log(error)
         }
@@ -110,10 +120,12 @@ function PostComponent({
                 }
             )
 
-            const data = await response.json()
-            console.log(data)
-            setCommentTriggerRender(self.crypto.randomUUID())
-            setTriggerRender(self.crypto.randomUUID())
+            const responseData = await response.json()
+            console.log(responseData)
+            console.log(commentsData)
+            setCommentsData([responseData, ...commentsData])
+            // setCommentTriggerRender(self.crypto.randomUUID())
+            // setTriggerRender(self.crypto.randomUUID())
             setCommentText('')
         } catch (error) {
             console.log(error)
@@ -243,21 +255,20 @@ function PostComponent({
                                         data-comment
                                         type="button"
                                         onClick={handleShowComment}
-                                        className="cursor-pointer"
+                                        className="cursor-pointer text-2xl"
                                     >
-                                        <IoCloseSharp
-                                            data-comment
-                                            className="size-8"
-                                        />
+                                        X
                                     </button>
                                 </div>
                                 <CommentList
                                     postId={id}
-                                    commentTriggerRender={commentTriggerRender}
-                                    setCommentTriggerRender={
-                                        setCommentTriggerRender
-                                    }
-                                    setTriggerRender={setTriggerRender}
+                                    commentsData={commentsData}
+                                    setCommentsData={setCommentsData}
+                                    // commentTriggerRender={commentTriggerRender}
+                                    // setCommentTriggerRender={
+                                    //     setCommentTriggerRender
+                                    // }
+                                    // setTriggerRender={setTriggerRender}
                                 />
                                 <p className="text-center text-xs text-blue-400">
                                     -End of comments-

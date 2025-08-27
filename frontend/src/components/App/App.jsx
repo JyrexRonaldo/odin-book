@@ -7,8 +7,8 @@ import { BiSolidUserCircle } from 'react-icons/bi'
 import { useState } from 'react'
 import { useNavigate, Link, Outlet } from 'react-router-dom'
 import Navbar from '../Navbar/Navbar'
-import RenderContext from '../RenderContext/RenderContext'
-import StylesContext from '../StylesContext/StylesContext'
+import RenderContext from '../../contexts/RenderContext/RenderContext'
+import StylesContext from '../../contexts/StylesContext/StylesContext'
 
 function App() {
     const [forceUpdate, setForceUpdate] = useState('update')

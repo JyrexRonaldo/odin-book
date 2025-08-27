@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import Comment from '../Comment/Comment'
 
 function CommentList({
     postId,
-    commentTriggerRender,
-    setCommentTriggerRender,
-    setTriggerRender,
+    commentsData,
+    setCommentsData,
+    // setTriggerRender,
 }) {
-    const [commentsData, setCommentsData] = useState([])
+    // const [commentsData, setCommentsData] = useState([])
 
     useEffect(() => {
         async function fetchData() {
@@ -34,16 +34,18 @@ function CommentList({
             }
         }
         fetchData()
-    }, [postId, commentTriggerRender])
+    }, [postId, setCommentsData])
 
-    const commentCards = commentsData.map((dataItem) => {
+    const commentCards = commentsData.map((dataItem, index) => {
         let isLikedByUser = false
         const likeArray = []
+        let commentCount = dataItem._count.likedBy
         dataItem.likedBy.forEach((item) => {
             likeArray.push(item.userId)
         })
         if (likeArray.includes(+localStorage.getItem('userId'))) {
             isLikedByUser = true
+            commentCount -= 1
         }
         return (
             <Comment
@@ -53,11 +55,12 @@ function CommentList({
                 commentBody={dataItem.comment}
                 authorUsername={dataItem.author.username}
                 createdAt={dataItem.createdAt}
-                setCommentTriggerRender={setCommentTriggerRender}
-                setTriggerRender={setTriggerRender}
-                commentLikeCount={dataItem._count.likedBy}
+                commentLikeCount={commentCount}
                 isLikedByUser={isLikedByUser}
                 authorImg={dataItem.author.avatarImageUrl}
+                commentsData={commentsData}
+                setCommentsData={setCommentsData}
+                commentPosition={index}
             />
         )
     })

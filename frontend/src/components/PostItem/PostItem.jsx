@@ -1,11 +1,11 @@
 import { useEffect, useContext, useState } from 'react'
-import StylesContext from '../StylesContext/StylesContext'
+import StylesContext from '../../contexts/StylesContext/StylesContext'
 import { useNavigate, useParams } from 'react-router-dom'
 import PostComponent from '../PostComponent/PostComponent'
 
 function PostItem() {
     const [postData, setPostData] = useState([])
-    const [triggerRender, setTriggerRender] = useState(0)
+    // const [triggerRender, setTriggerRender] = useState(0)
     const navigate = useNavigate()
     const { handleUserProfileStyles } = useContext(StylesContext)
 
@@ -44,7 +44,7 @@ function PostItem() {
             }
         }
         fetchData()
-    }, [navigate, triggerRender, postId])
+    }, [navigate, postId])
 
     function getPostCards(data) {
         const dataCards = data.map((dataItem) => {
@@ -69,7 +69,7 @@ function PostItem() {
                     commentCount={dataItem._count.comments}
                     likeCount={dataItem._count.likedBy}
                     isLikedByUser={isLikedByUser}
-                    setTriggerRender={setTriggerRender}
+                    // setTriggerRender={setTriggerRender}
                     postImgUrl={dataItem.postImageUrl}
                     authorImg={dataItem.author.avatarImageUrl}
                 />

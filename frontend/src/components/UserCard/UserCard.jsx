@@ -1,12 +1,15 @@
+import { useState } from 'react'
 import { BiSolidUserCircle } from 'react-icons/bi'
 import { FaPlus } from 'react-icons/fa6'
 import { FaMinus } from 'react-icons/fa6'
 import { useNavigate } from 'react-router-dom'
 
-function UserCard({ id, name, username, bio, isFollowed, setTriggerRender, followerCount, avatarUrl }) {
+function UserCard({ id, name, username, bio, isFollowed, followerCount, avatarUrl }) {
+    const [followerNumbers, setFollowerNumbers] = useState(followerCount)
+    const [isUserFollowed, setIsUserFollowed] = useState(isFollowed)
     const navigate = useNavigate()
 
-    async function handleSendRequest() {
+    async function handleUserFollow() {
         try {
             const response = await fetch(
                 `${import.meta.env.VITE_HOME_DOMAIN}/users`,
@@ -24,7 +27,33 @@ function UserCard({ id, name, username, bio, isFollowed, setTriggerRender, follo
 
             const data = await response.json()
             console.log(data)
-            setTriggerRender(self.crypto.randomUUID())
+            setFollowerNumbers(followerNumbers + 1)
+            setIsUserFollowed(true)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async function handleUserUnFollow() {
+        try {
+            const response = await fetch(
+                `${import.meta.env.VITE_HOME_DOMAIN}/users`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `${localStorage.getItem('userToken')}`,
+                    },
+                    body: JSON.stringify({
+                        followeeId: `${id}`,
+                    }),
+                }
+            )
+
+            const data = await response.json()
+            console.log(data)
+            setFollowerNumbers(followerNumbers - 1)
+            setIsUserFollowed(false)
         } catch (error) {
             console.log(error)
         }
@@ -47,13 +76,13 @@ function UserCard({ id, name, username, bio, isFollowed, setTriggerRender, follo
                         )}
 
             <p className="text-2xl font-extrabold">{name}</p>
-            <p className="text-xs">{followerCount} followers</p>
+            <p className="text-xs">{followerNumbers} followers</p>
             <p>@{username}</p>
             <p>{bio}</p>
             <div className="flex gap-3">
-                {isFollowed ? (
+                {isUserFollowed ? (
                     <button
-                        onClick={handleSendRequest}
+                        onClick={handleUserUnFollow}
                         className="flex cursor-pointer items-center gap-2 rounded-lg border-2 border-blue-500 bg-black px-3 py-1 text-blue-500"
                     >
                         Unfollow
@@ -61,7 +90,7 @@ function UserCard({ id, name, username, bio, isFollowed, setTriggerRender, follo
                     </button>
                 ) : (
                     <button
-                        onClick={handleSendRequest}
+                        onClick={handleUserFollow}
                         className="flex cursor-pointer items-center gap-2 rounded-lg border-2 border-blue-500 bg-blue-500 px-3 py-1 text-black"
                     >
                         Follow
