@@ -5,6 +5,8 @@ import StylesContext from '../../contexts/StylesContext/StylesContext'
 
 function Feed() {
     const [feedData, setFeedData] = useState([])
+    const [error, setError] = useState(false)
+    const [loading, setLoading] = useState(true)
     const navigate = useNavigate()
     const { handleFeedStyles } = useContext(StylesContext)
 
@@ -37,17 +39,41 @@ function Feed() {
                 setFeedData(data)
             } catch (error) {
                 console.log(error)
+                setError(true)
+            } finally {
+                setLoading(false)
             }
         }
         fetchData()
     }, [navigate])
 
+    if (loading) {
+        return (
+            <div className="flex w-full max-w-2xl justify-center">
+                <p className="text-white">Loading...</p>
+            </div>
+        )
+    }
+
+    if (error) {
+        return (
+            <div className="flex w-full max-w-2xl justify-center">
+                <p className="text-white">A network error was encounted</p>
+            </div>
+        )
+    }
+
+    if (feedData.length === 0) {
+        return (
+            <div className="flex w-full max-w-2xl justify-center">
+                <p className="text-white">You have no feeds</p>
+            </div>
+        )
+    }
+
     return (
         <>
-            <PostListComponent
-                data={feedData}
-                setData={setFeedData}
-            />
+            <PostListComponent data={feedData} setData={setFeedData} />
         </>
     )
 }

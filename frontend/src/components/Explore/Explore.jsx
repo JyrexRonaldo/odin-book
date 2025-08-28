@@ -5,6 +5,8 @@ import StylesContext from '../../contexts/StylesContext/StylesContext'
 
 function Explore() {
     const [exploreData, setExploreData] = useState([])
+    const [error, setError] = useState(false)
+    const [loading, setLoading] = useState(true)
     const navigate = useNavigate()
     const { handleExploreStyles } = useContext(StylesContext)
 
@@ -37,10 +39,29 @@ function Explore() {
                 setExploreData(data)
             } catch (error) {
                 console.log(error)
+                setError(true)
+            } finally {
+                setLoading(false)
             }
         }
         fetchData()
     }, [navigate])
+
+    if (loading) {
+        return (
+            <div className='flex w-full max-w-2xl justify-center'>
+                <p className="text-white">Loading...</p>
+            </div>
+        )
+    }
+
+    if (error) {
+        return (
+            <div className='flex w-full max-w-2xl justify-center'>
+                <p className="text-white">A network error was encounted</p>
+            </div>
+        )
+    }
 
     return (
         <>

@@ -57,7 +57,7 @@ function UserList() {
 
     if (loading) {
         return (
-            <div>
+            <div className='flex w-full max-w-2xl justify-center'>
                 <p className="text-white">Loading...</p>
             </div>
         )
@@ -65,7 +65,7 @@ function UserList() {
 
     if (error) {
         return (
-            <div>
+            <div className='flex w-full max-w-2xl justify-center'>
                 <p className="text-white">A network error was encounted</p>
             </div>
         )

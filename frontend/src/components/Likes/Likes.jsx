@@ -5,6 +5,8 @@ import StylesContext from '../../contexts/StylesContext/StylesContext'
 
 function Likes() {
     const [likesData, setLikesData] = useState([])
+    const [error, setError] = useState(false)
+    const [loading, setLoading] = useState(true)
     const navigate = useNavigate()
     const { handleLikesStyles } = useContext(StylesContext)
 
@@ -38,17 +40,41 @@ function Likes() {
                 setLikesData(data)
             } catch (error) {
                 console.log(error)
+                setError(true)
+            } finally {
+                setLoading(false)
             }
         }
         fetchData()
     }, [navigate])
 
+    if (loading) {
+        return (
+            <div className="flex w-full max-w-2xl justify-center">
+                <p className="text-white">Loading...</p>
+            </div>
+        )
+    }
+
+    if (error) {
+        return (
+            <div className="flex w-full max-w-2xl justify-center">
+                <p className="text-white">A network error was encounted</p>
+            </div>
+        )
+    }
+
+    if (likesData.length === 0) {
+        return (
+            <div className="flex w-full max-w-2xl justify-center">
+                <p className="text-white">You haven't liked any posts</p>
+            </div>
+        )
+    }
+
     return (
         <>
-            <PostListComponent
-                data={likesData}
-                setData={setLikesData}
-            />
+            <PostListComponent data={likesData} setData={setLikesData} />
         </>
     )
 }
