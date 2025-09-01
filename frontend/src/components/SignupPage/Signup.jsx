@@ -31,8 +31,8 @@ function SignupPage() {
     }
 
     async function handleSignUpButton() {
-        if (email === '' || password === '' || name === '' || username === '' ) {
-            setErrorMessage("Various fields cannot be empty")
+        if (email === '' || password === '' || name === '' || username === '') {
+            setErrorMessage('Various fields cannot be empty')
             return
         }
         if (password !== confirmPassword) {
@@ -50,6 +50,15 @@ function SignupPage() {
                 }
             )
 
+            console.log(response)
+            if (response.status === 401) {
+                setErrorMessage('Username unavailable')
+            }
+
+            if (response.status === 402) {
+                setErrorMessage('Email unavailable')
+            }
+
             const data = await response.json()
             localStorage.setItem('userToken', `${data.token}`)
             localStorage.setItem('userId', `${data.userId}`)
@@ -58,6 +67,7 @@ function SignupPage() {
             localStorage.setItem('name', `${data.name}`)
             localStorage.setItem('bio', `${data.bio}`)
             if (response.ok) {
+                setErrorMessage(null)
                 setSuccessMessage(data.message)
                 setTimeout(() => {
                     navigate('/explore')

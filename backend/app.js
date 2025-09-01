@@ -15,7 +15,7 @@ const server = createServer(app);
 const io = new Server(server, {
   cors: {
     origin: "*",
-   methods: ['GET', 'PUT', 'POST', 'DELETE'],
+    methods: ["GET", "PUT", "POST", "DELETE"],
   },
 });
 
@@ -30,16 +30,30 @@ app.use((err, req, res, next) => {
   // if (err.code === "P2002" && err.meta.modelName === "Requests") {
   //   res.status(400).json("Request already sent");
   // } else {
-  res.status(500).json(err.message);
+  // console.log(err.code, err.meta.modelName, err.meta.target[0]);
+  if (
+    (err.code === "P2002",
+    err.meta.modelName === "User",
+    err.meta.target[0] === "username")
+  ) {
+    res.status(401).json(err.message);
+  } else if (
+    (err.code === "P2002",
+    err.meta.modelName === "User",
+    err.meta.target[0] === "email")
+  ) {
+    res.status(402).json(err.message);
+  } else {
+    res.status(500).json(err.message);
+  }
   // }
 });
 
 io.on("connection", (socket) => {
-  socket.on('message', () => {
-    io.emit('message')
-  })
+  socket.on("message", () => {
+    io.emit("message");
+  });
 });
-
 
 server.listen(PORT, () => {
   console.log(`Express app running at port ${PORT}`);
