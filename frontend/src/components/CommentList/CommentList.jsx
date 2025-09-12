@@ -5,9 +5,7 @@ function CommentList({
     postId,
     commentsData,
     setCommentsData,
-    // setTriggerRender,
-}) {
-    // const [commentsData, setCommentsData] = useState([])
+}) {    
 
     useEffect(() => {
         async function fetchData() {

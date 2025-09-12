@@ -29,8 +29,8 @@ function App() {
     const navigate = useNavigate()
 
     const buttonColorVariants = {
-        default: '',
-        selected: 'bg-white text-black',
+        default: 'hover:text-black hover:bg-gray-50 active:bg-gray-400',
+        selected: 'bg-gray-200 text-black hover:bg-gray-50 active:bg-gray-400',
     }
 
     const iconStyleVariants = {
@@ -126,7 +126,7 @@ function App() {
                             </div>
                             <button
                                 onClick={handleCreatePost}
-                                className="mt-14 h-12 w-52 rounded-lg bg-blue-500 px-3.5 text-left"
+                                className="mt-14 h-12 w-52 rounded-lg bg-blue-500 px-3.5 text-left hover:bg-blue-400 active:bg-blue-600"
                             >
                                 Create Post
                             </button>

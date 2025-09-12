@@ -33,7 +33,7 @@ function Dropdown() {
                 </button>
                 <button
                     onClick={handleLogout}
-                    className="cursor-pointer rounded-lg border-2 border-blue-500 bg-black px-3 py-1 text-blue-500"
+                    className="cursor-pointer rounded-lg border-2 border-blue-500 bg-black px-3 py-1 text-blue-500 hover:text-blue-400 active:text-blue-600"
                 >
                     Logout
                 </button>

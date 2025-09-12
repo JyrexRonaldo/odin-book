@@ -90,18 +90,6 @@ function AccountEdit() {
     }
 
     async function handleProfileInfoEdit(changeType) {
-        console.log(localStorage.getItem('username'))
-
-        console.log({ name, username })
-
-        // if (name.length < 3) {
-        //     return
-        // }
-
-        // if (username.length < 3) {
-        //     return
-        // }
-
         try {
             let imgPublicUrl = avatarUrl
             if (selectedImg) {
@@ -240,7 +228,7 @@ function AccountEdit() {
                     <p>Should be less than 5mb</p>
                     <p>Recommended size:</p>
                     <p>500px x 500px</p>
-                    <div className="relative flex flex-col items-center gap-2.5 rounded-lg bg-blue-500 p-2.5">
+                    <div className="relative flex flex-col items-center gap-2.5 rounded-lg bg-blue-500 p-2.5 hover:bg-blue-400 active:bg-blue-600">
                         <p className="font-extrabold">
                             Drag Here to Upload Media
                         </p>
@@ -261,7 +249,7 @@ function AccountEdit() {
                     <input
                         onChange={handleNameInput}
                         value={name}
-                        className="rounded-lg bg-white px-5 py-2.5 text-black"
+                        className="rounded-lg bg-white px-5 py-2.5 text-black hover:outline-5 hover:outline-blue-500 focus:outline-5 focus:outline-blue-500"
                         type="text"
                         id="name"
                     />
@@ -272,7 +260,7 @@ function AccountEdit() {
                     <textarea
                         onChange={handleBioInput}
                         value={bio}
-                        className="min-h-28 max-w-2xl resize-y rounded-lg bg-white p-5 text-black"
+                        className="min-h-28 max-w-2xl resize-y rounded-lg bg-white p-5 text-black hover:outline-5 hover:outline-blue-500 focus:outline-5 focus:outline-blue-500"
                         name="bio"
                         id="bio"
                     ></textarea>
@@ -281,7 +269,7 @@ function AccountEdit() {
                     onClick={() => {
                         handleProfileInfoEdit('profile')
                     }}
-                    className="cursor-pointer self-start rounded-lg bg-blue-500 px-3 py-1 text-xl text-blue-950 hover:bg-blue-600 focus:bg-blue-600 active:bg-blue-600"
+                    className="cursor-pointer self-start rounded-lg bg-blue-500 px-3 py-1 text-xl text-blue-950 hover:bg-blue-400 active:bg-blue-600"
                     type="button"
                 >
                     Save
@@ -298,7 +286,7 @@ function AccountEdit() {
                     <input
                         onChange={handleUsernameInput}
                         value={username}
-                        className="rounded-lg bg-white px-5 py-2.5 text-black"
+                        className="rounded-lg bg-white px-5 py-2.5 text-black hover:outline-5 hover:outline-blue-500 focus:outline-5 focus:outline-blue-500"
                         placeholder="Your new username"
                         type="text"
                         id="username"
@@ -312,7 +300,7 @@ function AccountEdit() {
                     onClick={() => {
                         handleProfileInfoEdit('username')
                     }}
-                    className="cursor-pointer self-start rounded-lg bg-blue-500 px-3 py-1 text-xl text-blue-950 hover:bg-blue-600 focus:bg-blue-600 active:bg-blue-600"
+                    className="cursor-pointer self-start rounded-lg bg-blue-500 px-3 py-1 text-xl text-blue-950 hover:bg-blue-400 active:bg-blue-600"
                     type="button"
                 >
                     Save
@@ -323,9 +311,7 @@ function AccountEdit() {
                     className="hidden"
                     type="text"
                     name="email"
-                    // value="..."
                     autoComplete="email"
-                    // style="display: none;"
                 ></input>
                 <p className="text-2xl font-bold">Change Password</p>
                 <div className="flex flex-col gap-2">
@@ -333,7 +319,7 @@ function AccountEdit() {
                     <input
                         onChange={handleOldPasswordInput}
                         value={oldPassword}
-                        className="rounded-lg bg-white px-5 py-2.5 text-black"
+                        className="rounded-lg bg-white px-5 py-2.5 text-black hover:outline-5 hover:outline-blue-500 focus:outline-5 focus:outline-blue-500"
                         type="password"
                         id="oldPassword"
                         name="oldPassword"
@@ -345,7 +331,7 @@ function AccountEdit() {
                     <input
                         onChange={handleNewPasswordInput}
                         value={newPassword}
-                        className="rounded-lg bg-white px-5 py-2.5 text-black"
+                        className="rounded-lg bg-white px-5 py-2.5 text-black hover:outline-5 hover:outline-blue-500 focus:outline-5 focus:outline-blue-500"
                         type="password"
                         id="newPassword"
                         name="newPassword"
@@ -359,7 +345,7 @@ function AccountEdit() {
                     <input
                         onChange={handleConfirmNewPasswordInput}
                         value={confirmNewPassword}
-                        className="rounded-lg bg-white px-5 py-2.5 text-black"
+                        className="rounded-lg bg-white px-5 py-2.5 text-black hover:outline-5 hover:outline-blue-500 focus:outline-5 focus:outline-blue-500"
                         type="password"
                         id="confirmPassword"
                         name="confirmPassword"
@@ -373,7 +359,7 @@ function AccountEdit() {
                     onClick={() => {
                         handleProfileInfoEdit('password')
                     }}
-                    className="cursor-pointer self-start rounded-lg bg-blue-500 px-3 py-1 text-xl text-blue-950 hover:bg-blue-600 focus:bg-blue-600 active:bg-blue-600"
+                    className="cursor-pointer self-start rounded-lg bg-blue-500 px-3 py-1 text-xl text-blue-950 hover:bg-blue-400 active:bg-blue-600"
                     type="button"
                 >
                     Save
@@ -392,7 +378,7 @@ function AccountEdit() {
                 <button
                     data-dialog
                     onClick={handleShowDeleteDialog}
-                    className="cursor-pointer self-start rounded-lg bg-red-500 px-3 py-1 text-xl text-white hover:bg-red-700 focus:bg-red-700 active:bg-red-700"
+                    className="cursor-pointer self-start rounded-lg bg-red-500 px-3 py-1 text-xl text-white hover:bg-red-400 active:bg-red-600"
                 >
                     Delete
                 </button>
@@ -421,14 +407,14 @@ function AccountEdit() {
                             <input
                                 onChange={handleDeleteConfirmText}
                                 value={confirmDeleteText}
-                                className="rounded-lg bg-white px-5 py-2.5 text-black"
+                                className="rounded-lg bg-white px-5 py-2.5 text-black hover:outline-5 hover:outline-blue-500 focus:outline-5 focus:outline-blue-500"
                                 type="text"
                                 id="confirm"
                             />
                         </div>
                         <button
                             onClick={handleDeleteConfirm}
-                            className="cursor-pointer self-start rounded-lg bg-blue-500 px-3 py-1 text-xl text-blue-950 hover:bg-blue-600 focus:bg-blue-600 active:bg-blue-600"
+                            className="cursor-pointer self-start rounded-lg bg-blue-500 px-3 py-1 text-xl text-blue-950 hover:bg-blue-400 active:bg-blue-600"
                             type="button"
                         >
                             Done

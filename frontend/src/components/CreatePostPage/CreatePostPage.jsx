@@ -108,7 +108,7 @@ function CreatePostPage() {
                     <p className="text-5xl font-bold">Create Post</p>
                     <div className="flex flex-col gap-3">
                         <p className="text-2xl font-bold">Image</p>
-                        <div className="relative flex min-h-56 justify-center rounded-lg bg-blue-500 p-5 text-center">
+                        <div className="relative flex min-h-56 justify-center rounded-lg bg-blue-500 p-5 text-center hover:bg-blue-400 active:bg-blue-600">
                             <div className="flex flex-col items-center justify-between">
                                 <p>Drag Here to Upload Media</p>
                                 <p>
@@ -150,7 +150,7 @@ function CreatePostPage() {
                         <textarea
                             onChange={handlePostTextarea}
                             value={postBody}
-                            className="resize-y rounded-lg bg-white p-5 text-black"
+                            className="resize-y rounded-lg bg-white p-5 text-black hover:outline-5 hover:outline-blue-500 focus:outline-5 focus:outline-blue-500"
                             name="postText"
                             placeholder="Write down your thoughts..."
                             id="postText"
@@ -164,7 +164,7 @@ function CreatePostPage() {
                         <button
                             type="button"
                             onClick={handleCreatePostButton}
-                            className="cursor-pointer rounded-lg bg-blue-500 px-3 py-1 text-xl text-blue-950 hover:bg-blue-600"
+                            className="cursor-pointer rounded-lg bg-blue-500 px-3 py-1 text-xl text-blue-950 hover:bg-blue-400 active:bg-blue-600"
                         >
                             Create Post
                         </button>

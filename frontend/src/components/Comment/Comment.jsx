@@ -170,13 +170,13 @@ function Comment({
                     {authorUsername === localStorage.getItem('username') && (
                         <div className="flex gap-2 text-xs">
                             <button
-                                className="cursor-pointer"
+                                className="cursor-pointer hover:text-blue-400 active:text-blue-600"
                                 onClick={handleEditButton}
                             >
                                 {show ? 'Cancel' : 'Edit'}
                             </button>
                             <button
-                                className="cursor-pointer text-red-600"
+                                className="cursor-pointer text-red-500 hover:text-red-400 active:text-red-6"
                                 onClick={handleDeleteButton}
                             >
                                 Delete

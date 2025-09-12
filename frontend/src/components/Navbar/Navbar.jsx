@@ -50,7 +50,7 @@ function Navbar() {
                     </button>
                     <button
                         onClick={handleCreatePost}
-                        className="cursor-pointer rounded-lg bg-blue-500 px-3 py-1 max-md:hidden"
+                        className="cursor-pointer rounded-lg bg-blue-500 px-3 py-1 max-md:hidden hover:bg-blue-400 active:bg-blue-600"
                     >
                         Create Post
                     </button>

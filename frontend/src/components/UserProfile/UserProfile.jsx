@@ -76,30 +76,6 @@ function UserProfile() {
         }
     }
 
-    // async function handleSendRequest() {
-    //     try {
-    //         const response = await fetch(
-    //             `${import.meta.env.VITE_HOME_DOMAIN}/users`,
-    //             {
-    //                 method: 'POST',
-    //                 headers: {
-    //                     'Content-Type': 'application/json',
-    //                     Authorization: `${localStorage.getItem('userToken')}`,
-    //                 },
-    //                 body: JSON.stringify({
-    //                     followeeId: `${profileData.id}`,
-    //                 }),
-    //             }
-    //         )
-
-    //         const data = await response.json()
-    //         console.log(data)
-    //         setTriggerRender(self.crypto.randomUUID())
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
-
     async function handleUserFollow() {
         try {
             const response = await fetch(
@@ -204,7 +180,6 @@ function UserProfile() {
                 bio={dataItem.bio}
                 following={dataItem._count.following}
                 followedBy={dataItem._count.followedBy}
-                // setTriggerRender={setTriggerRender}
                 isFollowed={isFollowedValue}
                 avatarUrl={dataItem.avatarImageUrl}
             />
@@ -232,17 +207,11 @@ function UserProfile() {
                 commentCount={dataItem._count.comments}
                 likeCount={dataItem._count.likedBy}
                 isLikedByUser={isLikedByUser}
-                // setTriggerRender={setTriggerRender}
                 postImgUrl={dataItem.postImageUrl}
                 authorImg={dataItem.author.avatarImageUrl}
             />
         )
     })
-
-    // let isFollowed = null
-    // profileData.followedBy?.some((element) => {
-    //     return element.following.id === +localStorage.getItem('userId')
-    // })
 
     return (
         <div className="flex w-full max-w-xl flex-col gap-10 text-white">
@@ -266,7 +235,7 @@ function UserProfile() {
                     {isUserFollowed ? (
                         <button
                             onClick={handleUserUnFollow}
-                            className="flex cursor-pointer items-center gap-2 rounded-lg border-2 border-blue-500 bg-black px-3 py-1 text-blue-500"
+                            className="flex cursor-pointer items-center gap-2 rounded-lg border-2 border-blue-500 bg-black px-3 py-1 text-blue-500 hover:text-blue-400 active:text-blue-600"
                         >
                             Unfollow
                             <FaMinus />
@@ -274,7 +243,7 @@ function UserProfile() {
                     ) : (
                         <button
                             onClick={handleUserFollow}
-                            className="flex cursor-pointer items-center gap-2 rounded-lg border-2 border-blue-500 bg-blue-500 px-3 py-1 text-black"
+                            className="flex cursor-pointer items-center gap-2 rounded-lg border-2 border-blue-500 bg-blue-500 px-3 py-1 text-black hover:bg-blue-400 active:bg-blue-600"
                         >
                             Follow
                             <FaPlus />
