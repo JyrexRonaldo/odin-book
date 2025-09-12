@@ -22,7 +22,7 @@ function Textarea({
             )}
 
             <textarea
-                className="grow resize-none rounded-[7px] bg-white px-2 py-1 text-black"
+                className="grow resize-none rounded-[7px] bg-white px-2 py-1 text-black hover:outline-5 hover:outline-blue-500 focus:outline-5 focus:outline-blue-500"
                 name="comment"
                 id=""
                 placeholder={placeholderText}
@@ -32,7 +32,7 @@ function Textarea({
             ></textarea>
 
             <button
-                className="rounded-[7px] bg-blue-500 p-2 text-black"
+                className="rounded-[7px] bg-blue-500 p-2 text-black hover:bg-blue-400 active:bg-blue-600"
                 onClick={sendButtonHandler}
             >
                 Send

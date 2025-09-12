@@ -107,7 +107,7 @@ function SignupPage() {
                                 <input
                                     onChange={handleNameInput}
                                     value={name}
-                                    className="min-h-10 rounded-lg bg-white px-3 text-black"
+                                    className="min-h-10 rounded-lg bg-white px-3 text-black hover:outline-5 hover:outline-blue-500 focus:outline-5 focus:outline-blue-500"
                                     type="text"
                                     name="name"
                                     id="name"
@@ -128,7 +128,7 @@ function SignupPage() {
                                     onChange={handleUsernameInput}
                                     value={username}
                                     autoComplete="username"
-                                    className="min-h-10 rounded-lg bg-white px-3 text-black"
+                                    className="min-h-10 rounded-lg bg-white px-3 text-black hover:outline-5 hover:outline-blue-500 focus:outline-5 focus:outline-blue-500"
                                     type="text"
                                     name="username"
                                     id="username"
@@ -149,7 +149,7 @@ function SignupPage() {
                                 <input
                                     onChange={handleEmailInput}
                                     value={email}
-                                    className="min-h-10 rounded-lg bg-white px-3 text-black"
+                                    className="min-h-10 rounded-lg bg-white px-3 text-black hover:outline-5 hover:outline-blue-500 focus:outline-5 focus:outline-blue-500"
                                     type="email"
                                     name="email"
                                     id="email"
@@ -167,7 +167,7 @@ function SignupPage() {
                                     onChange={handlePasswordInput}
                                     value={password}
                                     autoComplete="new-password"
-                                    className="min-h-10 rounded-lg bg-white px-3 text-black"
+                                    className="min-h-10 rounded-lg bg-white px-3 text-black hover:outline-5 hover:outline-blue-500 focus:outline-5 focus:outline-blue-500"
                                     type="password"
                                     name="password"
                                     id="password"
@@ -185,7 +185,7 @@ function SignupPage() {
                                     onChange={handleConfirmPasswordInput}
                                     value={confirmPassword}
                                     autoComplete="new-password"
-                                    className="min-h-10 rounded-lg bg-white px-3 text-black"
+                                    className="min-h-10 rounded-lg bg-white px-3 text-black hover:outline-5 hover:outline-blue-500 focus:outline-5 focus:outline-blue-500"
                                     type="password"
                                     name="confirmPassword"
                                     id="confirmPassword"
@@ -205,7 +205,7 @@ function SignupPage() {
                                 <button
                                     onClick={handleSignUpButton}
                                     type="button"
-                                    className="cursor-pointer rounded-lg bg-blue-500 px-3 py-1 text-black hover:bg-blue-600"
+                                    className="cursor-pointer rounded-lg bg-blue-500 px-3 py-1 text-black hover:bg-blue-400 active:bg-blue-600"
                                 >
                                     Sign Up
                                 </button>

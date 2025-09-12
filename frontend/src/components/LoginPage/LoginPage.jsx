@@ -18,7 +18,7 @@ function LoginPage() {
 
     async function handleLoginButton() {
         if (email === '' || password === '') {
-            setErrorMessage("Email and password fields cannot be empty")
+            setErrorMessage('Email and password fields cannot be empty')
             return
         }
         try {
@@ -62,7 +62,7 @@ function LoginPage() {
 
     async function handleLogInAsGuest() {
         try {
-            const guestName = `John Doe`
+            const guestName = `Guest Account`
             const guestUsername = `User-${self.crypto.randomUUID()}`
 
             const response = await fetch(
@@ -121,7 +121,7 @@ function LoginPage() {
                                     onChange={handleEmailInput}
                                     value={email}
                                     autoComplete="email"
-                                    className="min-h-10 rounded-lg bg-white px-3 text-black"
+                                    className="min-h-10 rounded-lg bg-white px-3 text-black hover:outline-5 hover:outline-blue-500 focus:outline-5 focus:outline-blue-500"
                                     type="email"
                                     name="email"
                                     id="email"
@@ -139,7 +139,7 @@ function LoginPage() {
                                     onChange={handlePasswordInput}
                                     value={password}
                                     autoComplete="current-password"
-                                    className="min-h-10 rounded-lg bg-white px-3 text-black"
+                                    className="min-h-10 rounded-lg bg-white px-3 text-black hover:outline-5 hover:outline-blue-500 focus:outline-5 focus:outline-blue-500"
                                     type="password"
                                     name="password"
                                     id="password"
@@ -157,14 +157,14 @@ function LoginPage() {
                             <button
                                 type="button"
                                 onClick={handleLoginButton}
-                                className="h-10 w-xs cursor-pointer rounded-lg bg-blue-500 px-3 py-1 text-black"
+                                className="h-10 w-xs cursor-pointer rounded-lg bg-blue-500 px-3 py-1 text-black hover:bg-blue-400 active:bg-blue-600"
                             >
                                 Log In
                             </button>
                             <button
                                 type="button"
                                 onClick={handleLogInAsGuest}
-                                className="w-xs rounded-lg bg-white p-3 text-black"
+                                className="w-xs rounded-lg bg-gray-200 p-3 text-black hover:bg-gray-50 active:bg-gray-400"
                             >
                                 Log in as Guest
                             </button>

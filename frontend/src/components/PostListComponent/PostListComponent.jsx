@@ -1,9 +1,11 @@
 import PostComponent from '../PostComponent/PostComponent'
 import { useState } from 'react'
 
-function PostListComponent({ data, setData
+function PostListComponent({
+    data,
+    setData,
     // setTriggerRender
- }) {
+}) {
     const [currentTab, setCurrentTab] = useState('Latest')
     const [buttonStyles, setButtonStyles] = useState([
         'default',
@@ -13,7 +15,7 @@ function PostListComponent({ data, setData
 
     const buttonColorVariants = {
         default:
-            'cursor-pointer rounded-lg border-2 border-blue-500 bg-black px-3 py-1 text-blue-500',
+            'cursor-pointer rounded-lg border-2 border-blue-500 bg-black px-3 py-1 text-blue-500 hover:text-blue-400',
         selected:
             'cursor-pointer rounded-lg border-2 border-blue-500 bg-blue-500 px-3 py-1 text-white',
     }
@@ -22,15 +24,12 @@ function PostListComponent({ data, setData
         if (e.target.textContent === 'Popular') {
             setButtonStyles(['selected', 'default', 'default'])
             setCurrentTab('Popular')
-            // setTriggerRender(self.crypto.randomUUID())
         } else if (e.target.textContent === 'Latest') {
             setButtonStyles(['default', 'selected', 'default'])
             setCurrentTab('Latest')
-            // setTriggerRender(self.crypto.randomUUID())
         } else if (e.target.textContent === 'Oldest') {
             setButtonStyles(['default', 'default', 'selected'])
             setCurrentTab('Oldest')
-            // setTriggerRender(self.crypto.randomUUID())
         }
     }
 

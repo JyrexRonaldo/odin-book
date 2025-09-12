@@ -4,7 +4,15 @@ import { FaPlus } from 'react-icons/fa6'
 import { FaMinus } from 'react-icons/fa6'
 import { useNavigate } from 'react-router-dom'
 
-function UserCard({ id, name, username, bio, isFollowed, followerCount, avatarUrl }) {
+function UserCard({
+    id,
+    name,
+    username,
+    bio,
+    isFollowed,
+    followerCount,
+    avatarUrl,
+}) {
     const [followerNumbers, setFollowerNumbers] = useState(followerCount)
     const [isUserFollowed, setIsUserFollowed] = useState(isFollowed)
     const navigate = useNavigate()
@@ -66,14 +74,14 @@ function UserCard({ id, name, username, bio, isFollowed, followerCount, avatarUr
     return (
         <div className="flex h-auto w-full max-w-80 flex-col items-center gap-2 rounded-xl bg-blue-900 p-5 text-center text-white">
             {avatarUrl ? (
-                            <img
-                                src={avatarUrl}
-                                alt="avatar"
-                                className="size-17 rounded-full object-cover"
-                            />
-                        ) : (
-                            <BiSolidUserCircle className="size-17" />
-                        )}
+                <img
+                    src={avatarUrl}
+                    alt="avatar"
+                    className="size-17 rounded-full object-cover"
+                />
+            ) : (
+                <BiSolidUserCircle className="size-17" />
+            )}
 
             <p className="text-2xl font-extrabold">{name}</p>
             <p className="text-xs">{followerNumbers} followers</p>
@@ -83,7 +91,7 @@ function UserCard({ id, name, username, bio, isFollowed, followerCount, avatarUr
                 {isUserFollowed ? (
                     <button
                         onClick={handleUserUnFollow}
-                        className="flex cursor-pointer items-center gap-2 rounded-lg border-2 border-blue-500 bg-black px-3 py-1 text-blue-500"
+                        className="flex cursor-pointer items-center gap-2 rounded-lg border-2 border-blue-500 bg-black px-3 py-1 text-blue-500 hover:text-blue-400 active:text-blue-600"
                     >
                         Unfollow
                         <FaMinus />
@@ -91,7 +99,7 @@ function UserCard({ id, name, username, bio, isFollowed, followerCount, avatarUr
                 ) : (
                     <button
                         onClick={handleUserFollow}
-                        className="flex cursor-pointer items-center gap-2 rounded-lg border-2 border-blue-500 bg-blue-500 px-3 py-1 text-black"
+                        className="flex cursor-pointer items-center gap-2 rounded-lg border-2 border-blue-500 bg-blue-500 px-3 py-1 text-black hover:bg-blue-400 active:bg-blue-600"
                     >
                         Follow
                         <FaPlus />
@@ -99,7 +107,7 @@ function UserCard({ id, name, username, bio, isFollowed, followerCount, avatarUr
                 )}
                 <button
                     onClick={handlerUserView}
-                    className="cursor-pointer rounded-lg border-2 border-blue-500 bg-black px-3 py-1 text-blue-500"
+                    className="cursor-pointer rounded-lg border-2 border-blue-500 bg-black px-3 py-1 text-blue-500 hover:text-blue-400 active:text-blue-600"
                 >
                     View
                 </button>

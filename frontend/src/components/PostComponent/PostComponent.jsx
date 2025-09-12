@@ -18,7 +18,6 @@ function PostComponent({
     commentCount,
     likeCount,
     isLikedByUser,
-    // setTriggerRender,
     postImgUrl,
     authorImg,
     data,
@@ -29,8 +28,6 @@ function PostComponent({
     const [likes, setLikes] = useState(likeCount)
     const [commentText, setCommentText] = useState('')
     const [commentsData, setCommentsData] = useState([])
-    // const [commentTriggerRender, setCommentTriggerRender] = useState(null)
-    // const { feedData } = useContext(FeedDataContext)
 
     function handleShowComment(e) {
         if (e.target.dataset.comment) {
@@ -176,7 +173,7 @@ function PostComponent({
                 <div className="flex flex-col gap-2">
                     {postImgUrl && (
                         <img
-                            className="max-h-96 object-cover"
+                            className="max-h-96 object-contain bg-slate-800"
                             src={postImgUrl}
                             alt="post image"
                         />
@@ -201,7 +198,7 @@ function PostComponent({
                     >
                         <TbArrowForwardUp
                             onClick={handleShareButton}
-                            className="size-7"
+                            className="size-7 hover:text-blue-400 active:text-blue-600"
                         />
                     </button>
                 </div>
@@ -213,14 +210,14 @@ function PostComponent({
                         data-comment
                         onClick={handleShowComment}
                         type="button"
-                        className="cursor-pointer"
+                        className="cursor-pointer hover:text-blue-400 active:text-blue-600"
                     >
                         View Comments...
                     </button>
                     {username === localStorage.getItem('username') && (
                         <button
                             onClick={handleDeletePost}
-                            className="cursor-pointer text-red-600"
+                            className="cursor-pointer text-red-500 hover:text-red-400 active:text-red-6"
                         >
                             Delete Post
                         </button>
@@ -233,7 +230,7 @@ function PostComponent({
                         className="fixed top-0 left-0 flex h-screen w-screen max-w-full items-center justify-center bg-red-700/0 max-lg:z-10"
                     >
                         <div className="h-8/12 w-full rounded-lg bg-blue-800 max-lg:self-end lg:grid lg:max-w-9/12 lg:grid-cols-[6fr_5fr]">
-                            <div className="flex items-center justify-center bg-black max-lg:hidden">
+                            <div className="flex items-center justify-center bg-slate-800 max-lg:hidden">
                                 {postImgUrl ? (
                                     <img
                                         className="max-h-96 w-full object-contain max-lg:hidden"
@@ -255,7 +252,7 @@ function PostComponent({
                                         data-comment
                                         type="button"
                                         onClick={handleShowComment}
-                                        className="cursor-pointer text-2xl"
+                                        className="cursor-pointer text-2xl hover:text-red-400 active:text-red-600"
                                     >
                                         X
                                     </button>
@@ -264,11 +261,6 @@ function PostComponent({
                                     postId={id}
                                     commentsData={commentsData}
                                     setCommentsData={setCommentsData}
-                                    // commentTriggerRender={commentTriggerRender}
-                                    // setCommentTriggerRender={
-                                    //     setCommentTriggerRender
-                                    // }
-                                    // setTriggerRender={setTriggerRender}
                                 />
                                 <p className="text-center text-xs text-blue-400">
                                     -End of comments-
